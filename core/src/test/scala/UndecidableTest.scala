@@ -14,50 +14,55 @@ import junit.framework.Assert._
 
 class UndecidableTest extends org.scalatest.junit.JUnit3Suite {
 
-  sealed trait List[+T]
-  case class Cons[T](hd: T, tl: List[T]) extends List[T]
-  case object Nil extends List[Nothing]
+    sealed trait List[+T]
+    case class Cons[T](hd: T, tl: List[T]) extends List[T]
+    sealed trait Nil extends List[Nothing]
+    case object Nil extends Nil
 
-  trait Show[T] {
-    def apply(t: T): String
-  }
-
-  def show[T](t: T)(implicit s: Show[T]) = s(t)
-
-  implicit def showInt: Show[Int] = new Show[Int] {
-    def apply(t: Int) = t.toString
-  }
-
-  implicit def showNil: Show[Nil.type] = new Show[Nil.type] {
-    def apply(t: Nil.type) = "Nil"
-  }
-
-  implicit def showCons[T](implicit st: Lazy[Show[T]], sl: Lazy[Show[List[T]]]): Show[Cons[T]] = new Show[Cons[T]] {
-      def apply(t: Cons[T]) = s"Cons(${show(t.hd)(st.value)}, ${show(t.tl)(sl.value)})"
-  }
-
-  implicit def showList[T](implicit sc: Lazy[Show[Cons[T]]]): Show[List[T]] = new Show[List[T]] {
-    def apply(t: List[T]) = t match {
-      case Nil => show(Nil)
-      case c: Cons[T] => show(c)(sc.value)
+    trait Show[T] {
+        def apply(t: T): String
     }
-  }
 
-  trait Undefined
-  implicit def mkUndefined(implicit x: Lazy[Undefined]): Undefined = new Undefined {}
+    object Show {
+        def apply[T](t: T)(implicit s: Show[T]) = s(t)
 
-  def myImplicitly[T](implicit x: T): T = x
+        implicit def showInt: Show[Int] = new Show[Int] {
+            def apply(t: Int) = t.toString
+        }
 
-  def testMe() {
-      show(3)
-      show(Nil)
+        implicit def showNil: Show[Nil.type] = new Show[Nil.type] {
+            def apply(t: Nil.type) = "Nil"
+        }
 
-      val l: List[Int] = Cons(1, Cons(2, Cons(3, Nil)))
-      val sl = show(l)
+        implicit def showCons[T](implicit st: Lazy[Show[T]], sl: Lazy[Show[List[T]]]): Show[Cons[T]] = new Show[Cons[T]] {
+            def apply(t: Cons[T]) = s"Cons(${Show(t.hd)(st.value)}, ${Show(t.tl)(sl.value)})"
+        }
 
-//      Predef.implicitly[Show[List[Int]]]
-      myImplicitly[Show[List[Int]]]
-      val u = myImplicitly[Undefined]
-  }
+        implicit def showList[T](implicit sc: Lazy[Show[Cons[T]]]): Show[List[T]] = new Show[List[T]] {
+            def apply(t: List[T]) = t match {
+                case Nil => Show(Nil)
+                case c: Cons[T] => Show(c)(sc.value)
+            }
+        }
+    }
+
+    trait Undefined
+    implicit def mkUndefined(implicit x: Lazy[Undefined]): Undefined = new Undefined {}
+
+    def myImplicitly[T](implicit x: T): T = x
+
+    def testMe() {
+        import Lazy._
+
+        Show(3)
+        Show(Nil)
+
+        val l: List[Int] = Cons(1, Cons(2, Cons(3, Nil)))
+        val sl = Show(l)
+
+        // Predef.implicitly[Show[List[Int]]] // diverging. why?
+        myImplicitly[Show[List[Int]]]
+        val u = myImplicitly[Undefined]
+    }
 
 }

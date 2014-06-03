@@ -17,11 +17,19 @@ private object Extract {
         }
     }
 
+    def Long(c: Context)(x: c.Tree): Long = {
+        import c.universe._
+        x match {
+            case Literal(Constant(y: Long)) => y
+            case t => CompileError.illegalArgument(c)(show(t) + " is required to be Long literal.")
+        }
+    }
+
     def String(c: Context)(x: c.Tree): String = {
         import c.universe._
 
         x match {
-            case Literal(Constant(s: String)) => s
+            case Literal(Constant(y: String)) => y
             case _ => CompileError.illegalArgument(c)(show(x) + " is required to be string literal.")
         }
     }

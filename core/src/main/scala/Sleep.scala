@@ -8,7 +8,7 @@ package com.github.okomok.lity
 
 
 object Sleep {
-    def apply(x: Long): scala.Unit = macro SleepImpl.impl
+    def apply(x: Long): Unit = macro SleepImpl.impl
 }
 
 
@@ -16,14 +16,7 @@ final class SleepImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def impl(x: c.Tree): c.Tree = {
-        Thread.sleep(extractLong(x))
+        Thread.sleep(Extract.Long(c)(x))
         q"()"
-    }
-
-    private def extractLong(x: c.Tree): Long = {
-        x match {
-            case Literal(Constant(ms: Long)) => ms
-            case t => CompileError.illegalArgument(c)(show(t) + " is required to be Long literal.")
-        }
     }
 }

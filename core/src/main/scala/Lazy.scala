@@ -6,6 +6,9 @@
 
 // See: shapeless.Lazy
 
+// I couldn't find where SLS specifies how implicit-chains work.
+// `recName` can really be a valid entry of implicit-lookup?
+
 
 package com.github.okomok.lity
 
@@ -23,7 +26,7 @@ final class LazyImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def impl[T](t: c.WeakTypeTag[T]): c.Tree = {
-        val recName = TermName(c.freshName)
+        val recName = TermName(c.freshName) // fresh name needed. why?
 
         q"""
         new ${Here(c)}.Lazy[${t.tpe}] {

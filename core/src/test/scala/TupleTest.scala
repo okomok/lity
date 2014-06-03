@@ -15,10 +15,10 @@ import junit.framework.Assert._
 class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
     final val TUP1 = """(1, "h")"""
-    val tup1: (Int, String) = C_(TUP1)
+    val tup1: (Int, String) = P_(TUP1)
 
     def testNth() {
-        val i: Int = Nth(C_(TUP1), 0)
+        val i: Int = Nth(P_(TUP1), 0)
         assertEquals(i, 1)
     }
 
