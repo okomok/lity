@@ -69,12 +69,13 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals((Y, 3, X), ys)
     }
 
-    final val YS = L_ { Map((X, 2, Y), (
-          (x: X.type) => Y
-        , (x: Y.type) => X
-        , (x: Int) => x + 1
-        ))
-    }
+    final val PolyFun = L_ { (
+        (x: X.type) => Y
+      , (x: Y.type) => X
+      , (x: Int) => x + 1
+    ) }
+
+    final val YS = L_ { Map((X, 2, Y), PolyFun) }
 
     def testLiteralize() {
 
