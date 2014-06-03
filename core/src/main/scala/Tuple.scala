@@ -22,7 +22,7 @@ private object Tuple {
     def toList(c: Context)(tup: c.Tree): List[c.Tree] = {
         import c.universe._
         tup match {
-            case Literal(Constant(_: Unit)) => Nil
+            case Literal(Constant(())) => Nil
             case Apply(_, xs) => xs
         }
     }

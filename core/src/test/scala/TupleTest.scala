@@ -65,7 +65,22 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals((Y, 3, X), ys)
     }
 
-    def testMap2() {
+    final val YS = U_ { Map((X, 2, Y), (
+          (x: X.type) => Y
+        , (x: Y.type) => X
+        , (x: Int) => x + 1
+        ))
+    }
 
+    def testUnparse() {
+
+        val zs = Map(P_(YS), (
+            (x: X.type) => Y
+          , (x: Y.type) => X
+          , (x: Int) => x + 1
+
+        ))
+
+        assertEquals((X, 4, Y), zs)
     }
 }
