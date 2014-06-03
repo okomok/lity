@@ -7,11 +7,21 @@
 package com.github.okomok.lity
 
 
-sealed trait Type[T]
+sealed trait Type {
+    type apply
+}
 
 
 object Type {
-    def apply[T] = new Type[T] {}
+    def of[x](x: x): apply[x] = apply[x]
+
+    def apply[x]: apply[x] = new Type {
+        override type apply = x
+    }
+
+    type apply[x] = Type {
+        type apply = x
+    }
 
     def unwrap(c: Context)(x: c.Tree): c.Tree = {
         import c.universe._

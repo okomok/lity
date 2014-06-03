@@ -11,7 +11,7 @@ import com.github.okomok.lity._
 
 
 trait BenchmarkTest {
-
+/*
     Echo {
         Benchmark("Sleep(500)") - Benchmark("Sleep(200)")
     }
@@ -20,6 +20,6 @@ trait BenchmarkTest {
     Echo {
         TypeOf(this)
     }
-
+*/
     //val x = TypeOf(this)
 }

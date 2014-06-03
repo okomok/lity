@@ -78,7 +78,6 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     final val YS = L_ { Map((X, 2, Y), PolyFun) }
 
     def testLiteralize() {
-
         val zs = Map(YS, (
             (x: X.type) => Y
           , (x: Y.type) => X
