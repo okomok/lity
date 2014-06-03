@@ -15,12 +15,11 @@ object Map {
 final class MapImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, ftup: c.Tree): c.Tree = {
-
+    def impl(tup: c.Tree, ftup: c.Tree): c.Tree = Tuple(c) {
         val xs = Tuple.toList(c)(tup)
         val fs = Tuple.toList(c)(ftup)
 
-        val ys = xs.map { x =>
+        xs.map { x =>
             fs.find { f =>
                 x.tpe <:< ParamType(c)(f).tpe
             } match {
@@ -28,6 +27,5 @@ final class MapImpl(override val c: Context) extends InContext {
                 case None => c.abort(c.enclosingPosition, "match error")
             }
         }
-        q"${Tuple(c)(ys)}"
     }
 }

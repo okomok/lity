@@ -7,15 +7,15 @@
 package com.github.okomok.lity
 
 
-object Tail {
-    def apply(tup: Any): Any = macro TailImpl.impl
+object Reverse {
+    def apply(tup: Any): Any = macro ReverseImpl.impl
 }
 
 
-final class TailImpl(override val c: Context) extends InContext {
+final class ReverseImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def impl(tup: c.Tree): c.Tree = Tuple(c) {
-        Tuple.toList(c)(tup).tail
+        Tuple.toList(c)(tup).reverse
     }
 }

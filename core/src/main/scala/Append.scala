@@ -15,8 +15,7 @@ object Append {
 final class AppendImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup1: c.Tree, tup2: c.Tree): c.Tree = {
-        val ys = Tuple.toList(c)(tup1) ++ Tuple.toList(c)(tup2)
-        q"${Tuple(c)(ys)}"
+    def impl(tup1: c.Tree, tup2: c.Tree): c.Tree = Tuple(c) {
+        Tuple.toList(c)(tup1) ++ Tuple.toList(c)(tup2)
     }
 }

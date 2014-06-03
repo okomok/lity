@@ -88,4 +88,15 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
         assertEquals((X, 4, Y), zs)
     }
+
+    def testReverse() {
+        val ys = Reverse((1, "h", 'a'))
+        assertEquals(('a', "h", 1), ys)
+    }
+
+    def testFilter() {
+        val ys = Filter((3, Y, X), (Type[X.type], Type[Int]))
+        assertEquals((3, X), ys)
+    }
+
 }
