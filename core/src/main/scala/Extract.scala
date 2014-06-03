@@ -7,8 +7,17 @@
 package com.github.okomok.lity
 
 
-private object ExtractString {
-    def apply(c: Context)(x: c.Tree): String = {
+private object Extract {
+    def Int(c: Context)(x: c.Tree): Int = {
+        import c.universe._
+
+        x match {
+            case Literal(Constant(y: Int)) => y
+            case _ => CompileError.illegalArgument(c)(show(x) + " is required to be Int literal.")
+        }
+    }
+
+    def String(c: Context)(x: c.Tree): String = {
         import c.universe._
 
         x match {

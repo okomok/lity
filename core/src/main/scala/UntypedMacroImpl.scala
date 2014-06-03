@@ -11,7 +11,7 @@ trait UntypedMacroImpl extends InContext {
     protected def macroImpl(x: c.Tree): c.Tree
 
     final def impl(x: c.Tree): c.Tree = {
-        val code = ExtractString(c)(x)
+        val code = Extract.String(c)(x)
         macroImpl(c.parse(code))
     }
 }
