@@ -16,6 +16,15 @@ object Parse {
 }
 
 
-final class Parse(override val c: Context) extends UntypedMacroImpl {
-    override protected def macroImpl(x: c.Tree): c.Tree = x
+final class Parse(override val c: Context) extends InContext {
+    def impl(x: c.Tree): c.Tree = _Parse(c)(x)
 }
+
+
+private object _Parse {
+    def apply(c: Context)(x: c.Tree): c.Tree = {
+        val code = ExtractString(c)(x)
+        c.parse(code)
+    }
+}
+

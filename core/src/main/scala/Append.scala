@@ -17,6 +17,6 @@ final class AppendImpl(override val c: Context) extends InContext {
 
     def impl(tup1: c.Tree, tup2: c.Tree): c.Tree = {
         val ys = Tuple.toList(c)(tup1) ++ Tuple.toList(c)(tup2)
-        q"${Tuple(c)(ys.length)}(..$ys)"
+        q"${Tuple(c)(ys)}"
     }
 }

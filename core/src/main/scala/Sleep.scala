@@ -16,7 +16,7 @@ final class SleepImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def impl(x: c.Tree): c.Tree = {
-        Thread.sleep(Extract.Long(c)(x))
+        Thread.sleep(ExtractLong(c)(x))
         q"()"
     }
 }

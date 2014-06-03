@@ -17,6 +17,6 @@ final class TailImpl(override val c: Context) extends InContext {
 
     def impl(tup: c.Tree): c.Tree = {
         val ys = Tuple.toList(c)(tup).tail
-        q"${Tuple(c)(ys.length)}(..$ys)"
+        q"${Tuple(c)(ys)}"
     }
 }

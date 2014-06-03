@@ -8,14 +8,22 @@ package com.github.okomok.lity
 
 
 private object Tuple {
-    def apply(c: Context)(n: Int): c.Tree = {
+    def apply(c: Context)(xs: List[c.Tree]): c.Tree = {
         import c.universe._
-        Ident(definitions.TupleClass(n).name.toTermName)
+
+        if (xs.isEmpty) {
+            q"()"
+        } else {
+            val tn = TermName(s"Tuple${xs.length}")
+            q"scala.$tn(..$xs)"
+        }
     }
 
     def toList(c: Context)(tup: c.Tree): List[c.Tree] = {
         import c.universe._
-        val Apply(_, xs) = tup
-        xs
+        tup match {
+            case Literal(Constant(_: Unit)) => Nil
+            case Apply(_, xs) => xs
+        }
     }
 }

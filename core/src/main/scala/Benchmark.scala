@@ -12,12 +12,13 @@ object Benchmark {
 }
 
 
-final class BenchmarkImpl(override val c: Context) extends UntypedMacroImpl {
+final class BenchmarkImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    override protected def macroImpl(x: c.Tree): c.Tree = {
+    def impl(x: c.Tree): c.Tree = {
+        val y = _Parse(c)(x)
         val start = System.currentTimeMillis
-        c.typecheck(x)
+        c.typecheck(y)
         val elapsed = System.currentTimeMillis - start
         q"$elapsed"
     }

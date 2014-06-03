@@ -7,11 +7,13 @@
 package com.github.okomok.lity
 
 
+// Will be removed.
+
 trait UntypedMacroImpl extends InContext {
     protected def macroImpl(x: c.Tree): c.Tree
 
     final def impl(x: c.Tree): c.Tree = {
-        val code = Extract.String(c)(x)
+        val code = ExtractString(c)(x)
         macroImpl(c.parse(code))
     }
 }

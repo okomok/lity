@@ -8,7 +8,7 @@ package com.github.okomok.lity
 
 
 object Echo {
-    def apply(x: Any): scala.Unit = macro EchoImpl.impl
+    def apply(x: Any): Unit = macro EchoImpl.impl
 }
 
 
@@ -23,7 +23,7 @@ final class EchoImpl(override val c: Context) extends InContext  {
 
 
 object EchoRaw {
-    def apply(x: Any): scala.Unit = macro EchoRawImpl.impl
+    def apply(x: Any): Unit = macro EchoRawImpl.impl
 }
 
 
