@@ -21,6 +21,16 @@ private object Tuple {
 
     def toList(c: Context)(tup: c.Tree): List[c.Tree] = {
         import c.universe._
+
+        tup match {
+            case Literal(Constant(x: String)) => _toList(c)(c.typecheck(c.parse(x)))
+            case x => _toList(c)(x)
+        }
+    }
+
+    private def _toList(c: Context)(tup: c.Tree): List[c.Tree] = {
+        import c.universe._
+
         tup match {
             case Literal(Constant(())) => Nil
             case Apply(_, xs) => xs

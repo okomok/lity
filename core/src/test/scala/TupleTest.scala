@@ -14,11 +14,15 @@ import junit.framework.Assert._
 
 class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
-    final val TUP1 = """(1, "h")"""
-    val tup1: (Int, String) = P_(TUP1)
+    final val TUP1 = L_{ (1, "h") }
+
+    def testParse() {
+        val tup1: (Int, String) = Parse(TUP1)
+        ()
+    }
 
     def testGet() {
-        val i: Int = Get(P_(TUP1), 0)
+        val i: Int = Get(TUP1, 0)
         assertEquals(i, 1)
     }
 
@@ -31,7 +35,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testAppendNil() {
-        val xs: (Int, String) = Append((1, "h"), ())
+        val xs: (Int, String) = Append(TUP1, ())
         assertEquals(xs._2, "h")
     }
 
@@ -65,16 +69,16 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals((Y, 3, X), ys)
     }
 
-    final val YS = U_ { Map((X, 2, Y), (
+    final val YS = L_ { Map((X, 2, Y), (
           (x: X.type) => Y
         , (x: Y.type) => X
         , (x: Int) => x + 1
         ))
     }
 
-    def testUnparse() {
+    def testLiteralize() {
 
-        val zs = Map(P_(YS), (
+        val zs = Map(YS, (
             (x: X.type) => Y
           , (x: Y.type) => X
           , (x: Int) => x + 1

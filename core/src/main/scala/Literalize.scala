@@ -7,16 +7,16 @@
 package com.github.okomok.lity
 
 
-object U_ {
-    def apply(x: Any): String = macro Unparse.impl
+object L_ {
+    def apply(x: Any): String = macro Literalize.impl
 }
 
-object Unparse {
-    def apply(x: Any): String = macro Unparse.impl
+object Literalize {
+    def apply(x: Any): String = macro Literalize.impl
 }
 
 
-final class Unparse(override val c: Context) extends InContext {
+final class Literalize(override val c: Context) extends InContext {
     import c.universe._
 
     def impl(x: c.Tree): c.Tree = {

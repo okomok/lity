@@ -7,10 +7,6 @@
 package com.github.okomok.lity
 
 
-object P_ {
-    def apply(x: String): Any = macro Parse.impl
-}
-
 object Parse {
     def apply(x: String): Any = macro Parse.impl
 }
