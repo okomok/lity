@@ -35,3 +35,33 @@ final class EchoRawImpl(override val c: Context) extends InContext  {
         q"()"
     }
 }
+
+
+object EchoType {
+    def apply(x: Any): Unit = macro EchoTypeImpl.impl
+}
+
+
+final class EchoTypeImpl(override val c: Context) extends InContext  {
+    import c.universe._
+
+    def impl(x: c.Tree): c.Tree = {
+        c.echo(NoPosition, show(x.tpe.dealias))
+        q"()"
+    }
+}
+
+
+object EchoTypeRaw {
+    def apply(x: Any): Unit = macro EchoTypeRawImpl.impl
+}
+
+
+final class EchoTypeRawImpl(override val c: Context) extends InContext  {
+    import c.universe._
+
+    def impl(x: c.Tree): c.Tree = {
+        c.echo(NoPosition, showRaw(x.tpe.dealias))
+        q"()"
+    }
+}

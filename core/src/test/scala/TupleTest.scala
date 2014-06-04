@@ -122,4 +122,57 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         val ys: List[Any] = ToList(TUP1)
         assertEquals(List(1, "h"), ys)
     }
+
+    def testFoldLeft() {
+        val y = FoldLeft(('a', 2, "hello"), 3, (
+            (z: Int, x: Char) => z + 1,
+            (z: Int, x: Int) => z + x,
+            (z: Int, x: String) => z + x.length) )
+        assertEquals(11, y)
+    }
+
+    def testFoldLeft0() {
+        val y = FoldLeft((), 3, (
+            (z: Int, x: Char) => z + 1,
+            (z: Int, x: Int) => z + x,
+            (z: Int, x: String) => z + x.length) )
+        assertEquals(3, y)
+    }
+
+    def testReduceLeft() {
+        val y = ReduceLeft((3, 'a', 2, "hello"), (
+            (z: Int, x: Char) => z + 1,
+            (z: Int, x: Int) => z + x,
+            (z: Int, x: String) => z + x.length) )
+        assertEquals(11, y)
+    }
+
+    def testFoldRight() {
+        val y = FoldRight(('a', 2, "hello"), 3, (
+            (x: Char, z: Int) => z + 1,
+            (x: Int, z: Int) => z + x,
+            (x: String, z: Int) => z + x.length) )
+        assertEquals(11, y)
+    }
+
+    def testFoldRight0() {
+        val y = FoldRight((), 3, (
+            (x: Char, z: Int) => z + 1,
+            (x: Int, z: Int) => z + x,
+            (x: String, z: Int) => z + x.length) )
+        assertEquals(3, y)
+    }
+
+    def testReduceRight() {
+        val y = ReduceRight(('a', 2, "hello", 3), (
+            (x: Char, z: Int) => z + 1,
+            (x: Int, z: Int) => z + x,
+            (x: String, z: Int) => z + x.length) )
+        assertEquals(11, y)
+    }
+
+    def testTest() {
+
+
+    }
 }
