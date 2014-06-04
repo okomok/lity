@@ -21,7 +21,7 @@ final class MapImpl(override val c: Context) extends InContext {
 
         xs.map { x =>
             fs.find { f =>
-                x.tpe <:< Function1ParamType1(c)(f).tpe
+                x.tpe <:< TypeArgs(c)(f.tpe)(0)
             } match {
                 case Some(f) => q"$f($x)"
                 case None => c.abort(c.enclosingPosition, "match error")

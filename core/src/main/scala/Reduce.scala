@@ -21,7 +21,7 @@ final class ReduceLeftImpl(override val c: Context) extends InContext {
 
         xs.reduceLeft { (z, x) =>
             fs.find { f =>
-                x.tpe <:< Function2ParamType2(c)(f).tpe
+                x.tpe <:< TypeArgs(c)(f.tpe)(1)
             } match {
                 case Some(f) => q"$f($z, $x)"
                 case None => c.abort(c.enclosingPosition, "match error")
@@ -45,7 +45,7 @@ final class ReduceRightImpl(override val c: Context) extends InContext {
 
         xs.reduceRight { (x, z) =>
             fs.find { f =>
-                x.tpe <:< Function2ParamType1(c)(f).tpe
+                x.tpe <:< TypeArgs(c)(f.tpe)(0)
             } match {
                 case Some(f) => q"$f($x, $z)"
                 case None => c.abort(c.enclosingPosition, "match error")
