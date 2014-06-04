@@ -18,9 +18,14 @@ object Literalize {
 
 final class Literalize(override val c: Context) extends InContext {
     import c.universe._
+    def impl(x: c.Tree): c.Tree = q"${showCode(x)}"
+}
 
-    def impl(x: c.Tree): c.Tree = {
-        val y = showCode(x)
-        q"$y"
-    }
+
+object _L {
+    def apply(x: Any): String = macro Parse.impl
+}
+
+object Unliteralize {
+    def apply(x: Any): String = macro Parse.impl
 }

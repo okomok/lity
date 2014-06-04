@@ -29,8 +29,13 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     object X
     object Y
 
-    def testConcat() {
-        val ys = Concat((1, "h"), (X, Y))
+    def testFlatten0() {
+        val xs: (Int, String) = Flatten(TUP1, ())
+        assertEquals(xs._2, "h")
+    }
+
+    def testFlatten2() {
+        val ys = Flatten((1, "h"), (X, Y))
         assertEquals((1, "h", X, Y), ys)
     }
 
@@ -42,11 +47,6 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     def testPrepend() {
         val ys = Prepend((1, "h"), X)
         assertEquals((X, 1, "h"), ys)
-    }
-
-    def testConcat0() {
-        val xs: (Int, String) = Concat(TUP1, ())
-        assertEquals(xs._2, "h")
     }
 
     def testHead() {
@@ -172,10 +172,25 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFlatten() {
-        val xs = Flatten((
+        val ys = Flatten((
             ('a', 3),
             TUP1
         ))
-        assertEquals(('a', 3, 1, "h"), xs)
+        assertEquals(('a', 3, 1, "h"), ys)
+    }
+
+    def testRange() {
+        val ys = Range(2, 5)
+        assertEquals((2, 3, 4), ys)
+    }
+
+    def testTranpose() {
+        val ys = Transpose( ('a', 1, Y), ("h", X, 'b'), (X, 'k', "q") )
+        assertEquals( ( ('a', "h", X), (1, X, 'k'), (Y, 'b', "q") ), ys)
+    }
+
+    def testTranspose2() {
+        val ys = Transpose( ( ('a', "h"), (1, X), (Y, 'b') )  )
+        assertEquals( ( ('a', 1, Y), ("h", X, 'b') ), ys)
     }
 }
