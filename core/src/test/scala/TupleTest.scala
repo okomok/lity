@@ -171,8 +171,11 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(11, y)
     }
 
-    def testTest() {
-
-
+    def testFlatten() {
+        val xs = Flatten((
+            ('a', 3),
+            TUP1
+        ))
+        assertEquals(('a', 3, 1, "h"), xs)
     }
 }
