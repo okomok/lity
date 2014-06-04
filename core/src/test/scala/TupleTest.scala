@@ -29,13 +29,23 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     object X
     object Y
 
-    def testAppend() {
-        val xs: (Int, String, X.type, Y.type) = Append((1, "h"), (X, Y))
-        assertEquals(xs._2, "h")
+    def testConcat() {
+        val ys = Concat((1, "h"), (X, Y))
+        assertEquals((1, "h", X, Y), ys)
     }
 
-    def testAppendNil() {
-        val xs: (Int, String) = Append(TUP1, ())
+    def testAppend() {
+        val ys = Append((1, "h"), X)
+        assertEquals((1, "h", X), ys)
+    }
+
+    def testPrepend() {
+        val ys = Prepend((1, "h"), X)
+        assertEquals((X, 1, "h"), ys)
+    }
+
+    def testConcat0() {
+        val xs: (Int, String) = Concat(TUP1, ())
         assertEquals(xs._2, "h")
     }
 
@@ -103,4 +113,13 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals("h1", y)
     }
 
+    def testUpdated() {
+        val ys = Updated(TUP1, 1, 'p')
+        assertEquals((1, 'p'), ys)
+    }
+
+    def testToList() {
+        val ys: List[Any] = ToList(TUP1)
+        assertEquals(List(1, "h"), ys)
+    }
 }

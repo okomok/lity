@@ -7,15 +7,15 @@
 package com.github.okomok.lity
 
 
-object Append {
-    def apply(tup1: Any, x: Any): Any = macro AppendImpl.impl
+object Prepend {
+    def apply(tup1: Any, x: Any): Any = macro PrependImpl.impl
 }
 
 
-final class AppendImpl(override val c: Context) extends InContext {
+final class PrependImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def impl(tup1: c.Tree, x: c.Tree): c.Tree = Tuple(c) {
-        Tuple.toList(c)(tup1) :+ x
+        x :: Tuple.toList(c)(tup1)
     }
 }

@@ -17,6 +17,6 @@ final class AppliedImpl(override val c: Context) extends InContext {
 
     def impl(tup: c.Tree, f: c.Tree): c.Tree = {
         val xs = Tuple.toList(c)(tup)
-        q"$f.tupled(..$xs)"
+        q"$f(..$xs)"
     }
 }
