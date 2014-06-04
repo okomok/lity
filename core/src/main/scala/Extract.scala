@@ -12,7 +12,7 @@ private object ExtractInt {
         import c.universe._
 
         x match {
-            case Literal(Constant(y: Int)) => y
+            case q"${y: Int}" => y
             case _ => CompileError.illegalArgument(c)(show(x) + " is required to be Int literal.")
         }
     }
@@ -23,7 +23,7 @@ private object ExtractLong {
     def apply(c: Context)(x: c.Tree): Long = {
         import c.universe._
         x match {
-            case Literal(Constant(y: Long)) => y
+            case q"${y: Long}" => y
             case t => CompileError.illegalArgument(c)(show(t) + " is required to be Long literal.")
         }
     }
@@ -35,7 +35,7 @@ private object ExtractString {
         import c.universe._
 
         x match {
-            case Literal(Constant(y: String)) => y
+            case q"${y: String}" => y
             case _ => CompileError.illegalArgument(c)(show(x) + " is required to be string literal.")
         }
     }

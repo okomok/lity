@@ -25,7 +25,7 @@ object Type {
 
     def unwrap(c: Context)(x: c.Tree): c.Tree = {
         import c.universe._
-        val TypeApply(_, List(y)) = x
+        val q"${_}[$y]" = x
         y
     }
 }

@@ -23,7 +23,7 @@ private object Tuple {
         import c.universe._
 
         tup match {
-            case Literal(Constant(x: String)) => _toList(c)(c.typecheck(c.parse(x)))
+            case q"${x: String}" => _toList(c)(c.typecheck(c.parse(x)))
             case x => _toList(c)(x)
         }
     }
@@ -32,8 +32,8 @@ private object Tuple {
         import c.universe._
 
         tup match {
-            case Literal(Constant(())) => Nil
-            case Apply(_, xs) => xs
+            case q"()" => Nil
+            case q"${_}(..$xs)" => xs
         }
     }
 }
