@@ -193,4 +193,12 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         val ys = Transpose( ( ('a', "h"), (1, X), (Y, 'b') )  )
         assertEquals( ( ('a', 1, Y), ("h", X, 'b') ), ys)
     }
+
+    def testEquals() {
+        val y = Equals( (1, "h"), TUP1 )
+        assertTrue(y)
+
+        val z = Equals( (1, "k"), TUP1 )
+        assertFalse(z)
+    }
 }
