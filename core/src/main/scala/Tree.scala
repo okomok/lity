@@ -12,7 +12,6 @@ private object TreeReplace {
         import c.universe._
         // no typecheck for `1 + _I1` etc.
         c.parse(showCode(x).replace(showCode(from), showCode(to)))
-
     }
 }
 
@@ -25,5 +24,16 @@ private object TreeToOption {
             case EmptyTree => None
             case _ => Some(x)
         }
+    }
+}
+
+
+private object TreeHasParam {
+    def apply(c: Context)(x: c.Tree): Boolean = {
+        import c.universe._
+
+        x.find { y =>
+            y.tpe <:< typeOf[Param]
+        }.nonEmpty
     }
 }

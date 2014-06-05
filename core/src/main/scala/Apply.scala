@@ -39,7 +39,9 @@ private object Apply_ {
 
         (Tuple.normalize(c)(x), Tuple.normalize(c)(a)) match {
             case (x_, a) if Param.accepts(c)(x, a) => {
-                TreeReplace(c)(y, x, a)
+                Undefer(c) {
+                    TreeReplace(c)(y, x, a)
+                }
             }
             case (q"${_}(..$xs)", q"${_}(..$as)") if xs.length == as.length => {
                 (xs, as).zipped.foldLeft(y) { case (y_, (x_, a_)) =>

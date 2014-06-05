@@ -41,7 +41,7 @@ sealed trait Param {
 }
 
 
-object Param {
+private object Param {
     def accepts(c: Context)(x: c.Tree, a: c.Tree): Boolean = {
         import c.universe._
 
@@ -57,6 +57,54 @@ object Param {
             at <:< typeOf[String] || at <:< typeOf[StringParam]
         } else {
             false
+        }
+    }
+
+    def isParam(c: Context)(x: c.Tree): Boolean = {
+        isAny(c)(x) || isChar(c)(x) || isString(c)(x) || isInt(c)(x)
+    }
+
+    def isAny(c: Context)(x: c.Tree): Boolean = {
+        import c.universe._
+
+        x match {
+            case q"${_}._X1" => true
+            case q"${_}._X2" => true
+            case q"${_}._X3" => true
+            case _ => false
+        }
+    }
+
+    def isChar(c: Context)(x: c.Tree): Boolean = {
+        import c.universe._
+
+        x match {
+            case q"${_}._C1" => true
+            case q"${_}._C2" => true
+            case q"${_}._C3" => true
+            case _ => false
+        }
+    }
+
+    def isString(c: Context)(x: c.Tree): Boolean = {
+        import c.universe._
+
+        x match {
+            case q"${_}._S1" => true
+            case q"${_}._S2" => true
+            case q"${_}._S3" => true
+            case _ => false
+        }
+    }
+
+    def isInt(c: Context)(x: c.Tree): Boolean = {
+        import c.universe._
+
+        x match {
+            case q"${_}._I1" => true
+            case q"${_}._I2" => true
+            case q"${_}._I3" => true
+            case _ => false
         }
     }
 }

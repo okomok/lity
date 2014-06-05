@@ -8,7 +8,7 @@ package com.github.okomok.lity
 
 
 object Length {
-    def apply(tup: Any): Int = macro LengthImpl.impl
+    def apply(tup: Any): Any = macro LengthImpl.impl
 }
 
 

@@ -205,4 +205,9 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         val z = Equals( (1, "k"), TUP1 )
         assertFalse(z)
     }
+
+    def testToTuple() {
+        val y = ToTuple("hey")
+        assertEquals(('h', 'e', 'y'), y)
+    }
 }

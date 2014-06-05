@@ -10,6 +10,6 @@ package com.github.okomok.lity
 private object Here {
     def apply(c: Context): c.Tree = {
         import c.universe._
-        q"_root_.com.github.okomok.lity"
+        q"com.github.okomok.lity" // Don't add `_root_` for `showCode`
     }
 }
