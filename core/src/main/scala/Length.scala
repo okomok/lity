@@ -8,15 +8,16 @@ package com.github.okomok.lity
 
 
 object Length {
-    def apply(tup: Any): Any = macro LengthImpl.impl
+    def apply(arg: Any): Any = macro LengthImpl.apply
 }
 
 
-final class LengthImpl(override val c: Context) extends InContext {
+final class LengthImpl(override val c: Context) extends MacroImpl {
     import c.universe._
 
-    def impl(tup: c.Tree): c.Tree = {
-        val n = Tuple.toList(c)(tup).length
+    override protected def name: c.Tree = q"${Here(c)}.Length"
+    override protected def impl(arg: c.Tree): c.Tree = {
+        val n = Tuple.toList(c)(arg).length
         q"$n"
     }
 }

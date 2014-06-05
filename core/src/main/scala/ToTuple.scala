@@ -8,15 +8,16 @@ package com.github.okomok.lity
 
 
 object ToTuple {
-    def apply(x: Any): Any = macro ToTupleImpl.impl
+    def apply(arg: Any): Any = macro ToTupleImpl.apply
 }
 
 
-final class ToTupleImpl(override val c: Context) extends InContext {
+final class ToTupleImpl(override val c: Context) extends MacroImpl {
     import c.universe._
 
-    def impl(x: c.Tree): c.Tree = Tuple(c) {
-        x match {
+    override protected def name: c.Tree = q"${Here(c)}.ToTuple"
+    override protected def impl(arg: c.Tree): c.Tree = Tuple(c) {
+        arg match {
             case q"${y: String}" => y.toList.map { c => q"$c" }
         }
     }
