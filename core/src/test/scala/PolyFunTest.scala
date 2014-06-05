@@ -54,4 +54,15 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(8, y)
     }
 
+    final val Inc = L_{
+        (_X1 -> (_X1 + 1), ())
+    }
+
+    def testInc() {
+        val y = Apply(Inc, 3)
+        assertEquals(4, y)
+        val z = Apply(Inc, "h")
+        assertEquals("h1", z)
+    }
+
 }
