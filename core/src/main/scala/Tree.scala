@@ -10,7 +10,9 @@ package com.github.okomok.lity
 private object TreeReplace {
     def apply(c: Context)(x: c.Tree, from: c.Tree, to: c.Tree): c.Tree = {
         import c.universe._
+        // no typecheck for `1 + _I1` etc.
         c.parse(showCode(x).replace(showCode(from), showCode(to)))
+
     }
 }
 

@@ -133,51 +133,45 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(List(1, "h"), ys)
     }
 
+    final val LFun1 = L_{ (
+        (_I1, _C1) -> (_I1 + 1),
+        (_I1, _I2) -> (_I2 + _I1),
+        (_I1, _S1) -> (_I1 + _S1.toString.length)
+    )}
+
+    final val RFun1 = L_{ (
+        (_C1, _I1) -> (_I1 + 1),
+        (_I1, _I2) -> (_I2 + _I1),
+        (_S1, _I1) -> (_I1 + _S1.toString.length)
+    )}
+
     def testFoldLeft() {
-        val y = FoldLeft(('a', 2, "hello"), 3, (
-            (z: Int, x: Char) => z + 1,
-            (z: Int, x: Int) => z + x,
-            (z: Int, x: String) => z + x.length) )
+        val y = FoldLeft(('a', 2, "hello"), 3, LFun1)
         assertEquals(11, y)
     }
 
     def testFoldLeft0() {
-        val y = FoldLeft((), 3, (
-            (z: Int, x: Char) => z + 1,
-            (z: Int, x: Int) => z + x,
-            (z: Int, x: String) => z + x.length) )
+        val y = FoldLeft((), 3, LFun1)
         assertEquals(3, y)
     }
 
     def testReduceLeft() {
-        val y = ReduceLeft((3, 'a', 2, "hello"), (
-            (z: Int, x: Char) => z + 1,
-            (z: Int, x: Int) => z + x,
-            (z: Int, x: String) => z + x.length) )
+        val y = ReduceLeft((3, 'a', 2, "hello"), LFun1)
         assertEquals(11, y)
     }
 
     def testFoldRight() {
-        val y = FoldRight(('a', 2, "hello"), 3, (
-            (x: Char, z: Int) => z + 1,
-            (x: Int, z: Int) => z + x,
-            (x: String, z: Int) => z + x.length) )
+        val y = FoldRight(('a', 2, "hello"), 3, RFun1)
         assertEquals(11, y)
     }
 
     def testFoldRight0() {
-        val y = FoldRight((), 3, (
-            (x: Char, z: Int) => z + 1,
-            (x: Int, z: Int) => z + x,
-            (x: String, z: Int) => z + x.length) )
+        val y = FoldRight((), 3, RFun1)
         assertEquals(3, y)
     }
 
     def testReduceRight() {
-        val y = ReduceRight(('a', 2, "hello", 3), (
-            (x: Char, z: Int) => z + 1,
-            (x: Int, z: Int) => z + x,
-            (x: String, z: Int) => z + x.length) )
+        val y = ReduceRight(('a', 2, "hello", 3), RFun1)
         assertEquals(11, y)
     }
 
