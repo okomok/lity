@@ -37,4 +37,21 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals( (6, "h"), ys)
     }
 
+    final val Fun3 = L_{
+        ( (_I1, (_I2, _I3)) -> (_I1 + _I2 + _I3), _S1 -> _S1 )
+    }
+
+    final val FunNested = L_{
+        (
+            (_I1, 3) -> Apply(Fun1, (_I1, _I1)),
+            (), // accepted
+            31  //
+        )
+    }
+
+    def testNested1() {
+        val y = Apply(FunNested, (4, 3))
+        assertEquals(8, y)
+    }
+
 }

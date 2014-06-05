@@ -13,3 +13,15 @@ private object TreeReplace {
         c.parse(showCode(x).replace(showCode(from), showCode(to)))
     }
 }
+
+
+private object TreeToOption {
+    def apply(c: Context)(x: c.Tree): Option[c.Tree] = {
+        import c.universe._
+
+        x match {
+            case EmptyTree => None
+            case _ => Some(x)
+        }
+    }
+}

@@ -118,9 +118,9 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals((3, X), ys)
     }
 
-    def testApplied() {
-        val y = Applied(TUP1, (x: Int, y: String) => y + x.toString)
-        assertEquals("h1", y)
+    def testApply() {
+        val y = Apply(PolyFun, 3)
+        assertEquals(4, y)
     }
 
     def testUpdated() {

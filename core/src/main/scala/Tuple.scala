@@ -28,12 +28,22 @@ private object Tuple {
         }
     }
 
-    private def _toList(c: Context)(tup: c.Tree): List[c.Tree] = {
+    def normalize(c: Context)(tup: c.Tree): c.Tree = {
         import c.universe._
 
         tup match {
+            case q"${_}($x).->[${_}]($y)" => q"($x, $y)"
+            case _ => tup
+        }
+    }
+
+    private def _toList(c: Context)(tup: c.Tree): List[c.Tree] = {
+        import c.universe._
+
+        normalize(c)(tup) match {
             case q"()" => Nil
             case q"${_}(..$xs)" => xs
+            case _ => c.abort(c.enclosingPosition, s"tuple is required: ${show(tup)}")
         }
     }
 }
