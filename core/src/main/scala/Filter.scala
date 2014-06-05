@@ -8,21 +8,16 @@ package com.github.okomok.lity
 
 
 object Filter {
-    def apply(tup: Any, ftup: Any): Any = macro FilterImpl.impl
+    def apply(tup: Any, f: Any): Any = macro FilterImpl.impl
 }
 
 
 final class FilterImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, ftup: c.Tree): c.Tree = Tuple(c) {
-        val xs = Tuple.toList(c)(tup)
-        val fs = Tuple.toList(c)(ftup)
-
-        xs.filter { x =>
-            fs.find { f =>
-                x.tpe <:< Type.unwrap(c)(f).tpe
-            }.nonEmpty
+    def impl(tup: c.Tree, f: c.Tree): c.Tree = Tuple(c) {
+        Tuple.toList(c)(tup).filter { x =>
+            AsBoolean(c)(Call(c)(f, x))
         }
     }
 }

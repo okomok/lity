@@ -7,18 +7,17 @@
 package com.github.okomok.lity
 
 
-object FindConforms {
-    def apply[To](tup: Any): Any = macro FindConformsImpl.impl[To]
+object Find {
+    def apply(tup: Any, f: Any): Any = macro FindImpl.impl
 }
 
 
-final class FindConformsImpl(override val c: Context) extends InContext {
+final class FindImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl[To](tup: c.Tree)(implicit To: c.WeakTypeTag[To]): c.Tree = {
-        val xs = Tuple.toList(c)(tup)
-        val y = xs.find { x =>
-            x.tpe <:< To.tpe
+    def impl(tup: c.Tree, f: c.Tree): c.Tree = {
+        val y = Tuple.toList(c)(tup).find { x =>
+            AsBoolean(c)(Call(c)(f, x))
         }
         q"$y"
     }

@@ -8,24 +8,16 @@ package com.github.okomok.lity
 
 
 object Map {
-    def apply(tup: Any, ftup: Any): Any = macro MapImpl.impl
+    def apply(tup: Any, f: Any): Any = macro MapImpl.impl
 }
 
 
 final class MapImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, ftup: c.Tree): c.Tree = Tuple(c) {
-        val xs = Tuple.toList(c)(tup)
-        val fs = Tuple.toList(c)(ftup)
-
-        xs.map { x =>
-            fs.find { f =>
-                x.tpe <:< TypeArgs(c)(f.tpe)(0)
-            } match {
-                case Some(f) => q"$f($x)"
-                case None => c.abort(c.enclosingPosition, "match error")
-            }
+    def impl(tup: c.Tree, f: c.Tree): c.Tree = Tuple(c) {
+        Tuple.toList(c)(tup).map { x =>
+            Call(c)(f, x)
         }
     }
 }

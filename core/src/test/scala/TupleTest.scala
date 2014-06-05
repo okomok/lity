@@ -64,34 +64,44 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(3, n)
     }
 
-    def testFindConforms() {
-        val x: Some[Int] = FindConforms[Int]((X, 2, Y))
+    def testFind() {
+        val x: Some[Int] = Find( (X, 2, Y), ( 2 -> true, (_X1, false) ) )
         assertEquals(2, x.get)
     }
 
     def testMap() {
         val ys = Map((X, 2, Y), (
-            (x: X.type) => Y
-          , (x: Y.type) => X
-          , (x: Int) => x + 1
+            (X, Y)
+          , (Y, X)
+          , (2, 3)
 
         ))
         assertEquals((Y, 3, X), ys)
     }
 
+    def testMap2() {
+        val ys = Map((X, 2, Y), (_I1 -> (_I1 + _I1), _X1 -> _X1))
+        assertEquals((X, 4, Y), ys)
+    }
+
+    def testMap3() {
+        val ys = Map((X, 2, "h"), (_I1 -> (_I1 + _I1), _S1 -> (_S1 + "ello"), X -> X))
+        assertEquals((X, 4, "hello"), ys)
+    }
+
     final val PolyFun = L_ { (
-        (x: X.type) => Y
-      , (x: Y.type) => X
-      , (x: Int) => x + 1
+        X -> Y
+      , Y -> X
+      , _I1 -> (_I1 + 1)
     ) }
 
     final val YS = L_ { Map((X, 2, Y), PolyFun) }
 
     def testLiteralize() {
         val zs = Map(YS, (
-            (x: X.type) => Y
-          , (x: Y.type) => X
-          , (x: Int) => x + 1
+            (X, Y)
+          , (Y, X)
+          , _I1 -> (_I1 + 1)
 
         ))
 
@@ -104,7 +114,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFilter() {
-        val ys = Filter((3, Y, X), (Type[X.type], Type[Int]))
+        val ys = Filter((3, Y, X), ((3, true), (X, true), (_X1, false)))
         assertEquals((3, X), ys)
     }
 
