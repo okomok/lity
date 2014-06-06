@@ -28,9 +28,10 @@ private object Apply_ {
 
         CollectFirst(es) {
             case q"${_}($x, $y)" => TreeToOption(c)(betaReduce(c)(x, y, a))
+            case e => c.abort(c.enclosingPosition, s"mapping entry error: ${show(e)}")
         } match {
             case Some(y) => y
-            case None => c.abort(c.enclosingPosition, s"illegal argument: ${show(a)}")
+            case None => c.abort(c.enclosingPosition, s"function application match error: ${show(a)}")
         }
     }
 

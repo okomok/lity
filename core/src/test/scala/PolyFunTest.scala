@@ -84,4 +84,16 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
         val y = Apply(FunToTuple, "12")
         assertEquals(2, y)
     }
+
+    def testIncDefer() {
+        object Lit {
+            final val Fun = L_{
+                (_X1 -> (Defer(1) + _X1), ())
+            }
+        }
+
+        val z = Apply(Lit.Fun, "h")
+        assertEquals("1h", z)
+    }
+
 }

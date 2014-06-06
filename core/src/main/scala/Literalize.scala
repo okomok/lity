@@ -22,7 +22,7 @@ final class Literalize(override val c: Context) extends InContext {
 }
 
 
-object _L {
+object R_ {
     def apply(x: Any): String = macro Parse.impl
 }
 

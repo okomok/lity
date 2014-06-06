@@ -23,8 +23,14 @@ object CompileError {
         c.abort(c.enclosingPosition, "Assertion failed: " + msg)
     }
 
-    def illegalArgument(c: Context)(msg: String): Nothing = {
-        c.abort(c.enclosingPosition, "Illegal argument: " + msg)
+    def illegalArgument(c: Context)(x: c.Tree, tp: String): Nothing = {
+        import c.universe._
+
+        c.abort(c.enclosingPosition, s"""
+         |Illegal argument: $tp is required, but
+         |    ${show(x)}
+         |        : ${show(c.typecheck(x).tpe.dealias)}
+         """.stripMargin)
     }
 
     def abstractType(c: Context)(msg: String): Nothing = {

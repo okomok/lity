@@ -13,7 +13,7 @@ private object ExtractInt {
 
         x match {
             case q"${y: Int}" => y
-            case _ => CompileError.illegalArgument(c)(show(x) + " is required to be Int literal.")
+            case _ => CompileError.illegalArgument(c)(x, "Int literal")
         }
     }
 }
@@ -24,7 +24,7 @@ private object ExtractLong {
         import c.universe._
         x match {
             case q"${y: Long}" => y
-            case t => CompileError.illegalArgument(c)(show(t) + " is required to be Long literal.")
+            case t => CompileError.illegalArgument(c)(x, "Long literal")
         }
     }
 }
@@ -36,7 +36,7 @@ private object ExtractString {
 
         x match {
             case q"${y: String}" => y
-            case _ => CompileError.illegalArgument(c)(show(x) + " is required to be string literal.")
+            case _ => CompileError.illegalArgument(c)(x, "String literal")
         }
     }
 }

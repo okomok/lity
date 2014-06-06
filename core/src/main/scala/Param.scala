@@ -10,35 +10,7 @@ package com.github.okomok.lity
 import scala.language.implicitConversions
 
 
-sealed trait Param {
-    final def <(x: Any): Param = new Param{}
-    final def >(x: Any): Param = new Param{}
-    final def <=(x: Any): Param = new Param{}
-    final def >=(x: Any): Param = new Param{}
-
-    final def +(x: Any): Param = new Param{}
-    final def -(x: Any): Param = new Param{}
-    final def *(x: Any): Param = new Param{}
-    final def /(x: Any): Param = new Param{}
-    final def %(x: Any): Param = new Param{}
-
-    final def &(x: Any): Param = new Param{}
-    final def |(x: Any): Param = new Param{}
-    final def ^(x: Any): Param = new Param{}
-
-    final def <<(x: Any): Param = new Param{}
-    final def >>(x: Any): Param = new Param{}
-    final def >>>(x: Any): Param = new Param{}
-
-    final def unary_+ : Param = new Param{}
-    final def unary_- : Param = new Param{}
-    final def unary_~ : Param = new Param{}
-
-    final def &&(x: Any): Param = new Param{}
-    final def ||(x: Any): Param = new Param{}
-
-    final def unary_! : Param = new Param{}
-}
+sealed trait Param extends Bottom
 
 
 private object Param {

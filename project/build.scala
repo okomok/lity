@@ -5,7 +5,7 @@ object build extends Build {
     lazy val theSettings = Project.defaultSettings ++ Seq(
         organization := "com.github.okomok"
         , version := "0.1.0-SNAPSHOT"
-        , scalaVersion := "2.11.0"
+        , scalaVersion := "2.11.1"
 
         , scalacOptions ++=
             Seq("-unchecked", "-deprecation", "-feature")
@@ -28,7 +28,15 @@ object build extends Build {
             publish := ()
             , publishLocal := ()
         )
-    ) aggregate(core)
+    ) aggregate(core, macros)
+
+    lazy val macros = Project(
+        "lity-macros"
+        , file("macros")
+        , settings = theSettings ++ Seq(
+            libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
+        )
+    )
 
     lazy val core = Project(
         "lity-core"

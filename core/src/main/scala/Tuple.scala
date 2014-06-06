@@ -23,6 +23,7 @@ private object Tuple {
         import c.universe._
 
         tup match {
+            case q"()" => Nil
             case q"${x: String}" => _toList(c)(c.typecheck(c.parse(x)))
             case x => _toList(c)(x)
         }
@@ -41,9 +42,8 @@ private object Tuple {
         import c.universe._
 
         normalize(c)(tup) match {
-            case q"()" => Nil
             case q"${_}(..$xs)" => xs
-            case _ => c.abort(c.enclosingPosition, s"tuple is required: ${show(tup)}")
+            case _ => CompileError.illegalArgument(c)(tup, "tuple")
         }
     }
 }

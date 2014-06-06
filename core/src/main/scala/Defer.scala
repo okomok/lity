@@ -8,7 +8,7 @@ package com.github.okomok.lity
 
 
 object Defer {
-    def apply(x: Any): Any => Any = throw new Error("impossible")
+    def apply(x: Any): Bottom = new Bottom{}
 }
 
 
