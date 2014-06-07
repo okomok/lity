@@ -16,7 +16,7 @@ final class GetImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def apply(tup: c.Tree, n: c.Tree): c.Tree = {
-        val i = ExtractInt(c)(n)
+        val i = Extract.Int(c)(n)
         Tuple.toList(c)(tup)(i)
     }
 }

@@ -7,8 +7,8 @@
 package com.github.okomok.lity
 
 
-private object ExtractInt {
-    def apply(c: Context)(x: c.Tree): Int = {
+private object Extract {
+    def Int(c: Context)(x: c.Tree): Int = {
         import c.universe._
 
         x match {
@@ -16,22 +16,16 @@ private object ExtractInt {
             case _ => CompileError.illegalArgument(c)(x, "Int literal")
         }
     }
-}
 
-
-private object ExtractLong {
-    def apply(c: Context)(x: c.Tree): Long = {
+    def Long(c: Context)(x: c.Tree): Long = {
         import c.universe._
         x match {
             case q"${y: Long}" => y
             case t => CompileError.illegalArgument(c)(x, "Long literal")
         }
     }
-}
 
-
-private object ExtractString {
-    def apply(c: Context)(x: c.Tree): String = {
+    def String(c: Context)(x: c.Tree): String = {
         import c.universe._
 
         x match {

@@ -16,7 +16,7 @@ final class RangeImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def apply(n: c.Tree, m: c.Tree): c.Tree = Tuple(c) {
-        List.range(ExtractInt(c)(n), ExtractInt(c)(m)).map { i =>
+        List.range(Extract.Int(c)(n), Extract.Int(c)(m)).map { i =>
             q"$i"
         }
     }

@@ -19,7 +19,7 @@ final class ParseImpl(override val c: Context) extends InContext {
 
 private object _Parse {
     def apply(c: Context)(x: c.Tree): c.Tree = {
-        val code = ExtractString(c)(x)
+        val code = Extract.String(c)(x)
         c.parse(code)
     }
 }
