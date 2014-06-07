@@ -17,16 +17,17 @@ private object Param {
     def accepts(c: Context)(x: c.Tree, a: c.Tree): Boolean = {
         import c.universe._
 
-        val (xt, at) = (c.typecheck(x).tpe, c.typecheck(a).tpe)
+        val xt = SafeTpe(c)(x)
+        val at = SafeTpe(c)(a)
 
         if (xt <:< typeOf[AnyParam]) {
             true
         } else if (xt <:< typeOf[IntParam]) {
-            at <:< typeOf[Int] || at <:< typeOf[IntParam]
+            at <:< typeOf[Int]
         } else if (xt <:< typeOf[CharParam]) {
-            at <:< typeOf[Char] || at <:< typeOf[CharParam]
+            at <:< typeOf[Char]
         } else if (xt <:< typeOf[StringParam]) {
-            at <:< typeOf[String] || at <:< typeOf[StringParam]
+            at <:< typeOf[String]
         } else {
             false
         }
