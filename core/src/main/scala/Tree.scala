@@ -10,8 +10,8 @@ package com.github.okomok.lity
 import scala.reflect.macros.ParseException
 
 
-private object TreeReplace {
-    def apply(c: Context)(x: c.Tree, from: c.Tree, to: c.Tree): c.Tree = {
+private object Tree {
+    def replace(c: Context)(x: c.Tree, from: c.Tree, to: c.Tree): c.Tree = {
         import c.universe._
         // no typecheck for `1 + _I1` etc.
         val code = showCode(x).replace(showCode(from), showCode(to))
@@ -28,11 +28,8 @@ private object TreeReplace {
             }
         }
     }
-}
 
-
-private object TreeToOption {
-    def apply(c: Context)(x: c.Tree): Option[c.Tree] = {
+    def toOption(c: Context)(x: c.Tree): Option[c.Tree] = {
         import c.universe._
 
         x match {
@@ -40,15 +37,9 @@ private object TreeToOption {
             case _ => Some(x)
         }
     }
-}
 
-
-private object TreeHasParam {
-    def apply(c: Context)(x: c.Tree): Boolean = {
+    def hasParam(c: Context)(x: c.Tree): Boolean = {
         import c.universe._
-
-        x.find { y =>
-            y.tpe <:< typeOf[Param]
-        }.nonEmpty
+        showCode(x).matches(s".*$here\\._[A-Z]\\d.*")
     }
 }

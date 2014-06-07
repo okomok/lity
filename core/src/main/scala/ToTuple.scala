@@ -12,7 +12,7 @@ object ToTuple {
 }
 
 
-final class ToTupleImpl(override val c: Context) extends MacroImpl {
+final class ToTupleImpl(override val c: Context) extends MacroImpl1 {
     import c.universe._
 
     override protected def name: c.Tree = q"${Here(c)}.ToTuple"

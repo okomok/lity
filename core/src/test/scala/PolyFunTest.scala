@@ -75,7 +75,6 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(2, y)
     }
 
-
     final val FunToTuple = L_ {
         ( _X1 -> Length(ToTuple(_X1)), () )
     }

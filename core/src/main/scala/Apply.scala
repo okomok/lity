@@ -27,7 +27,7 @@ private object Apply_ {
         }
 
         CollectFirst(es) {
-            case q"${_}($x, $y)" => TreeToOption(c)(betaReduce(c)(x, y, a))
+            case q"${_}($x, $y)" => Tree.toOption(c)(betaReduce(c)(x, y, a))
             case e => c.abort(c.enclosingPosition, s"mapping entry error: ${show(e)}")
         } match {
             case Some(y) => y
@@ -41,7 +41,7 @@ private object Apply_ {
         (Tuple.normalize(c)(x), Tuple.normalize(c)(a)) match {
             case (x_, a) if Param.accepts(c)(x, a) => {
                 Undefer(c) {
-                    TreeReplace(c)(y, x, a)
+                    Tree.replace(c)(y, x, a)
                 }
             }
             case (q"${_}(..$xs)", q"${_}(..$as)") if xs.length == as.length => {

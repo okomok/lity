@@ -15,6 +15,6 @@ object Defer {
 private object Undefer {
     def apply(c: Context)(x: c.Tree): c.Tree = {
         import c.universe._
-        TreeReplace(c)(x, q"${Here(c)}.Defer", q"${Here(c)}.Identity")
+        Tree.replace(c)(x, q"${Here(c)}.Defer", q"${Here(c)}.Identity")
     }
 }

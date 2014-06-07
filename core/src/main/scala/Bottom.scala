@@ -9,7 +9,7 @@ package com.github.okomok.lity
 
 // Makes expressions well-typed.
 trait Bottom {
-    final val value: Bottom = new Bottom{}
+    final def value: Bottom = new Bottom{}
 
     final def apply(x1: Any): Bottom = new Bottom{}
     final def apply(x1: Any, x2: Any): Bottom = new Bottom{}
