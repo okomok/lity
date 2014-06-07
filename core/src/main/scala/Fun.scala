@@ -8,17 +8,12 @@ package com.github.okomok.lity
 
 
 object Fun {
-    def apply(m: Any): Any = macro FunImpl.apply
+    def apply(xs: Any*): Any = macro FunImpl.apply
 }
 
 
 final class FunImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def apply(m: c.Tree): c.Tree = {
-        val y = showCode(q"$m(_X1)")
-        q"""
-        ${Here(c)}.Def(${Here(c)}._X1 -> $y)
-        """
-    }
+    def apply(xs: c.Tree*): c.Tree = q"${Here(c)}.Lit { (..$xs, ()) }"
 }

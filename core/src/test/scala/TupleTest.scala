@@ -65,7 +65,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFind() {
-        val x: Some[Int] = Find( (X, 2, Y), Lambda( 2 -> "true", (_X1, "false") ) )
+        val x: Some[Int] = Find( (X, 2, Y), Fun( 2 -> "true", (_X1, "false") ) )
         assertEquals(2, x.get)
     }
 
@@ -80,16 +80,16 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testMap2() {
-        val ys = Map((X, 2, Y), Lambda(_I1 -> "_I1 + _I1", _X1 -> "_X1"))
+        val ys = Map((X, 2, Y), Fun(_I1 -> "_I1 + _I1", _X1 -> "_X1"))
         assertEquals((X, 4, Y), ys)
     }
 
     def testMap3() {
-        val ys = Map((X, 2, "h"), Lambda(_I1 -> "_I1 + _I1", _S1 -> """_S1 + "ello"""", X -> "X"))
+        val ys = Map((X, 2, "h"), Fun(_I1 -> "_I1 + _I1", _S1 -> """_S1 + "ello"""", X -> "X"))
         assertEquals((X, 4, "hello"), ys)
     }
 
-    final val PolyFun = Def(
+    final val PolyFun = Fun(
         X -> "Y"
       , Y -> "X"
       , _I1 -> "_I1 + 1"
@@ -98,7 +98,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     final val YS = Lit { Map((X, 2, Y), PolyFun) }
 
     def testLit() {
-        val zs = Map(YS, Lambda(
+        val zs = Map(YS, Fun(
             (X, "Y")
           , (Y, "X")
           , _I1 -> "_I1 + 1"
@@ -114,7 +114,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFilter() {
-        val ys = Filter((3, Y, X), Lambda((3, "true"), (X, "true"), (_X1, "false")))
+        val ys = Filter((3, Y, X), Fun((3, "true"), (X, "true"), (_X1, "false")))
         assertEquals((3, X), ys)
     }
 
@@ -133,13 +133,13 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(List(1, "h"), ys)
     }
 
-    final val RFun1 = Def(
+    final val RFun1 = Fun(
         (_C1, _I1) -> "_I1 + 1",
         (_I1, _I2) -> "_I2 + _I1",
         (_S1, _I1) -> "_I1 + _S1.toString.length"
     )
 
-    final val LFun1 = Def(
+    final val LFun1 = Fun(
         (_I1, _C1) -> "_I1 + 1",
         (_I1, _I2) -> "_I2 + _I1",
         (_I1, _S1) -> "_I1 + _S1.toString.length"
