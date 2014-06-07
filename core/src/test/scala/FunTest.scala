@@ -19,13 +19,13 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testLength1() {
-        val y = Apply(F_(Length), (1, 2, 3))
+        val y = Apply(Fun(Length), (1, 2, 3))
         assertEquals(3, y)
     }
 
     def testLength2() {
         object Lit {
-            final val f = F_(Length)
+            final val f = Fun(Length)
         }
         val y = Apply(Lit.f, (1, 2, 3))
         assertEquals(3, y)
@@ -60,6 +60,7 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(8, y)
 
     }
+
     def testDefer() {
         object Plus {
             final val value = Def(_X1 -> """Lambda(_X2 -> "Length(_X1) + Length(_X2)")""")
@@ -67,5 +68,17 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
 
         val y = Apply(Apply(Plus.value, (1,2,3)), (1,2,3,4,5))
         assertEquals(8, y)
+    }
+
+    def testFun() {
+        object Ignore {
+            final val value = Def(_X1 -> "Fun(Length)")
+        }
+
+        val y = Apply(Fun(Length), (1,2,3))
+        assertEquals(3, y)
+
+        val z = Apply(Apply(Ignore.value, "h"), (1,2,3))
+        assertEquals(3, z)
     }
 }
