@@ -7,6 +7,4 @@
 package com.github.okomok.lity
 
 
-object Defer {
-    def apply(x: Any): Bottom = new Bottom{}
-}
+object Lambda extends Tuple

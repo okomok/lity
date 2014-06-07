@@ -38,19 +38,44 @@ private object Apply_ {
     private def betaReduce(c: Context)(x: c.Tree, y: c.Tree, a: c.Tree): c.Tree = {
         import c.universe._
 
+
         (Tuple.normalize(c)(x), Tuple.normalize(c)(a)) match {
-            case (x_, a) if Param.accepts(c)(x, a) => {
-                Undefer(c) {
-                    Tree.replace(c)(y, x, a)
-                }
+            case (x, a) if Param.accepts(c)(x, a) => {
+              //  undefer(c) {
+                    bindArg(c)(x, y, a)
+              //  }
             }
             case (q"${_}(..$xs)", q"${_}(..$as)") if xs.length == as.length => {
-                (xs, as).zipped.foldLeft(y) { case (y_, (x_, a_)) =>
-                    betaReduce(c)(x_, y_, a_)
+                (xs, as).zipped.foldLeft(y) { case (y, (x, a)) =>
+                    betaReduce(c)(x, y, a)
                 }
             }
-            case (x_, a) if x_.equalsStructure(a) => y
+            case (x, a) if x.equalsStructure(a) => y
             case _ => EmptyTree
         }
+    }
+
+    private def bindArg(c: Context)(x: c.Tree, y: c.Tree, a: c.Tree): c.Tree = {
+        import c.universe._
+
+        reparse(c) {
+            new Transformer {
+                override def transform(z: c.Tree): c.Tree = {
+                    z match {
+                        case q"${_}.lity.Def(..${_})" => z // protects Params.
+                        case q"${_}.lity.Defer" => q"${Here(c)}.Identity"
+                        case z if z.equalsStructure(x) => a
+                        case _ => super.transform(z)
+                    }
+                }
+            }.transform(y)
+        }
+    }
+
+    // for type update
+    private def reparse(c: Context)(x: c.Tree): c.Tree = {
+        import c.universe._
+        // no typecheck for `1 + _I1` etc.
+        c.parse(showCode(x))
     }
 }
