@@ -17,7 +17,7 @@ final class FoldLeftImpl(override val c: Context) extends InContext {
 
     def apply(tup: c.Tree, z: c.Tree, f: c.Tree): c.Tree = {
         Tuple.toList(c)(tup).foldLeft(z) { (z, x) =>
-            Apply_(c)(f, q"($z, $x)")
+            q"${Here(c)}.Apply($f, ($z, $x))"
         }
     }
 }
@@ -33,7 +33,7 @@ final class FoldRightImpl(override val c: Context) extends InContext {
 
     def apply(tup: c.Tree, z: c.Tree, f: c.Tree): c.Tree = {
         Tuple.toList(c)(tup).foldRight(z) { (x, z) =>
-            Apply_(c)(f, q"($x, $z)")
+            q"${Here(c)}.Apply($f, ($x, $z))"
         }
     }
 }

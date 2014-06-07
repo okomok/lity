@@ -17,7 +17,7 @@ final class MapImpl(override val c: Context) extends InContext {
 
     def apply(tup: c.Tree, f: c.Tree): c.Tree = Tuple(c) {
         Tuple.toList(c)(tup).map { x =>
-            Apply_(c)(f, x)
+            q"${Here(c)}.Apply($f, $x)"
         }
     }
 }

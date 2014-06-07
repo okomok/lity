@@ -17,7 +17,7 @@ final class ReduceLeftImpl(override val c: Context) extends InContext {
 
     def apply(tup: c.Tree, f: c.Tree): c.Tree = {
         Tuple.toList(c)(tup).reduceLeft { (z, x) =>
-            Apply_(c)(f, q"($z, $x)")
+            q"${Here(c)}.Apply($f, ($z, $x))"
         }
     }
 }
@@ -33,7 +33,7 @@ final class ReduceRightImpl(override val c: Context) extends InContext {
 
     def apply(tup: c.Tree, f: c.Tree): c.Tree = {
         Tuple.toList(c)(tup).reduceRight { (x, z) =>
-            Apply_(c)(f, q"($x, $z)")
+            q"${Here(c)}.Apply($f, ($x, $z))"
         }
     }
 }

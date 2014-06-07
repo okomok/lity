@@ -11,7 +11,7 @@ private object AsBoolean {
     def apply(c: Context)(x: c.Tree): Boolean = {
         import c.universe._
 
-        x match {
+        c.typecheck(x) match {
             case q"true" => true
             case q"false" => false
             case x => {

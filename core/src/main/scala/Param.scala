@@ -32,20 +32,11 @@ private object Param {
         }
     }
 
-    def equalsIdent(c: Context)(x: c.Tree, y: c.Tree): Boolean = {
-        import c.universe._
-
-        y match {
-            case Ident(TermName(p)) => showCode(x).endsWith(p)
-            case _ => false
-        }
-    }
-
-    def replace(c: Context)(s: String, x: c.Tree, a: c.Tree): c.Tree = {
+    def replace(c: Context)(s: String, x: c.Tree, a: c.Tree): String = {
         import c.universe._
 
         val x_ = showCode(x).reverse.take(3).reverse
-        q"${s.replace(x_, showCode(a))}"
+        s.replace(x_, showCode(a))
     }
 }
 

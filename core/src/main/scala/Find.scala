@@ -17,7 +17,7 @@ final class FindImpl(override val c: Context) extends InContext {
 
     def apply(tup: c.Tree, f: c.Tree): c.Tree = {
         val y = Tuple.toList(c)(tup).find { x =>
-            AsBoolean(c)(Apply_(c)(f, x))
+            AsBoolean(c)(q"${Here(c)}.Apply($f, $x)")
         }
         q"$y"
     }
