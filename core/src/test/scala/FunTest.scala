@@ -41,10 +41,26 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testLambda() {
         object Plus {
-            final val value = Def_(_X1 -> Lambda(_X2 -> (_X2 + _X1)))
+            final val value = Def_(_X1 -> Lambda(_X2 -> (Defer(_X1) + _X2)))
+        }
+
+        object Plus3 {
+            final val value = L_{ Apply(Plus.value, 3) }
         }
 
         val y = Apply(Apply(Plus.value, 3), 5)
+        assertEquals(8, y)
+
+        val z = Apply(Plus3.value, 5)
+        assertEquals(8, z)
+    }
+
+    def testDefer() {
+        object Plus {
+            final val value = Def_(_X1 -> Lambda(_X2 -> (Length(_X1) + Length(_X2))))
+        }
+
+        val y = Apply(Apply(Plus.value, (1,2,3)), (1,2,3,4,5))
         assertEquals(8, y)
     }
 
