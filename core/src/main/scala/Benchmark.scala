@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Benchmark {
-    def apply(x: String): scala.Any = macro BenchmarkImpl.impl
+    def apply(x: String): scala.Any = macro BenchmarkImpl.apply
 }
 
 
 final class BenchmarkImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(x: c.Tree): c.Tree = {
+    def apply(x: c.Tree): c.Tree = {
         val y = _Parse(c)(x)
         val start = System.currentTimeMillis
         c.typecheck(y)

@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Find {
-    def apply(tup: Any, f: Any): Any = macro FindImpl.impl
+    def apply(tup: Any, f: Any): Any = macro FindImpl.apply
 }
 
 
 final class FindImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, f: c.Tree): c.Tree = {
+    def apply(tup: c.Tree, f: c.Tree): c.Tree = {
         val y = Tuple.toList(c)(tup).find { x =>
             AsBoolean(c)(Apply_(c)(f, x))
         }

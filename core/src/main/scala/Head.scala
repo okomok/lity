@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Head {
-    def apply(tup: Any): Any = macro HeadImpl.impl
+    def apply(tup: Any): Any = macro HeadImpl.apply
 }
 
 
 final class HeadImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree): c.Tree = {
+    def apply(tup: c.Tree): c.Tree = {
         Tuple.toList(c)(tup).head
     }
 }

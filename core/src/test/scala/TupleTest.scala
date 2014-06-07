@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
-    final val TUP1 = L_{ (1, "h") }
+    final val TUP1 = Lit{ (1, "h") }
 
     def testParse() {
         val tup1: (Int, String) = Parse(TUP1)
@@ -65,43 +65,43 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFind() {
-        val x: Some[Int] = Find( (X, 2, Y), Lambda( 2 -> true, (_X1, false) ) )
+        val x: Some[Int] = Find( (X, 2, Y), Lambda( 2 -> "true", (_X1, "false") ) )
         assertEquals(2, x.get)
     }
 
     def testMap() {
         val ys = Map((X, 2, Y), (
-            (X, Y)
-          , (Y, X)
-          , (2, 3)
+            (X, "Y")
+          , (Y, "X")
+          , (2, "3")
 
         ))
         assertEquals((Y, 3, X), ys)
     }
 
     def testMap2() {
-        val ys = Map((X, 2, Y), Lambda(_I1 -> (_I1 + _I1), _X1 -> _X1))
+        val ys = Map((X, 2, Y), Lambda(_I1 -> "_I1 + _I1", _X1 -> "_X1"))
         assertEquals((X, 4, Y), ys)
     }
 
     def testMap3() {
-        val ys = Map((X, 2, "h"), Lambda(_I1 -> (_I1 + _I1), _S1 -> (_S1 + "ello"), X -> X))
+        val ys = Map((X, 2, "h"), Lambda(_I1 -> "_I1 + _I1", _S1 -> """_S1 + "ello"""", X -> "X"))
         assertEquals((X, 4, "hello"), ys)
     }
 
-    final val PolyFun = Def_(
-        X -> Y
-      , Y -> X
-      , _I1 -> (_I1 + 1)
+    final val PolyFun = Def(
+        X -> "Y"
+      , Y -> "X"
+      , _I1 -> "_I1 + 1"
     )
 
-    final val YS = L_ { Map((X, 2, Y), PolyFun) }
+    final val YS = Lit { Map((X, 2, Y), PolyFun) }
 
-    def testLiteralize() {
+    def testLit() {
         val zs = Map(YS, Lambda(
-            (X, Y)
-          , (Y, X)
-          , _I1 -> (_I1 + 1)
+            (X, "Y")
+          , (Y, "X")
+          , _I1 -> "_I1 + 1"
 
         ))
 
@@ -114,7 +114,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFilter() {
-        val ys = Filter((3, Y, X), Lambda((3, true), (X, true), (_X1, false)))
+        val ys = Filter((3, Y, X), Lambda((3, "true"), (X, "true"), (_X1, "false")))
         assertEquals((3, X), ys)
     }
 
@@ -133,16 +133,16 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals(List(1, "h"), ys)
     }
 
-    final val RFun1 = Def_(
-        (_C1, _I1) -> (_I1 + 1),
-        (_I1, _I2) -> (_I2 + _I1),
-        (_S1, _I1) -> (_I1 + _S1.toString.length)
+    final val RFun1 = Def(
+        (_C1, _I1) -> "_I1 + 1",
+        (_I1, _I2) -> "_I2 + _I1",
+        (_S1, _I1) -> "_I1 + _S1.toString.length"
     )
 
-    final val LFun1 = Def_(
-        (_I1, _C1) -> (_I1 + 1),
-        (_I1, _I2) -> (_I2 + _I1),
-        (_I1, _S1) -> (_I1 + _S1.toString.length)
+    final val LFun1 = Def(
+        (_I1, _C1) -> "_I1 + 1",
+        (_I1, _I2) -> "_I2 + _I1",
+        (_I1, _S1) -> "_I1 + _S1.toString.length"
     )
 
     def testLFun1Apply() {

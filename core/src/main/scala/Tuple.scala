@@ -7,14 +7,6 @@
 package com.github.okomok.lity
 
 
-trait Tuple {
-    def apply[x1](x1: x1): Tuple1[x1] = Tuple1(x1)
-    def apply[x1, x2](x1: x1, x2: x2): Tuple2[x1, x2] = Tuple2(x1, x2)
-    def apply[x1, x2, x3](x1: x1, x2: x2, x3: x3): Tuple3[x1, x2, x3] = Tuple3(x1, x2, x3)
-    def apply[x1, x2, x3, x4](x1: x1, x2: x2, x3: x3, x4: x4): Tuple4[x1, x2, x3, x4] = Tuple4(x1, x2, x3, x4)
-}
-
-
 private object Tuple {
     def apply(c: Context)(xs: List[c.Tree]): c.Tree = {
         import c.universe._

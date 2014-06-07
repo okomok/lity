@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object ReduceLeft {
-    def apply(tup: Any, f: Any): Any = macro ReduceLeftImpl.impl
+    def apply(tup: Any, f: Any): Any = macro ReduceLeftImpl.apply
 }
 
 
 final class ReduceLeftImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, f: c.Tree): c.Tree = {
+    def apply(tup: c.Tree, f: c.Tree): c.Tree = {
         Tuple.toList(c)(tup).reduceLeft { (z, x) =>
             Apply_(c)(f, q"($z, $x)")
         }
@@ -24,14 +24,14 @@ final class ReduceLeftImpl(override val c: Context) extends InContext {
 
 
 object ReduceRight {
-    def apply(tup: Any, f: Any): Any = macro ReduceRightImpl.impl
+    def apply(tup: Any, f: Any): Any = macro ReduceRightImpl.apply
 }
 
 
 final class ReduceRightImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, f: c.Tree): c.Tree = {
+    def apply(tup: c.Tree, f: c.Tree): c.Tree = {
         Tuple.toList(c)(tup).reduceRight { (x, z) =>
             Apply_(c)(f, q"($x, $z)")
         }

@@ -8,13 +8,13 @@ package com.github.okomok.lity
 
 
 object Apply {
-    def apply(f: Any, x: Any): Any = macro ApplyImpl.impl
+    def apply(f: Any, x: Any): Any = macro ApplyImpl.apply
 }
 
 
 final class ApplyImpl(override val c: Context) extends InContext {
     import c.universe._
-    def impl(f: c.Tree, x: c.Tree): c.Tree = Apply_(c)(f, x)
+    def apply(f: c.Tree, x: c.Tree): c.Tree = Apply_(c)(f, x)
 }
 
 
@@ -27,7 +27,9 @@ private object Apply_ {
         }
 
         CollectFirst(es) {
-            case q"${_}($x, $y)" => Tree.toOption(c)(betaReduce(c)(x, y, a))
+            case q"${_}($x, ${y: String})" => Tree.toOption(c) {
+                betaReduce(c)(x, c.parse(y), a)
+            }
             case e => c.abort(c.enclosingPosition, s"mapping entry error: ${show(e)}")
         } match {
             case Some(y) => y
@@ -40,11 +42,7 @@ private object Apply_ {
 
         (Tuple.normalize(c)(x), Tuple.normalize(c)(a)) match {
             case (x, a) if Param.accepts(c)(x, a) => {
-                untype(c) {
-                    undefer(c) {
-                        bindArg(c)(x, y, a)
-                    }
-                }
+                bindArg(c)(x, y, a)
             }
             case (q"${_}(..$xs)", q"${_}(..$as)") if xs.length == as.length => {
                 (xs, as).zipped.foldLeft(y) { case (y, (x, a)) =>
@@ -62,31 +60,11 @@ private object Apply_ {
         new Transformer {
             override def transform(z: c.Tree): c.Tree = {
                 z match {
-                    case q"${_}.lity.Def.apply[..${_}](..${_})" => z // don't touch Def.
-                    case z if z.equalsStructure(x) => a
+                    case z if Param.equalsIdent(c)(x, z) => a
+                    case q"${s: String}" => Param.replace(c)(s, x, a)
                     case _ => super.transform(z)
                 }
             }
         }.transform(y)
-    }
-
-    private def undefer(c: Context)(y: c.Tree): c.Tree = {
-        import c.universe._
-
-        new Transformer {
-            override def transform(z: c.Tree): c.Tree = {
-                z match {
-                    case q"${_}.lity.Def.apply[..${_}](..${_})" => z
-                    case q"${_}.lity.Lambda.apply[..${_}](..${_})" => z
-                    case q"${_}.lity.Defer" => q"${Here(c)}.Identity"
-                    case _ => super.transform(z)
-                }
-            }
-        }.transform(y)
-    }
-
-    private def untype(c: Context)(y: c.Tree): c.Tree = {
-        import c.universe._
-        c.parse(showCode(y))
     }
 }

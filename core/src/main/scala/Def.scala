@@ -7,18 +7,13 @@
 package com.github.okomok.lity
 
 
-object Def extends Tuple
-
-
-object Def_ {
-    def apply(arg: Any*): Any = macro Def_Impl.apply
+object Def {
+    def apply(xs: Any*): Any = macro DefImpl.apply
 }
 
 
-final class Def_Impl(override val c: Context) extends InContext {
+final class DefImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def apply(arg: c.Tree*): c.Tree = {
-        q"${Here(c)}.L_ { ${Here(c)}.Def(..$arg) }"
-    }
+    def apply(xs: c.Tree*): c.Tree = q"${Here(c)}.Lit { (..$xs, ()) }"
 }

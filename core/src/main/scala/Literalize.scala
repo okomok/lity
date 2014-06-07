@@ -7,25 +7,17 @@
 package com.github.okomok.lity
 
 
-object L_ {
-    def apply(x: Any): String = macro Literalize.impl
-}
-
-object Literalize {
-    def apply(x: Any): String = macro Literalize.impl
+object Lit {
+    def apply(x: Any): String = macro LitImpl.apply
 }
 
 
-final class Literalize(override val c: Context) extends InContext {
+final class LitImpl(override val c: Context) extends InContext {
     import c.universe._
-    def impl(x: c.Tree): c.Tree = q"${showCode(x)}"
+    def apply(x: c.Tree): c.Tree = q"${showCode(x)}"
 }
 
 
-object R_ {
-    def apply(x: Any): String = macro Parse.impl
-}
-
-object Unliteralize {
-    def apply(x: Any): String = macro Parse.impl
+object Unlit {
+    def apply(x: Any): String = macro ParseImpl.apply
 }

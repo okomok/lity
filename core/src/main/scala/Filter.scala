@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Filter {
-    def apply(tup: Any, f: Any): Any = macro FilterImpl.impl
+    def apply(tup: Any, f: Any): Any = macro FilterImpl.apply
 }
 
 
 final class FilterImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, f: c.Tree): c.Tree = Tuple(c) {
+    def apply(tup: c.Tree, f: c.Tree): c.Tree = Tuple(c) {
         Tuple.toList(c)(tup).filter { x =>
             AsBoolean(c)(Apply_(c)(f, x))
         }

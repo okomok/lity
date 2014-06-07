@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Get {
-    def apply(tup: Any, n: Int): Any = macro GetImpl.impl
+    def apply(tup: Any, n: Int): Any = macro GetImpl.apply
 }
 
 
 final class GetImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree, n: c.Tree): c.Tree = {
+    def apply(tup: c.Tree, n: c.Tree): c.Tree = {
         val i = ExtractInt(c)(n)
         Tuple.toList(c)(tup)(i)
     }

@@ -19,9 +19,4 @@ private object Tree {
             case _ => Some(x)
         }
     }
-
-    def hasParam(c: Context)(x: c.Tree): Boolean = {
-        import c.universe._
-        showCode(x).matches(s".*$here\\._[A-Z]\\d.*")
-    }
 }

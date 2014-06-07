@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Tail {
-    def apply(tup: Any): Any = macro TailImpl.impl
+    def apply(tup: Any): Any = macro TailImpl.apply
 }
 
 
 final class TailImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree): c.Tree = Tuple(c) {
+    def apply(tup: c.Tree): c.Tree = Tuple(c) {
         Tuple.toList(c)(tup).tail
     }
 }

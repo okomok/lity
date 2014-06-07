@@ -18,14 +18,14 @@ trait Lazy[T] {
 }
 
 object Lazy {
-    implicit def of[T]: Lazy[T] = macro LazyImpl.impl[T]
+    implicit def of[T]: Lazy[T] = macro LazyImpl.apply[T]
 }
 
 
 final class LazyImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl[T](t: c.WeakTypeTag[T]): c.Tree = {
+    def apply[T](t: c.WeakTypeTag[T]): c.Tree = {
         val recName = TermName(c.freshName) // fresh name needed. why?
 
         q"""

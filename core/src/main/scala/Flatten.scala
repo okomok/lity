@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Flatten {
-    def apply(tups: Any): Any = macro FlattenImpl.impl
+    def apply(tups: Any): Any = macro FlattenImpl.apply
 }
 
 
 final class FlattenImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tups: c.Tree): c.Tree = Tuple(c) {
+    def apply(tups: c.Tree): c.Tree = Tuple(c) {
         Tuple.toList(c)(tups).map { tup =>
             Tuple.toList(c)(tup)
         }.flatten

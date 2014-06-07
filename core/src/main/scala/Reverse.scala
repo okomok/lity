@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Reverse {
-    def apply(tup: Any): Any = macro ReverseImpl.impl
+    def apply(tup: Any): Any = macro ReverseImpl.apply
 }
 
 
 final class ReverseImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree): c.Tree = Tuple(c) {
+    def apply(tup: c.Tree): c.Tree = Tuple(c) {
         Tuple.toList(c)(tup).reverse
     }
 }

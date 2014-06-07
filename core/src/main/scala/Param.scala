@@ -10,7 +10,7 @@ package com.github.okomok.lity
 import scala.language.implicitConversions
 
 
-sealed trait Param extends Bottom
+sealed trait Param
 
 
 private object Param {
@@ -32,52 +32,20 @@ private object Param {
         }
     }
 
-    def isParam(c: Context)(x: c.Tree): Boolean = {
-        isAny(c)(x) || isChar(c)(x) || isString(c)(x) || isInt(c)(x)
-    }
-
-    def isAny(c: Context)(x: c.Tree): Boolean = {
+    def equalsIdent(c: Context)(x: c.Tree, y: c.Tree): Boolean = {
         import c.universe._
 
-        x match {
-            case q"${_}._X1" => true
-            case q"${_}._X2" => true
-            case q"${_}._X3" => true
+        y match {
+            case Ident(TermName(p)) => showCode(x).endsWith(p)
             case _ => false
         }
     }
 
-    def isChar(c: Context)(x: c.Tree): Boolean = {
+    def replace(c: Context)(s: String, x: c.Tree, a: c.Tree): c.Tree = {
         import c.universe._
 
-        x match {
-            case q"${_}._C1" => true
-            case q"${_}._C2" => true
-            case q"${_}._C3" => true
-            case _ => false
-        }
-    }
-
-    def isString(c: Context)(x: c.Tree): Boolean = {
-        import c.universe._
-
-        x match {
-            case q"${_}._S1" => true
-            case q"${_}._S2" => true
-            case q"${_}._S3" => true
-            case _ => false
-        }
-    }
-
-    def isInt(c: Context)(x: c.Tree): Boolean = {
-        import c.universe._
-
-        x match {
-            case q"${_}._I1" => true
-            case q"${_}._I2" => true
-            case q"${_}._I3" => true
-            case _ => false
-        }
+        val x_ = showCode(x).reverse.take(3).reverse
+        q"${s.replace(x_, showCode(a))}"
     }
 }
 

@@ -7,4 +7,13 @@
 package com.github.okomok.lity
 
 
-object Lambda extends Tuple
+object Lambda {
+    def apply(arg: Any*): Any = macro LambdaImpl.apply
+}
+
+
+final class LambdaImpl(override val c: Context) extends InContext {
+    import c.universe._
+
+    def apply(arg: c.Tree*): c.Tree = q"(..$arg, ())"
+}

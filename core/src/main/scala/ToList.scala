@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object ToList {
-    def apply(tup: Any): Any = macro ToListImpl.impl
+    def apply(tup: Any): Any = macro ToListImpl.apply
 }
 
 
 final class ToListImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tup: c.Tree): c.Tree = {
+    def apply(tup: c.Tree): c.Tree = {
         val xs = Tuple.toList(c)(tup)
         q"scala.List(..$xs)"
     }

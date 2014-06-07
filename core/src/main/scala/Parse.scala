@@ -8,12 +8,12 @@ package com.github.okomok.lity
 
 
 object Parse {
-    def apply(x: String): Any = macro Parse.impl
+    def apply(x: String): Any = macro ParseImpl.apply
 }
 
 
-final class Parse(override val c: Context) extends InContext {
-    def impl(x: c.Tree): c.Tree = _Parse(c)(x)
+final class ParseImpl(override val c: Context) extends InContext {
+    def apply(x: c.Tree): c.Tree = _Parse(c)(x)
 }
 
 

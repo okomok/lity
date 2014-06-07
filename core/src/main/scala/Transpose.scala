@@ -8,14 +8,14 @@ package com.github.okomok.lity
 
 
 object Transpose {
-    def apply(tups: Any): Any = macro TransposeImpl.impl
+    def apply(tups: Any): Any = macro TransposeImpl.apply
 }
 
 
 final class TransposeImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def impl(tups: c.Tree): c.Tree = Tuple(c) {
+    def apply(tups: c.Tree): c.Tree = Tuple(c) {
         Tuple.toList(c)(tups).map { tup =>
             Tuple.toList(c)(tup)
         }.transpose.map { xs =>
