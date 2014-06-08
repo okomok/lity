@@ -19,12 +19,12 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     )
 
     def testTrivial1() {
-        val ys = Map( ((1, 2), "h"), Fun1 )
+        val ys = Tuple.map( ((1, 2), "h"), Fun1 )
         assertEquals(( 3, "h" ), ys)
     }
 
     def testTrivial2() {
-        val ys = Map( ((1, 'a'), "h"), Fun1 )
+        val ys = Tuple.map( ((1, 'a'), "h"), Fun1 )
         assertEquals( ((1, 'a'), "h"), ys)
     }
 
@@ -33,7 +33,7 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     )
 
     def testTrivial3() {
-        val ys = Map( ((1, (2,3)), "h"), Fun2 )
+        val ys = Tuple.map( ((1, (2,3)), "h"), Fun2 )
         assertEquals( (6, "h"), ys)
     }
 
@@ -61,14 +61,14 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals("h1", z)
     }
 
-    final val FunLength = Fun( _X1 -> "Length(_X1)" )
+    final val FunLength = Fun( _X1 -> "Tuple.length(_X1)" )
 
     def testLength() {
         val y = Apply(FunLength, (1, 2))
         assertEquals(2, y)
     }
 
-    final val FunToTuple = Fun( _X1 -> "Length(ToTuple(_X1))" )
+    final val FunToTuple = Fun( _X1 -> "Tuple.length(ToTuple(_X1))" )
 
     def testToTuple() {
         val y = Apply(FunToTuple, "12")

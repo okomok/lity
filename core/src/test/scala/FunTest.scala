@@ -14,18 +14,18 @@ import junit.framework.Assert._
 class FunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testLength0() {
-        val y = Apply(Fun(_X1 -> "Length(_X1)"), (1, 2, 3))
+        val y = Apply(Fun(_X1 -> "Tuple.length(_X1)"), (1, 2, 3))
         assertEquals(3, y)
     }
 
     def testLength1() {
-        val y = Apply(ToFun(Length), (1, 2, 3))
+        val y = Apply(ToFun(Tuple.length), (1, 2, 3))
         assertEquals(3, y)
     }
 
     def testLength2() {
         object Lit {
-            final val f = ToFun(Length)
+            final val f = ToFun(Tuple.length)
         }
         val y = Apply(Lit.f, (1, 2, 3))
         assertEquals(3, y)
@@ -33,7 +33,7 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testHigherOrder() {
         object Lit1 {
-            final val value  = Fun(_X1 -> "Length(_X1)")
+            final val value  = Fun(_X1 -> "Tuple.length(_X1)")
         }
 
         object Lit2 {
@@ -63,7 +63,7 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testDefer() {
         object Plus {
-            final val value = Fun(_X1 -> Fun(_X2 -> "Length(_X1) + Length(_X2)"))
+            final val value = Fun(_X1 -> Fun(_X2 -> "Tuple.length(_X1) + Tuple.length(_X2)"))
         }
 
         val y = Apply(Apply(Plus.value, (1,2,3)), (1,2,3,4,5))
@@ -72,10 +72,10 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testFun() {
         object Ignore {
-            final val value = Fun(_X1 -> "ToFun(Length)")
+            final val value = Fun(_X1 -> "ToFun(Tuple.length)")
         }
 
-        val y = Apply(ToFun(Length), (1,2,3))
+        val y = Apply(ToFun(Tuple.length), (1,2,3))
         assertEquals(3, y)
 
         val z = Apply(Apply(Ignore.value, "h"), (1,2,3))
@@ -84,7 +84,7 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testFun2() {
         object f {
-            final val value = Fun(_X1 -> """Apply(Fun(_X2 -> "Length(_X2)"), _X1)""")
+            final val value = Fun(_X1 -> """Apply(Fun(_X2 -> "Tuple.length(_X2)"), _X1)""")
         }
 
         val y = Apply(f.value, (1,2,3))

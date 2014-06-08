@@ -22,7 +22,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testGet() {
-        val i: Int = Get(TUP1, 0)
+        val i: Int = Tuple.get(TUP1, 0)
         assertEquals(i, 1)
     }
 
@@ -30,47 +30,47 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     object Y
 
     def testFlatten0() {
-        val xs: (Int, String) = Flatten(TUP1, ())
+        val xs: (Int, String) = Tuple.flatten(TUP1, ())
         assertEquals(xs._2, "h")
     }
 
     def testFlatten2() {
-        val ys = Flatten((1, "h"), (X, Y))
+        val ys = Tuple.flatten((1, "h"), (X, Y))
         assertEquals((1, "h", X, Y), ys)
     }
 
     def testAppend() {
-        val ys = Append((1, "h"), X)
+        val ys = Tuple.append((1, "h"), X)
         assertEquals((1, "h", X), ys)
     }
 
     def testPrepend() {
-        val ys = Prepend((1, "h"), X)
+        val ys = Tuple.prepend((1, "h"), X)
         assertEquals((X, 1, "h"), ys)
     }
 
     def testHead() {
-        val i: Int = Head((1, "h"))
+        val i: Int = Tuple.head((1, "h"))
         assertEquals(i, 1)
     }
 
     def testTail() {
-        val ys: (String, Char) = Tail((1, "h", 'a'))
+        val ys: (String, Char) = Tuple.tail((1, "h", 'a'))
         assertEquals('a', ys._2)
     }
 
     def testLength() {
-        val n = Length((1,2,3))
+        val n = Tuple.length((1,2,3))
         assertEquals(3, n)
     }
 
     def testFind() {
-        val x: Some[Int] = Find( (X, 2, Y), Fun( 2 -> "true", (_X1, "false") ) )
+        val x: Some[Int] = Tuple.find( (X, 2, Y), Fun( 2 -> "true", (_X1, "false") ) )
         assertEquals(2, x.get)
     }
 
     def testMap() {
-        val ys = Map((X, 2, Y), (
+        val ys = Tuple.map((X, 2, Y), (
             (X, "Y")
           , (Y, "X")
           , (2, "3")
@@ -80,12 +80,12 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testMap2() {
-        val ys = Map((X, 2, Y), Fun(_I1 -> "_I1 + _I1", _X1 -> "_X1"))
+        val ys = Tuple.map((X, 2, Y), Fun(_I1 -> "_I1 + _I1", _X1 -> "_X1"))
         assertEquals((X, 4, Y), ys)
     }
 
     def testMap3() {
-        val ys = Map((X, 2, "h"), Fun(_I1 -> "_I1 + _I1", _S1 -> """_S1 + "ello"""", X -> "X"))
+        val ys = Tuple.map((X, 2, "h"), Fun(_I1 -> "_I1 + _I1", _S1 -> """_S1 + "ello"""", X -> "X"))
         assertEquals((X, 4, "hello"), ys)
     }
 
@@ -95,10 +95,10 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
       , _I1 -> "_I1 + 1"
     )
 
-    final val YS = Lit { Map((X, 2, Y), PolyFun) }
+    final val YS = Lit { Tuple.map((X, 2, Y), PolyFun) }
 
     def testLit() {
-        val zs = Map(YS, Fun(
+        val zs = Tuple.map(YS, Fun(
             (X, "Y")
           , (Y, "X")
           , _I1 -> "_I1 + 1"
@@ -109,12 +109,12 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testReverse() {
-        val ys = Reverse((1, "h", 'a'))
+        val ys = Tuple.reverse((1, "h", 'a'))
         assertEquals(('a', "h", 1), ys)
     }
 
     def testFilter() {
-        val ys = Filter((3, Y, X), Fun((3, "true"), (X, "true"), (_X1, "false")))
+        val ys = Tuple.filter((3, Y, X), Fun((3, "true"), (X, "true"), (_X1, "false")))
         assertEquals((3, X), ys)
     }
 
@@ -124,12 +124,12 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testUpdated() {
-        val ys = Updated(TUP1, 1, 'p')
+        val ys = Tuple.updated(TUP1, 1, 'p')
         assertEquals((1, 'p'), ys)
     }
 
     def testToList() {
-        val ys: List[Any] = ToList(TUP1)
+        val ys: List[Any] = Tuple.toList(TUP1)
         assertEquals(List(1, "h"), ys)
     }
 
@@ -151,37 +151,37 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFoldLeft() {
-        val y = FoldLeft(('a', 2, "hello"), 3, LFun1)
+        val y = Tuple.foldLeft(('a', 2, "hello"), 3, LFun1)
         assertEquals(11, y)
     }
 
     def testFoldLeft0() {
-        val y = FoldLeft((), 3, LFun1)
+        val y = Tuple.foldLeft((), 3, LFun1)
         assertEquals(3, y)
     }
 
     def testReduceLeft() {
-        val y = ReduceLeft((3, 'a', 2, "hello"), LFun1)
+        val y = Tuple.reduceLeft((3, 'a', 2, "hello"), LFun1)
         assertEquals(11, y)
     }
 
     def testFoldRight() {
-        val y = FoldRight(('a', 2, "hello"), 3, RFun1)
+        val y = Tuple.foldRight(('a', 2, "hello"), 3, RFun1)
         assertEquals(11, y)
     }
 
     def testFoldRight0() {
-        val y = FoldRight((), 3, RFun1)
+        val y = Tuple.foldRight((), 3, RFun1)
         assertEquals(3, y)
     }
 
     def testReduceRight() {
-        val y = ReduceRight(('a', 2, "hello", 3), RFun1)
+        val y = Tuple.reduceRight(('a', 2, "hello", 3), RFun1)
         assertEquals(11, y)
     }
 
     def testFlatten() {
-        val ys = Flatten((
+        val ys = Tuple.flatten((
             ('a', 3),
             TUP1
         ))
@@ -189,25 +189,25 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testRange() {
-        val ys = Range(2, 5)
+        val ys = Tuple.range(2, 5)
         assertEquals((2, 3, 4), ys)
     }
 
     def testTranpose() {
-        val ys = Transpose( ('a', 1, Y), ("h", X, 'b'), (X, 'k', "q") )
+        val ys = Tuple.transpose( ('a', 1, Y), ("h", X, 'b'), (X, 'k', "q") )
         assertEquals( ( ('a', "h", X), (1, X, 'k'), (Y, 'b', "q") ), ys)
     }
 
     def testTranspose2() {
-        val ys = Transpose( ( ('a', "h"), (1, X), (Y, 'b') )  )
+        val ys = Tuple.transpose( ( ('a', "h"), (1, X), (Y, 'b') )  )
         assertEquals( ( ('a', 1, Y), ("h", X, 'b') ), ys)
     }
 
     def testEquals() {
-        val y = Equals( (1, "h"), TUP1 )
+        val y = Tuple.equal( (1, "h"), TUP1 )
         assertTrue(y)
 
-        val z = Equals( (1, "k"), TUP1 )
+        val z = Tuple.equal( (1, "k"), TUP1 )
         assertFalse(z)
     }
 
