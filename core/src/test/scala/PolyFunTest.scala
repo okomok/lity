@@ -38,13 +38,11 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     final val Fun3 = Fun(
-        (_I1, (_I2, _I3)) -> "_I1 + _I2 + _I3", "_S1 -> _S1"
+        (_I1, (_I2, _I3)) -> "_I1 + _I2 + _I3", _S1 -> "_S1"
     )
 
     final val FunNested = Fun(
-        (_I1, 3) -> "Apply(Fun1, (_I1, _I1))",
-        (), // accepted
-        31  //
+        (_I1, 3) -> "Apply(Fun1, (_I1, _I1))"
     )
 
     def testNested1() {
@@ -53,7 +51,7 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     final val Inc = Fun(
-        _X1 -> "_X1 + 1", ()
+        _X1 -> "_X1 + 1"
     )
 
     def testInc() {

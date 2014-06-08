@@ -8,7 +8,7 @@ package com.github.okomok.lity
 
 
 object Fun {
-    def apply(xs: Any*): Any = macro FunImpl.apply
+    def apply(xs: (Any, String)*): Any = macro FunImpl.apply
 }
 
 

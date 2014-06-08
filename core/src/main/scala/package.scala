@@ -13,4 +13,6 @@ package object lity {
     type Context = scala.reflect.macros.whitebox.Context
 
     type Unspecified = Any
+
+    final val LNil = "()"
 }
