@@ -8,14 +8,13 @@ package com.github.okomok.lity
 
 
 object LCons {
-    def apply(x: Any, xs: String): Any = macro LConsImpl.apply
-}
+    def apply(x: Any, xs: String): Any = macro Impl.apply
 
+    final class Impl(override val c: Context) extends InContext {
+        import c.universe._
 
-final class LConsImpl(override val c: Context) extends InContext {
-    import c.universe._
-
-    def apply(x: c.Tree, xs: c.Tree): c.Tree = {
-        q"${Here(c)}.Lit { ($x, $xs) }"
+        def apply(x: c.Tree, xs: c.Tree): c.Tree = {
+            q"${Here(c)}.Lit { ($x, $xs) }"
+        }
     }
 }

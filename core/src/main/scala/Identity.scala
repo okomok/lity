@@ -8,10 +8,9 @@ package com.github.okomok.lity
 
 
 object Identity {
-    def apply(x: Any): Any = macro IdentityImpl.apply
-}
+    def apply(x: Any): Any = macro Impl.apply
 
-
-final class IdentityImpl(override val c: Context) extends InContext {
-    def apply(x: c.Tree): c.Tree = x
+    final class Impl(override val c: Context) extends InContext {
+        def apply(x: c.Tree): c.Tree = x
+    }
 }

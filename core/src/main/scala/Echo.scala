@@ -8,60 +8,56 @@ package com.github.okomok.lity
 
 
 object Echo {
-    def apply(x: Any): Unit = macro EchoImpl.apply
-}
+    def apply(x: Any): Unit = macro Impl.apply
 
+    final class Impl(override val c: Context) extends InContext  {
+        import c.universe._
 
-final class EchoImpl(override val c: Context) extends InContext  {
-    import c.universe._
-
-    def apply(x: c.Tree): c.Tree = {
-        c.echo(NoPosition, show(x))
-        q"()"
+        def apply(x: c.Tree): c.Tree = {
+            c.echo(NoPosition, show(x))
+            q"()"
+        }
     }
 }
 
 
 object EchoRaw {
-    def apply(x: Any): Unit = macro EchoRawImpl.apply
-}
+    def apply(x: Any): Unit = macro Impl.apply
 
+    final class Impl(override val c: Context) extends InContext  {
+        import c.universe._
 
-final class EchoRawImpl(override val c: Context) extends InContext  {
-    import c.universe._
-
-    def apply(x: c.Tree): c.Tree = {
-        c.echo(NoPosition, showRaw(x))
-        q"()"
+        def apply(x: c.Tree): c.Tree = {
+            c.echo(NoPosition, showRaw(x))
+            q"()"
+        }
     }
 }
 
 
 object EchoType {
-    def apply(x: Any): Unit = macro EchoTypeImpl.apply
-}
+    def apply(x: Any): Unit = macro Impl.apply
 
+    final class Impl(override val c: Context) extends InContext  {
+        import c.universe._
 
-final class EchoTypeImpl(override val c: Context) extends InContext  {
-    import c.universe._
-
-    def apply(x: c.Tree): c.Tree = {
-        c.echo(NoPosition, show(x.tpe.dealias))
-        q"()"
+        def apply(x: c.Tree): c.Tree = {
+            c.echo(NoPosition, show(x.tpe.dealias))
+            q"()"
+        }
     }
 }
 
 
 object EchoTypeRaw {
-    def apply(x: Any): Unit = macro EchoTypeRawImpl.apply
-}
+    def apply(x: Any): Unit = macro Impl.apply
 
+    final class Impl(override val c: Context) extends InContext  {
+        import c.universe._
 
-final class EchoTypeRawImpl(override val c: Context) extends InContext  {
-    import c.universe._
-
-    def apply(x: c.Tree): c.Tree = {
-        c.echo(NoPosition, showRaw(x.tpe.dealias))
-        q"()"
+        def apply(x: c.Tree): c.Tree = {
+            c.echo(NoPosition, showRaw(x.tpe.dealias))
+            q"()"
+        }
     }
 }

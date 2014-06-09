@@ -9,18 +9,31 @@ package com.github.okomok.lity
 
 
 object Fun_ {
-    def apply(xs: Any*): Any = macro Tuple.RawImpl.apply
+    def apply(xs: Any*): Any = macro Tuple.raw.Impl.apply
 }
 
 
 object Fun {
 
-    def apply(xs: (Any, String)*): Any = macro ApplyImpl.apply
+    def apply(es: (Any, String)*): Any = macro Impl.apply
 
-    final class ApplyImpl(override val c: Context) extends InContext {
+    final class Impl(override val c: Context) extends InContext {
         import c.universe._
 
-        def apply(xs: c.Tree*): c.Tree = q"${Here(c)}.Lit { ${Here(c)}.Fun_(..$xs) }"
+        def apply(es: c.Tree*): c.Tree = {
+            check(es: _*)
+            q"""
+            ${Here(c)}.Lit { ${Here(c)}.Fun_(..$es) }
+            """
+        }
+
+        private def check(es: c.Tree*): Unit = {
+            es.foreach { x_y =>
+                ExtractPair(c)(x_y) match {
+                    case (x, y) => ParseExpr(c)(y)
+                }
+            }
+        }
     }
 
 
@@ -39,5 +52,3 @@ object Fun {
         }
     }
 }
-
-

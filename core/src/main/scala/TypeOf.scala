@@ -8,14 +8,13 @@ package com.github.okomok.lity
 
 
 object TypeOf {
-    def apply(x: Any): Any = macro TypeOfImpl.apply
-}
+    def apply(x: Any): Any = macro Impl.apply
 
+    final class Impl(override val c: Context) extends InContext {
+        import c.universe._
 
-final class TypeOfImpl(override val c: Context) extends InContext {
-    import c.universe._
-
-    def apply(x: c.Tree): c.Tree = {
-        q"${Here(c)}.Type.of($x)"
+        def apply(x: c.Tree): c.Tree = {
+            q"${Here(c)}.Type.of($x)"
+        }
     }
 }

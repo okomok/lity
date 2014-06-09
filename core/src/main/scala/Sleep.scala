@@ -8,15 +8,14 @@ package com.github.okomok.lity
 
 
 object Sleep {
-    def apply(x: Long): Unit = macro SleepImpl.apply
-}
+    def apply(x: Long): Unit = macro Impl.apply
 
+    final class Impl(override val c: Context) extends InContext {
+        import c.universe._
 
-final class SleepImpl(override val c: Context) extends InContext {
-    import c.universe._
-
-    def apply(x: c.Tree): c.Tree = {
-        Thread.sleep(ExtractLong(c)(x))
-        q"()"
+        def apply(x: c.Tree): c.Tree = {
+            Thread.sleep(ExtractLong(c)(x))
+            q"()"
+        }
     }
 }

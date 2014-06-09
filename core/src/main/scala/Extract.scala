@@ -7,6 +7,18 @@
 package com.github.okomok.lity
 
 
+private object ExtractPair {
+    def apply(c: Context)(x: c.Tree): (c.Tree, c.Tree) = {
+        import c.universe._
+
+         TupleToList(c)(x) match {
+            case v :: w :: Nil => (v, w)
+            case _ => CompileError.illegalArgument(c)(x, "pair")
+        }
+    }
+}
+
+
 private object ExtractInt {
     def apply(c: Context)(x: c.Tree): Int = {
         import c.universe._

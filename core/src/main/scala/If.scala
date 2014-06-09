@@ -8,16 +8,13 @@ package com.github.okomok.lity
 
 
 object If {
-    def apply(b: Boolean, t: String, e: String): Any = macro IfImpl.apply
-}
+    def apply(b: Boolean, t: String, e: String): Any = macro Impl.apply
 
-
-final class IfImpl(override val c: Context) extends InContext {
-    import c.universe._
-
-    def apply(b: c.Tree, t: c.Tree, e: c.Tree): c.Tree = c.parse {
-        ExtractString(c) {
-            if (AsBoolean(c)(b)) t else e
+    final class Impl(override val c: Context) extends InContext {
+        def apply(b: c.Tree, t: c.Tree, e: c.Tree): c.Tree = c.parse {
+            ExtractString(c) {
+                if (AsBoolean(c)(b)) t else e
+            }
         }
     }
 }
