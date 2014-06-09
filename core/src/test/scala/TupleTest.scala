@@ -14,7 +14,7 @@ import junit.framework.Assert._
 
 class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
-    final val TUP1 = Lit{ (1, "h") }
+    final val TUP1 = Unparse{ (1, "h") }
 
     def testParse() {
         val tup1: (Int, String) = Parse(TUP1)
@@ -95,7 +95,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
       , _I1 -> "_I1 + 1"
     )
 
-    final val YS = Lit { Tuple.map((X, 2, Y), PolyFun) }
+    final val YS = Unparse { Tuple.map((X, 2, Y), PolyFun) }
 
     def testLit() {
         val zs = Tuple.map(YS, Fun(

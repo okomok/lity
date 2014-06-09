@@ -20,7 +20,7 @@ object LCons {
 
         def apply(x: c.Tree, xs: c.Tree): c.Tree = {
 //            RequireExpr(c)(xs)
-            q"${Here(c)}.Lit { ${Here(c)}.LCons_($x, $xs) }"
+            q"${Here(c)}.Unparse { ${Here(c)}.LCons_($x, $xs) }"
         }
     }
 }

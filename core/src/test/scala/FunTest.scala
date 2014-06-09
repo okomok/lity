@@ -24,10 +24,10 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testLength2() {
-        object Lit {
-            final val f = Fun.fromMacro(Tuple.length)
+        object f {
+            final val value = Fun.fromMacro(Tuple.length)
         }
-        val y = Apply(Lit.f, (1, 2, 3))
+        val y = Apply(f.value, (1, 2, 3))
         assertEquals(3, y)
     }
 
@@ -50,7 +50,7 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
         }
 
         object Plus3 {
-            final val value = Lit{ Apply(Plus.value, 3) }
+            final val value = Unparse{ Apply(Plus.value, 3) }
         }
 
         val z = Apply(Plus3.value, 5)

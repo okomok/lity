@@ -12,7 +12,7 @@ import scala.reflect.macros.ParseException
 
 private object RequireExpr {
     def apply(c: Context)(x: c.Tree): Unit = try {
-        ParseExpr(c)(x)
+        ParseTree(c)(x)
     } catch {
         case _: ParseException => {
             TypeError(c)("illegal argument", x, "scala expression")

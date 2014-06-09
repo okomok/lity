@@ -12,7 +12,7 @@ object Expr {
 
     final class Impl(override val c: Context) extends InContext {
         def apply(x: c.Tree): c.Tree = {
-            ParseExpr(c)(x)
+            ParseTree(c)(x)
             x
         }
     }

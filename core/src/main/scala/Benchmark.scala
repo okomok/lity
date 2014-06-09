@@ -14,7 +14,7 @@ object Benchmark {
         import c.universe._
 
         def apply(x: c.Tree): c.Tree = {
-            val y = ParseExpr(c)(x)
+            val y = ParseTree(c)(x)
             val start = System.currentTimeMillis
             c.typecheck(y)
             val elapsed = System.currentTimeMillis - start
@@ -22,6 +22,3 @@ object Benchmark {
         }
     }
 }
-
-
-

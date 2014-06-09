@@ -15,7 +15,7 @@ object Tuple {
         import c.universe._
 
         def apply(xs: c.Tree*): c.Tree = {
-            q"${Here(c)}.Lit { ${TupleFromList(c)(xs.toList)} }"
+            q"${Here(c)}.Unparse { ${TupleFromList(c)(xs.toList)} }"
         }
     }
 

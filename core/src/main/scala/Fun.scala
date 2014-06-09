@@ -22,7 +22,7 @@ object Fun {
         def apply(es: c.Tree*): c.Tree = {
 //            requireLegal(es: _*)
             q"""
-            ${Here(c)}.Lit { ${Here(c)}.Fun_(..$es) }
+            ${Here(c)}.Unparse { ${Here(c)}.Fun_(..$es) }
             """
         }
 
