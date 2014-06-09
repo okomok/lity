@@ -9,6 +9,6 @@ package com.github.okomok.lity
 
 private object SafeTpe {
     def apply(c: Context)(x: c.Tree): c.Type = {
-        c.typecheck(x).tpe
+        c.typecheck(x).tpe.dealias
     }
 }

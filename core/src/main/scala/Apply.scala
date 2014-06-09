@@ -23,10 +23,10 @@ object Apply {
                     case "" => None
                     case y => Some(c.parse(y))
                 }
-                case e => c.abort(c.enclosingPosition, s"mapping entry error: ${show(e)}")
+                case e => TypeError(c)("illegal mapping entry", e, "(_, String)")
             } match {
                 case Some(y) => y
-                case None => c.abort(c.enclosingPosition, s"function application match error: ${show(a)}")
+                case None => TypeError(c)("illegal argument", a, paramTypes(es))
             }
         }
 
@@ -43,6 +43,12 @@ object Apply {
                 case (x, a) if x.equalsStructure(a) => y
                 case _ => ""
             }
+        }
+
+        private def paramTypes(es: List[c.Tree]): String = {
+            es.map {
+                case q"${_}($x, ${_})" => x
+            }.mkString(" or ")
         }
     }
 }

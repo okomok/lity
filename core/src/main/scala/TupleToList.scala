@@ -23,7 +23,7 @@ private object TupleToList {
         TupleDealias(c)(tup) match {
             case q"()" => Nil
             case q"${_}(..$xs)" => xs
-            case _ => CompileError.illegalArgument(c)(tup, "tuple")
+            case _ => TypeError(c)("illegal argument", tup, "tuple")
         }
     }
 }

@@ -19,6 +19,7 @@ object LCons {
         import c.universe._
 
         def apply(x: c.Tree, xs: c.Tree): c.Tree = {
+//            RequireExpr(c)(xs)
             q"${Here(c)}.Lit { ${Here(c)}.LCons_($x, $xs) }"
         }
     }

@@ -14,13 +14,7 @@ private object AsBoolean {
         c.typecheck(x) match {
             case q"true" => true
             case q"false" => false
-            case x => {
-                c.abort(c.enclosingPosition, s"""
-                |Illegal return value: Boolean literal is required, but
-                |    ${show(x)}
-                |        : ${show(c.typecheck(x).tpe.dealias)}
-                """.stripMargin)
-            }
+            case x => TypeError(c)("illegal return value", x, "Boolean literal")
         }
     }
 }

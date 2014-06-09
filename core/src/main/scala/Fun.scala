@@ -20,16 +20,16 @@ object Fun {
         import c.universe._
 
         def apply(es: c.Tree*): c.Tree = {
-            check(es: _*)
+//            requireLegal(es: _*)
             q"""
             ${Here(c)}.Lit { ${Here(c)}.Fun_(..$es) }
             """
         }
 
-        private def check(es: c.Tree*): Unit = {
+        private def requireLegal(es: c.Tree*): Unit = {
             es.foreach { x_y =>
                 ExtractPair(c)(x_y) match {
-                    case (x, y) => ParseExpr(c)(y)
+                    case (x, y) => RequireExpr(c)(y)
                 }
             }
         }

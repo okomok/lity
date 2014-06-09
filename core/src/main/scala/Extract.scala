@@ -13,7 +13,7 @@ private object ExtractPair {
 
         TupleToList(c)(x) match {
             case v :: w :: Nil => (v, w)
-            case _ => CompileError.illegalArgument(c)(x, "pair")
+            case _ => TypeError(c)("illegal argument", x, "pair")
         }
     }
 }
@@ -25,7 +25,7 @@ private object ExtractInt {
 
         x match {
             case q"${y: Int}" => y
-            case _ => CompileError.illegalArgument(c)(x, "Int literal")
+            case _ => TypeError(c)("illegal argument", x, "Int literal")
         }
     }
 }
@@ -36,7 +36,7 @@ private object ExtractLong {
         import c.universe._
         x match {
             case q"${y: Long}" => y
-            case t => CompileError.illegalArgument(c)(x, "Long literal")
+            case t => TypeError(c)("illegal argument", x, "Long literal")
         }
     }
 }
@@ -48,7 +48,7 @@ private object ExtractString {
 
         x match {
             case q"${y: String}" => y
-            case _ => CompileError.illegalArgument(c)(x, "String literal")
+            case _ => TypeError(c)("illegal argument", x, "String literal")
         }
     }
 }

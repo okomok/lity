@@ -18,7 +18,7 @@ object LList {
         TupleToList(c)(tup) match {
             case Nil => None
             case x :: q"${y: String}" :: Nil => Some((x, c.parse(y)))
-            case _ => CompileError.illegalArgument(c)(tup, "two-element tuple")
+            case _ => TypeError(c)("illegal argument", tup, "pair")
         }
     }
 
@@ -30,7 +30,7 @@ object LList {
             import c.universe._
 
             def apply(tup: c.Tree): c.Tree = extract(c)(tup) match {
-                case None => throw new Error("no such element")
+                case None => throw new NoSuchElementException
                 case Some((x, _)) => x
             }
         }
@@ -44,7 +44,7 @@ object LList {
             import c.universe._
 
             def apply(tup: c.Tree): c.Tree = extract(c)(tup) match {
-                case None => throw new Error("no such element")
+                case None => throw new NoSuchElementException
                 case Some((_, xs)) => xs
             }
         }
@@ -58,7 +58,7 @@ object LList {
             import c.universe._
 
             def apply(tup: c.Tree, n: c.Tree): c.Tree = extract(c)(tup) match {
-                case None => throw new Error("no such element")
+                case None => throw new NoSuchElementException
                 case Some((x, xs)) => ExtractInt(c)(n) match {
                     case 0 => x
                     case n => q"${Here(c)}.LList.get($xs, ${n-1})"
