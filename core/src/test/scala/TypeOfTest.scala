@@ -19,6 +19,13 @@ class TypeOfTest extends org.scalatest.junit.JUnit3Suite {
         implicitly[t.apply =:= Int]
     }
 
+    object Make {
+        def apply(xs: Any*): Int = 3
+    }
+
+    def testTest() {
+    }
+
 }
 
 

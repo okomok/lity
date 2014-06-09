@@ -15,7 +15,7 @@ object LList {
     private def extract(c: Context)(tup: c.Tree): Option[(c.Tree, c.Tree)] = {
         import c.universe._
 
-        Tuple.toList(c)(tup) match {
+        TupleToList(c)(tup) match {
             case Nil => None
             case x :: q"${y: String}" :: Nil => Some((x, c.parse(y)))
             case _ => CompileError.illegalArgument(c)(tup, "two-element tuple")
@@ -44,6 +44,7 @@ object LList {
         }
     }
 
+
     def get(tup: Any, n: Int): Any = macro GetImpl.apply
 
     final class GetImpl(override val c: Context) extends InContext {
@@ -57,6 +58,7 @@ object LList {
             }
         }
     }
+
 
     def rangeFrom(n: Int): Any = macro RangeFromImpl.apply
 

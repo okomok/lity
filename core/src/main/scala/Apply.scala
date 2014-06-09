@@ -16,8 +16,8 @@ final class ApplyImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def apply(f: c.Tree, a: c.Tree): c.Tree = {
-        val es = Tuple.toList(c)(f).map { e =>
-            Tuple.normalize(c)(e)
+        val es = TupleToList(c)(f).map { e =>
+            TupleDealias(c)(e)
         }
 
         CollectFirst(es) {
@@ -33,7 +33,7 @@ final class ApplyImpl(override val c: Context) extends InContext {
     }
 
     private def betaReduce(x: c.Tree, y: String, a: c.Tree): String = {
-        (Tuple.normalize(c)(x), Tuple.normalize(c)(a)) match {
+        (TupleDealias(c)(x), TupleDealias(c)(a)) match {
             case (x, a) if Param.accepts(c)(x, a) => {
                 Param.replace(c)(y, x, a)
             }
