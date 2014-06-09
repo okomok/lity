@@ -76,11 +76,11 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testIncDefer() {
-        object Lit {
-            final val ToFun = Fun( _X1 -> "1 + _X1" )
+        object f {
+            final val value = Fun( _X1 -> "1 + _X1" )
         }
 
-        val z = Apply(Lit.ToFun, "h")
+        val z = Apply(f.value, "h")
         assertEquals("1h", z)
     }
 

@@ -19,13 +19,13 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testLength1() {
-        val y = Apply(ToFun(Tuple.length), (1, 2, 3))
+        val y = Apply(Fun.fromMacro(Tuple.length), (1, 2, 3))
         assertEquals(3, y)
     }
 
     def testLength2() {
         object Lit {
-            final val f = ToFun(Tuple.length)
+            final val f = Fun.fromMacro(Tuple.length)
         }
         val y = Apply(Lit.f, (1, 2, 3))
         assertEquals(3, y)
@@ -72,10 +72,10 @@ class FunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testFun() {
         object Ignore {
-            final val value = Fun(_X1 -> "ToFun(Tuple.length)")
+            final val value = Fun(_X1 -> "Fun.fromMacro(Tuple.length)")
         }
 
-        val y = Apply(ToFun(Tuple.length), (1,2,3))
+        val y = Apply(Fun.fromMacro(Tuple.length), (1,2,3))
         assertEquals(3, y)
 
         val z = Apply(Apply(Ignore.value, "h"), (1,2,3))

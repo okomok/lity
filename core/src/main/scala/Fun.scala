@@ -14,12 +14,30 @@ object Fun_ {
 
 
 object Fun {
-    def apply(xs: (Any, String)*): Any = macro FunImpl.apply
+
+    def apply(xs: (Any, String)*): Any = macro ApplyImpl.apply
+
+    final class ApplyImpl(override val c: Context) extends InContext {
+        import c.universe._
+
+        def apply(xs: c.Tree*): c.Tree = q"${Here(c)}.Lit { ${Here(c)}.Fun_(..$xs) }"
+    }
+
+
+    object fromMacro {
+        def apply(m: Any): Any = macro FromMacroImpl.apply
+    }
+
+    final class FromMacroImpl(override val c: Context) extends InContext {
+        import c.universe._
+
+        def apply(m: c.Tree): c.Tree = {
+            val y = showCode(q"$m(_X1)")
+            q"""
+            ${Here(c)}.Fun(${Here(c)}._X1 -> $y)
+            """
+        }
+    }
 }
 
 
-final class FunImpl(override val c: Context) extends InContext {
-    import c.universe._
-
-    def apply(xs: c.Tree*): c.Tree = q"${Here(c)}.Lit { ${Here(c)}.Fun_(..$xs) }"
-}

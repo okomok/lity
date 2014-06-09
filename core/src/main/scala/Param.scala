@@ -7,9 +7,6 @@
 package com.github.okomok.lity
 
 
-import scala.language.implicitConversions
-
-
 sealed trait Param
 
 
@@ -60,6 +57,10 @@ sealed trait CharParam extends Param
 sealed trait StringParam extends Param
 
 
+case object _X1 extends AnyParam
+case object _X2 extends AnyParam
+case object _X3 extends AnyParam
+
 case object _I1 extends IntParam
 case object _I2 extends IntParam
 case object _I3 extends IntParam
@@ -87,7 +88,3 @@ case object _C3 extends CharParam
 case object _S1 extends StringParam
 case object _S2 extends StringParam
 case object _S3 extends StringParam
-
-case object _X1 extends AnyParam
-case object _X2 extends AnyParam
-case object _X3 extends AnyParam

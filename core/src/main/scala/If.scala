@@ -16,7 +16,7 @@ final class IfImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def apply(b: c.Tree, t: c.Tree, e: c.Tree): c.Tree = c.parse {
-        Extract.String(c) {
+        ExtractString(c) {
             if (AsBoolean(c)(b)) t else e
         }
     }

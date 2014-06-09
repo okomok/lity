@@ -37,7 +37,7 @@ object Tuple {
         import c.universe._
 
         def apply(n: c.Tree, m: c.Tree): c.Tree = TupleFromList(c) {
-            List.range(Extract.Int(c)(n), Extract.Int(c)(m)).map { i =>
+            List.range(ExtractInt(c)(n), ExtractInt(c)(m)).map { i =>
                 q"$i"
             }
         }
@@ -160,7 +160,7 @@ object Tuple {
         import c.universe._
 
         def apply(tup: c.Tree, n: c.Tree): c.Tree = {
-            val i = Extract.Int(c)(n)
+            val i = ExtractInt(c)(n)
             TupleToList(c)(tup)(i)
         }
     }
@@ -343,7 +343,7 @@ object Tuple {
         import c.universe._
 
         def apply(tup: c.Tree, n: c.Tree, x: c.Tree): c.Tree = TupleFromList(c) {
-            val i = Extract.Int(c)(n)
+            val i = ExtractInt(c)(n)
             TupleToList(c)(tup).updated(i, x)
         }
     }

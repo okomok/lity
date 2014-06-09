@@ -52,7 +52,7 @@ object LList {
 
         def apply(tup: c.Tree, n: c.Tree): c.Tree = extract(c)(tup) match {
             case None => throw new Error("no such element")
-            case Some((x, xs)) => Extract.Int(c)(n) match {
+            case Some((x, xs)) => ExtractInt(c)(n) match {
                 case 0 => x
                 case n => q"${Here(c)}.LList.get($xs, ${n-1})"
             }
