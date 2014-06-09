@@ -7,7 +7,6 @@
 package com.github.okomok.lity
 
 
-
 object Fun_ {
     def apply(xs: Any*): Any = macro Tuple.raw.Impl.apply
 }

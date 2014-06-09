@@ -44,5 +44,5 @@ object build extends Build {
         , settings = theSettings ++ Seq(
             libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
         )
-    )
+    ) dependsOn(macros)
 }

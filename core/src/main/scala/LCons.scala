@@ -7,6 +7,11 @@
 package com.github.okomok.lity
 
 
+object LCons_ {
+    def apply(x: Any, xs: String) = (x, xs)
+}
+
+
 object LCons {
     def apply(x: Any, xs: String): Any = macro Impl.apply
 
@@ -14,7 +19,7 @@ object LCons {
         import c.universe._
 
         def apply(x: c.Tree, xs: c.Tree): c.Tree = {
-            q"${Here(c)}.Lit { ($x, $xs) }"
+            q"${Here(c)}.Lit { ${Here(c)}.LCons_($x, $xs) }"
         }
     }
 }

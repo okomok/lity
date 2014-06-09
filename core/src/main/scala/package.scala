@@ -14,5 +14,6 @@ package object lity {
 
     type Unspecified = Any
 
-    final val LNil = "()"
+    final val LNil = here + ".LNil_()"
+    AssertConstant(LNil)
 }
