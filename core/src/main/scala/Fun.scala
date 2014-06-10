@@ -14,7 +14,7 @@ object Fun_ {
 
 object Fun {
 
-    def apply(es: (Any, String)*): Any = macro Impl.apply
+    def apply(es: (Any, String)*): String = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
@@ -37,7 +37,7 @@ object Fun {
 
 
     object fromMacro {
-        def apply(m: Any): Any = macro FromMacroImpl.apply
+        def apply(m: Any): String = macro FromMacroImpl.apply
     }
 
     final class FromMacroImpl(override val c: Context) extends InContext {

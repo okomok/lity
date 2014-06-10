@@ -21,6 +21,9 @@ object Unparse {
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
-        def apply(x: c.Tree): c.Tree = q"${showCode(x)}"
+        def apply(x: c.Tree): c.Tree = {
+            // `showCode` seems broken around type parameters.
+            q"${showCode(x)}"
+        }
     }
 }
