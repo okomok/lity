@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-// Partial fix of SI-8650.
+// Fix of SI-8650.
 
 final class StringInterpolatorImpl(override val c: Context) extends InContext {
     import c.universe._
@@ -17,14 +17,26 @@ final class StringInterpolatorImpl(override val c: Context) extends InContext {
             case q"${_}(${_}(..$as))" => toStringList(as)
         }
         val vals = toStringList(args.toList)
-        val y = new StringContext(parts: _*).s(vals: _*)
-        q"$y"
+
+//      if (constantForall(args.toList)) {
+            val y = new StringContext(parts: _*).s(vals: _*)
+            q"$y"
+//      } else {
+//          q"new StringContext(..$parts).s(..$vals)"
+//      }
     }
 
     private def toStringList(xs: List[c.Tree]): List[String] = {
         xs.map {
             case q"${s: String}" => s
             case a => TypeError(c)("illegal argument", a, "String literal")
+        }
+    }
+
+    private def constantForall(args: List[c.Tree]): Boolean = {
+        args.forall {
+            case q"${s: String}" => true
+            case a => false
         }
     }
 }

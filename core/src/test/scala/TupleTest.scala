@@ -65,7 +65,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFind() {
-        val x: Some[Int] = Tuple.find( (X, 2, Y), Fun( 2 -> "true", (_X1, "false") ) )
+        val x: Some[Int] = Tuple.find( (X, 2, Y), Fun( 2 -> "true", (X1, "false") ) )
         assertEquals(2, x.get)
     }
 
@@ -80,19 +80,19 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testMap2() {
-        val ys = Tuple.map((X, 2, Y), Fun(_I1 -> "_I1 + _I1", _X1 -> "_X1"))
+        val ys = Tuple.map((X, 2, Y), Fun(I1 -> "I1 + I1", X1 -> "X1"))
         assertEquals((X, 4, Y), ys)
     }
 
     def testMap3() {
-        val ys = Tuple.map((X, 2, "h"), Fun(_I1 -> "_I1 + _I1", _S1 -> """_S1 + "ello"""", X -> "X"))
+        val ys = Tuple.map((X, 2, "h"), Fun(I1 -> "I1 + I1", S1 -> """S1 + "ello"""", X -> "X"))
         assertEquals((X, 4, "hello"), ys)
     }
 
     final val PolyFun = Fun(
         X -> "Y"
       , Y -> "X"
-      , _I1 -> "_I1 + 1"
+      , I1 -> "I1 + 1"
     )
 
     final val YS = Unparse { Tuple.map((X, 2, Y), PolyFun) }
@@ -101,7 +101,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
         val zs = Tuple.map(YS, Fun(
             (X, "Y")
           , (Y, "X")
-          , _I1 -> "_I1 + 1"
+          , I1 -> "I1 + 1"
 
         ))
 
@@ -114,7 +114,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testFilter() {
-        val ys = Tuple.filter((3, Y, X), Fun((3, "true"), (X, "true"), (_X1, "false")))
+        val ys = Tuple.filter((3, Y, X), Fun((3, "true"), (X, "true"), (X1, "false")))
         assertEquals((3, X), ys)
     }
 
@@ -134,15 +134,15 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     final val RFun1 = Fun(
-        (_C1, _I1) -> "_I1 + 1",
-        (_I1, _I2) -> "_I2 + _I1",
-        (_S1, _I1) -> "_I1 + _S1.toString.length"
+        (C1, I1) -> "I1 + 1",
+        (I1, I2) -> "I2 + I1",
+        (S1, I1) -> "I1 + S1.toString.length"
     )
 
     final val LFun1 = Fun(
-        (_I1, _C1) -> "_I1 + 1",
-        (_I1, _I2) -> "_I2 + _I1",
-        (_I1, _S1) -> "_I1 + _S1.toString.length"
+        (I1, C1) -> "I1 + 1",
+        (I1, I2) -> "I2 + I1",
+        (I1, S1) -> "I1 + S1.toString.length"
     )
 
     def testLFun1Apply() {

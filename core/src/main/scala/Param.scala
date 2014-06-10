@@ -41,7 +41,7 @@ private object Param {
     def replace(c: Context)(s: String, x: c.Tree, a: c.Tree): String = {
         import c.universe._
 
-        val x_ = showCode(x).reverse.take(3).reverse
+        val x_ = showCode(x).reverse.take(2).reverse
         s.replace(x_, showCode(a))
     }
 }
@@ -57,34 +57,34 @@ sealed trait CharParam extends Param
 sealed trait StringParam extends Param
 
 
-case object _X1 extends AnyParam
-case object _X2 extends AnyParam
-case object _X3 extends AnyParam
+case object X1 extends AnyParam
+case object X2 extends AnyParam
+case object X3 extends AnyParam
 
-case object _I1 extends IntParam
-case object _I2 extends IntParam
-case object _I3 extends IntParam
+case object I1 extends IntParam
+case object I2 extends IntParam
+case object I3 extends IntParam
 
-case object _L1 extends LongParam
-case object _L2 extends LongParam
-case object _L3 extends LongParam
+case object L1 extends LongParam
+case object L2 extends LongParam
+case object L3 extends LongParam
 
-case object _F1 extends FloatParam
-case object _F2 extends FloatParam
-case object _F3 extends FloatParam
+case object F1 extends FloatParam
+case object F2 extends FloatParam
+case object F3 extends FloatParam
 
-case object _D1 extends DoubleParam
-case object _D2 extends DoubleParam
-case object _D3 extends DoubleParam
+case object D1 extends DoubleParam
+case object D2 extends DoubleParam
+case object D3 extends DoubleParam
 
-case object _B1 extends BooleanParam
-case object _B2 extends BooleanParam
-case object _B3 extends BooleanParam
+case object B1 extends BooleanParam
+case object B2 extends BooleanParam
+case object B3 extends BooleanParam
 
-case object _C1 extends CharParam
-case object _C2 extends CharParam
-case object _C3 extends CharParam
+case object C1 extends CharParam
+case object C2 extends CharParam
+case object C3 extends CharParam
 
-case object _S1 extends StringParam
-case object _S2 extends StringParam
-case object _S3 extends StringParam
+case object S1 extends StringParam
+case object S2 extends StringParam
+case object S3 extends StringParam

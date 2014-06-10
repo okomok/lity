@@ -17,6 +17,6 @@ package object lity {
     final val LNil = here + ".LNil_()"
 
     implicit class StringInterpolator(val sc: StringContext) extends AnyVal {
-        def cs(args: Any*): String = macro StringInterpolatorImpl.apply
+        def ls(args: Any*): String = macro StringInterpolatorImpl.apply
     }
 }

@@ -18,7 +18,7 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
 
     def testTrivial() {
         object f {
-            final val value = Fun((_X1, _X2) -> """If(_X1 == _X2, "1", "Hello")""")
+            final val value = Fun((X1, X2) -> """If(X1 == X2, "1", "Hello")""")
         }
 
         assertEquals(1, Apply(f.value, (1, 1)))

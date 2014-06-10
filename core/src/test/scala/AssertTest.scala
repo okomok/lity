@@ -30,9 +30,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEqual() {
-        Assert.equal(3, 1+2)
+        Assert { equal(3, 1+2) }
         Assert.errorBy(AssertionFailed) {"""
-            Assert.equal(3, "h")
+            Assert { equal(3, "h") }
         """}
     }
 
@@ -41,7 +41,7 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
             final val value = "hey"
             val value2 = "hey"
         }
-        Assert.isConstant(V.value)
+        Assert { isConstant(V.value) }
         Assert.errorBy("(?s).*constant.*") {"""
             Assert.isConstant(V.value2)
         """}
@@ -51,7 +51,7 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
         class X
         class Y extends X
 
-        Assert.conforms(new Y, new X)
+        Assert { conforms(new Y, new X) }
         Assert.errorBy("(?s).*conform.*") {"""
             Assert.conforms(new X, new Y)
         """}

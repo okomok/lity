@@ -15,7 +15,7 @@ import junit.framework.Assert._
 class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
 
     final val Fun1 = Fun(
-        (_I1, _I2) -> "_I1 + _I2", _X1 -> "_X1"
+        (I1, I2) -> "I1 + I2", X1 -> "X1"
     )
 
     def testTrivial1() {
@@ -29,7 +29,7 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     final val Fun2 = Fun(
-        (_I1, (_I2, _I3)) -> "_I1 + _I2 + _I3", _S1 -> "_S1"
+        (I1, (I2, I3)) -> "I1 + I2 + I3", S1 -> "S1"
     )
 
     def testTrivial3() {
@@ -38,11 +38,11 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     final val Fun3 = Fun(
-        (_I1, (_I2, _I3)) -> "_I1 + _I2 + _I3", _S1 -> "_S1"
+        (I1, (I2, I3)) -> "I1 + I2 + I3", S1 -> "S1"
     )
 
     final val FunNested = Fun(
-        (_I1, 3) -> "Apply(Fun1, (_I1, _I1))"
+        (I1, 3) -> "Apply(Fun1, (I1, I1))"
     )
 
     def testNested1() {
@@ -51,7 +51,7 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     final val Inc = Fun(
-        _X1 -> "_X1 + 1"
+        X1 -> "X1 + 1"
     )
 
     def testInc() {
@@ -61,14 +61,14 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
         assertEquals("h1", z)
     }
 
-    final val FunLength = Fun( _X1 -> "Tuple.length(_X1)" )
+    final val FunLength = Fun( X1 -> "Tuple.length(X1)" )
 
     def testLength() {
         val y = Apply(FunLength, (1, 2))
         assertEquals(2, y)
     }
 
-    final val FunToTuple = Fun( _X1 -> "Tuple.length(Tuple.fromString(_X1))" )
+    final val FunToTuple = Fun( X1 -> "Tuple.length(Tuple.fromString(X1))" )
 
     def testToTuple() {
         val y = Apply(FunToTuple, "12")
@@ -77,7 +77,7 @@ class PolyFunTest extends org.scalatest.junit.JUnit3Suite {
 
     def testIncDefer() {
         object f {
-            final val value = Fun( _X1 -> "1 + _X1" )
+            final val value = Fun( X1 -> "1 + X1" )
         }
 
         val z = Apply(f.value, "h")

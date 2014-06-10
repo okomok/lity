@@ -14,13 +14,18 @@ import junit.framework.Assert._
 class ConstantStringTest extends org.scalatest.junit.JUnit3Suite {
 
     final val x = "hello"
-    final val y = cs"$x world"
+    final val y = ls"$x world"
 
-    Assert.isConstant(y)
-    Assert.equal("hello world", y)
+    Assert { isConstant(y) }
+    Assert { equal("hello world", y) }
 
     def testTrivial() {
         assertEquals("hello world", y)
+    }
+
+    def testLength0() {
+        val y = Apply(Fun(X1 -> ls"Tuple.length(X1)"), (1, 2, 3))
+        assertEquals(3, y)
     }
 
 }

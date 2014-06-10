@@ -44,9 +44,9 @@ object Fun {
         import c.universe._
 
         def apply(m: c.Tree): c.Tree = {
-            val y = showCode(q"$m(_X1)")
+            val y = showCode(q"$m(X1)")
             q"""
-            ${Here(c)}.Fun(${Here(c)}._X1 -> $y)
+            ${Here(c)}.Fun(${Here(c)}.X1 -> $y)
             """
         }
     }
