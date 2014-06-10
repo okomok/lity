@@ -8,17 +8,14 @@ package com.github.okomok.lity
 
 
 object conforms {
-    def apply(x: Any, y: Any): Boolean = macro Impl.apply
+    def apply(x: Type, y: Type): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
 
         def apply(x: c.Tree, y: c.Tree): c.Tree = {
-            if (x.tpe <:< y.tpe) {
-                q"true"
-            } else {
-                q"false"
-            }
+            val z = Type.unwrap(c)(x) <:< Type.unwrap(c)(y)
+            q"$z"
         }
     }
 }

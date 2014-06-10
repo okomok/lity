@@ -23,9 +23,9 @@ object Type {
         type apply = x
     }
 
-    def unwrap(c: Context)(x: c.Tree): c.Tree = {
+    def unwrap(c: Context)(x: c.Tree): c.Type = {
         import c.universe._
-        val q"${_}[$y]" = x
-        y
+        val q"${_}[$y](..${_})" = x
+        SafeTpe(c)(y)
     }
 }

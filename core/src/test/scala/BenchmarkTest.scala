@@ -18,8 +18,8 @@ trait BenchmarkTest {
 
 
     Echo {
-        TypeOf(this)
+        typeOf(this)
     }
 */
-    //val x = TypeOf(this)
+    //val x = typeOf(this)
 }

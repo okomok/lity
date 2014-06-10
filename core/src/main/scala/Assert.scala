@@ -63,7 +63,7 @@ object Assert {
             import c.universe._
 
             def apply(x: c.Tree, y: c.Tree): c.Tree = {
-                if (x.tpe <:< y.tpe) {
+                if (Type.unwrap(c)(x) <:< Type.unwrap(c)(y)) {
                     q"()"
                 } else {
                     throw new AssertionError(s"expected:<$x: ${x.tpe.dealias}> conforms to <$y: ${y.tpe.dealias}> but was not.")
