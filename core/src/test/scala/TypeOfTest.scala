@@ -16,14 +16,16 @@ class TypeOfTest extends org.scalatest.junit.JUnit3Suite {
 
     def testMe() {
         val t = Type.of(3)
-        implicitly[t.unwrap =:= Int]
+        implicitly[t.apply =:= Int]
     }
 
     object Make {
         def apply(xs: Any*): Int = 3
     }
 
-    def testTest() {
+    def testFromClass() {
+        val t = Type(classOf[Int])
+        implicitly[t.apply =:= Int]
     }
 
 }

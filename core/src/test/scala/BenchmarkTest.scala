@@ -18,8 +18,8 @@ trait BenchmarkTest {
 
 
     echo {
-        typeOf(this)
+        classBy(this)
     }
 */
-    //val x = typeOf(this)
+    //val x = classBy(this)
 }

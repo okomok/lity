@@ -24,15 +24,15 @@ class TypeTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEqual() {
-        Assert { equal(typeOf("g"), typeOf("h")) }
-        Assert { equal(typeOf("g"), typeOf("h")) }
+        Assert { equal(classBy("g"), classBy("h")) }
+        Assert.not { equal(classBy(3), classBy("h")) }
     }
 
     def testConfroms() {
         class X
         class Y extends X
-        Assert { conforms(typeOf(new Y), typeOf(new X)) }
-        Assert.not { conforms(typeOf(new X), typeOf(new Y)) }
+        Assert { conforms(classBy(new Y), classBy(new X)) }
+        Assert.not { conforms(classBy(new X), classBy(new Y)) }
     }
 
 }
