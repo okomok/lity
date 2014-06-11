@@ -39,7 +39,7 @@ object Assert {
     }
 
 /*
-    object equal {
+    object lequals {
         def apply(x: Any, y: Any): Unit = macro Impl.apply
 
         final class Impl(val c: Context) {

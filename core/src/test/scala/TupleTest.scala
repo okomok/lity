@@ -204,10 +204,10 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEquals() {
-        val y = Tuple.equal( (1, "h"), TUP1 )
+        val y = Tuple.lequals( (1, "h"), TUP1 )
         assertTrue(y)
 
-        val z = Tuple.equal( (1, "k"), TUP1 )
+        val z = Tuple.lequals( (1, "k"), TUP1 )
         assertFalse(z)
     }
 

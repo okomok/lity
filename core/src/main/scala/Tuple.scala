@@ -86,7 +86,7 @@ object Tuple {
     }
 
 
-    object equal {
+    object lequals {
         def apply(tup1: Any, tup2: Any): Any = macro Impl.apply
 
         final class Impl(override val c: Context) extends InContext {

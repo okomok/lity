@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object conforms {
+object equalsType {
     def apply(x: Class[_], y: Class[_]): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
@@ -16,7 +16,7 @@ object conforms {
         def apply(x: c.Tree, y: c.Tree): c.Tree = {
             val z = x match {
                 case Literal(Constant(a: Type)) => y match {
-                    case Literal(Constant(b: Type)) => a <:< b
+                    case Literal(Constant(b: Type)) => a =:= b
                     case y => TypeError(c)("illegal argument", y, "Type literal")
                 }
                 case x => TypeError(c)("illegal argument", x, "Type literal")

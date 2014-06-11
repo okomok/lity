@@ -19,13 +19,13 @@ class TypeTest extends org.scalatest.junit.JUnit3Suite {
             final val intType = classOf[Int]
         }
 
-        Assert { equal(t.intType, classOf[Int]) }
-        Assert.not { equal(classOf[String], classOf[Int]) }
+        Assert { equalsType(t.intType, classOf[Int]) }
+        Assert.not { equalsType(classOf[String], classOf[Int]) }
     }
 
     def testEqual() {
-        Assert { equal(classBy("g"), classBy("h")) }
-        Assert.not { equal(classBy(3), classBy("h")) }
+        Assert { equalsType(classBy("g"), classBy("h")) }
+        Assert.not { equalsType(classBy(3), classBy("h")) }
     }
 
     def testConfroms() {
