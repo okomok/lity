@@ -37,12 +37,10 @@ object Undefer {
         new Transformer {
             override def transform(x: c.Tree): c.Tree = {
                 x match {
-                    case q"com.github.okomok.lity.Deferred.apply($y)" => y
+                    case q"com.github.okomok.lity.Deferred($y)" => y
                     case x => super.transform(x)
                 }
             }
-        }.transform {
-            Duplicate(c)(x)
-        }
+        }.transform(x)
     }
 }

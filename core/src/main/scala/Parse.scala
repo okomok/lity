@@ -16,13 +16,13 @@ object Parse {
 }
 
 
+// Broken: SI-8447
 object Unparse {
     def apply(x: Any): String = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
         def apply(x: c.Tree): c.Tree = {
-            // `showCode` seems broken around type parameters.
             q"${showCode(x)}"
         }
     }
