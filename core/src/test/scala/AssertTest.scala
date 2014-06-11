@@ -51,14 +51,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
         class X
         class Y extends X
 
-        object t {
-            final val X = Type.of(new X)
-            final val Y = Type.of(new Y)
-        }
-
-        Assert { conforms(typeOf(new Y), typeOf(new X)) }
+        Assert { conforms(classOf[Y], classOf[X]) }
         Assert.errorBy("(?s).*conforms.*") {"""
-            Assert { defer(conforms)(typeOf(new X), typeOf(new Y)) }
+            Assert { defer(conforms)(classOf[X], classOf[Y]) }
         """}
     }
 

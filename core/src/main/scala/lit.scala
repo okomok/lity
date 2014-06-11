@@ -22,3 +22,19 @@ object lit {
         }
     }
 }
+
+
+// String is not supported.
+object unlit {
+    def apply(x: Any): Any = macro Impl.apply
+
+    final class Impl(override val c: Context) extends InContext {
+        import c.universe._
+        def apply(x: c.Tree): c.Tree = {
+            x match {
+                case q"${_: String}" => ParseTree(c)(x)
+                case x => x
+            }
+        }
+    }
+}

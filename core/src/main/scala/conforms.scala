@@ -8,13 +8,16 @@ package com.github.okomok.lity
 
 
 object conforms {
-    def apply(x: Any, y: Any): Boolean = macro Impl.apply
+    def apply(x: Class[_], y: Class[_]): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
 
         def apply(x: c.Tree, y: c.Tree): c.Tree = {
-            val z = Type.unwrap(c)(x) <:< Type.unwrap(c)(y)
+            val z = (x, y) match {
+                case (Literal(Constant(a: Type)), Literal(Constant(b: Type))) => a <:< b
+//              case (q"${a: Type}", q"${b: Type}") => a <:< b
+            }
             q"$z"
         }
     }

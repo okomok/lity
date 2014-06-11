@@ -218,10 +218,12 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
     def testIsEmpty() {
         object e {
-            final val value = lit { Tuple() }
+            final val value = lit { () }
         }
 
         assertTrue(Tuple.isEmpty(Tuple()))
         assertTrue(Tuple.isEmpty(e.value))
+        assertEquals((), unlit(e.value))
+        assertEquals((1,2), unlit("(1,2)"))
     }
 }

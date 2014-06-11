@@ -15,8 +15,8 @@ import junit.framework.Assert._
 class TypeOfTest extends org.scalatest.junit.JUnit3Suite {
 
     def testMe() {
-        val t = typeOf(3)
-        implicitly[t.apply =:= Int]
+        val t = Type.of(3)
+        implicitly[t.unwrap =:= Int]
     }
 
     object Make {

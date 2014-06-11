@@ -8,7 +8,7 @@ package com.github.okomok.lity
 
 
 object timeOf {
-    def apply(x: String): scala.Any = macro Impl.apply
+    def apply(x: String): Long = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
