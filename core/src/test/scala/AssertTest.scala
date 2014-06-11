@@ -16,7 +16,7 @@ import CompileError._
 class AssertTest extends org.scalatest.junit.JUnit3Suite {
 
     def testError() {
-        Assert.errorBy(NotFound) {"""
+        expectError(NotFound) {"""
             wow
         """}
     }
@@ -24,15 +24,15 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     def testError2() {
         val hey = "hello" // not constant
 
-        Assert.errorBy(IllegalArgument) {"""
-            Assert.errorBy(hey) {"3"}
+        expectError(IllegalArgument) {"""
+            expectError(hey) {"3"}
         """}
     }
 
     def testEqual() {
-        Assert { lequals(3, 1+2) }
-        Assert.errorBy(AssertionFailed) {"""
-            Assert { lequals(3, "h") }
+        lassert { lequals(3, 1+2) }
+        expectError(AssertionFailed) {"""
+            lassert { lequals(3, "h") }
         """}
     }
 
@@ -41,9 +41,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
             final val value = "hey"
             val value2 = "hey"
         }
-        Assert { isConstant(V.value) }
-        Assert.errorBy("(?s).*isConstant.*") {"""
-            Assert { defer(isConstant)(V.value2) }
+        lassert { isConstant(V.value) }
+        expectError("(?s).*isConstant.*") {"""
+            lassert { defer(isConstant)(V.value2) }
         """}
     }
 
@@ -51,9 +51,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
         class X
         class Y extends X
 
-        Assert { conforms(classOf[Y], classOf[X]) }
-        Assert.errorBy("(?s).*conforms.*") {"""
-            Assert { defer(conforms)(classOf[X], classOf[Y]) }
+        lassert { conforms(classOf[Y], classOf[X]) }
+        expectError("(?s).*conforms.*") {"""
+            lassert { defer(conforms)(classOf[X], classOf[Y]) }
         """}
     }
 

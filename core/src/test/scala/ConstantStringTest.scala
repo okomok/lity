@@ -16,8 +16,8 @@ class ConstantStringTest extends org.scalatest.junit.JUnit3Suite {
     final val x = "hello"
     final val y = ls"$x world"
 
-    Assert { isConstant(y) }
-    Assert { lequals("hello world", y) }
+    lassert { isConstant(y) }
+    lassert { lequals("hello world", y) }
 
     def testTrivial() {
         assertEquals("hello world", y)
