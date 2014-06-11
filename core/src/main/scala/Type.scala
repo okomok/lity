@@ -22,7 +22,7 @@ object Type {
 
         def apply(x: c.Tree): c.Tree = {
             q"""
-            ${Here(c)}.Unparse { ${Here(c)}.Type.apply[${x.tpe}] }
+            ${Here(c)}.unparse { ${Here(c)}.Type.apply[${x.tpe}] }
             """
         }
     }

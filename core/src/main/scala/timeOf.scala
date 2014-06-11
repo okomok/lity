@@ -7,15 +7,18 @@
 package com.github.okomok.lity
 
 
-object sleep {
-    def apply(x: Long): Unit = macro Impl.apply
+object timeOf {
+    def apply(x: String): scala.Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
 
         def apply(x: c.Tree): c.Tree = {
-            Thread.sleep(ExtractLong(c)(x))
-            q"()"
+            val y = ParseTree(c)(x)
+            val start = System.currentTimeMillis
+            c.typecheck(y)
+            val elapsed = System.currentTimeMillis - start
+            q"$elapsed"
         }
     }
 }

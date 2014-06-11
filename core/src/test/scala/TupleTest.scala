@@ -14,10 +14,10 @@ import junit.framework.Assert._
 
 class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
-    final val TUP1 = Unparse{ (1, "h") }
+    final val TUP1 = unparse{ (1, "h") }
 
     def testParse() {
-        val tup1: (Int, String) = Parse(TUP1)
+        val tup1: (Int, String) = parse(TUP1)
         ()
     }
 
@@ -70,7 +70,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testMap() {
-        val ys = Tuple.map((X, 2, Y), (
+        val ys = Tuple.map((X, 2, Y), Fun(
             (X, "Y")
           , (Y, "X")
           , (2, "3")
@@ -95,7 +95,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
       , I1 -> "I1 + 1"
     )
 
-    final val YS = Unparse { Tuple.map((X, 2, Y), PolyFun) }
+    final val YS = unparse { Tuple.map((X, 2, Y), PolyFun) }
 
     def testLit() {
         val zs = Tuple.map(YS, Fun(
@@ -119,7 +119,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testApply() {
-        val y = Apply(PolyFun, 3)
+        val y = apply(PolyFun, 3)
         assertEquals(4, y)
     }
 
@@ -146,7 +146,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
     )
 
     def testLFun1Apply() {
-        val y = Apply(LFun1, (3+1, 2))
+        val y = apply(LFun1, (3+1, 2))
         assertEquals(6, y)
     }
 
@@ -218,7 +218,7 @@ class TupleTest extends org.scalatest.junit.JUnit3Suite {
 
     def testIsEmpty() {
         object e {
-            final val value = Tuple()
+            final val value = lit { Tuple() }
         }
 
         assertTrue(Tuple.isEmpty(Tuple()))

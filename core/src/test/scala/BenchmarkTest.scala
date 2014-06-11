@@ -12,12 +12,12 @@ import com.github.okomok.lity._
 
 trait BenchmarkTest {
 /*
-    Echo {
-        Benchmark("Sleep(500)") - Benchmark("Sleep(200)")
+    echo {
+        timeOf("sleep(500)") - timeOf("sleep(200)")
     }
 
 
-    Echo {
+    echo {
         typeOf(this)
     }
 */

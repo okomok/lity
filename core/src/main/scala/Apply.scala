@@ -7,15 +7,15 @@
 package com.github.okomok.lity
 
 
-object Apply {
+object apply {
     def apply(f: Any, a: Any): Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
 
         def apply(f: c.Tree, a: c.Tree): c.Tree = {
-            val es = TupleToList(c)(f).map { e =>
-                TupleDealias(c)(e)
+            val es = Tuple.treeToList(c)(f).map { e =>
+                Tuple.treeDealias(c)(e)
             }
 
             CollectFirst(es) {
@@ -31,7 +31,7 @@ object Apply {
         }
 
         private def betaReduce(x: c.Tree, y: String, a: c.Tree): String = {
-            (TupleDealias(c)(x), TupleDealias(c)(a)) match {
+            (Tuple.treeDealias(c)(x), Tuple.treeDealias(c)(a)) match {
                 case (x, a) if Param.accepts(c)(x, a) => {
                     Param.replace(c)(y, x, a)
                 }

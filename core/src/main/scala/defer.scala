@@ -30,7 +30,7 @@ object defer {
 }
 
 
-object Undefer {
+object UndeferTree {
     def apply(c: Context)(x: c.Tree): c.Tree = c.typecheck {
         import c.universe._
 

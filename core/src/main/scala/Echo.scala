@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object Echo {
+object echo {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext  {
@@ -21,7 +21,7 @@ object Echo {
 }
 
 
-object EchoRaw {
+object echoRaw {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext  {
@@ -35,7 +35,7 @@ object EchoRaw {
 }
 
 
-object EchoType {
+object echoType {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext  {
@@ -49,7 +49,7 @@ object EchoType {
 }
 
 
-object EchoTypeRaw {
+object echoTypeRaw {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext  {

@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object Parse {
+object parse {
     def apply(x: String): Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
@@ -16,14 +16,10 @@ object Parse {
 }
 
 
-// Broken: SI-8447
-object Unparse {
+object unparse {
     def apply(x: Any): String = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
-        import c.universe._
-        def apply(x: c.Tree): c.Tree = {
-            q"${showCode(x)}"
-        }
+        def apply(x: c.Tree): c.Tree = UnparseTree(c)(x)
     }
 }

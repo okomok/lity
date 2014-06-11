@@ -8,7 +8,7 @@ package com.github.okomok.lity
 
 
 object Fun_ {
-    def apply(xs: Any*): Any = macro Tuple.raw.Impl.apply
+    def apply(xs: Any*): Any = macro Tuple.Impl.apply
 }
 
 
@@ -20,9 +20,9 @@ object Fun {
         import c.universe._
 
         def apply(es: c.Tree*): c.Tree = {
-//            requireLegal(es: _*)
+//          requireLegal(es: _*)
             q"""
-            ${Here(c)}.Unparse { ${Here(c)}.Fun_(..$es) }
+            ${Here(c)}.unparse { ${Here(c)}.Fun_(..$es) }
             """
         }
 

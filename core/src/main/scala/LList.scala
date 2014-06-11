@@ -15,7 +15,7 @@ object LList {
     private def extract(c: Context)(tup: c.Tree): Option[(c.Tree, c.Tree)] = {
         import c.universe._
 
-        TupleToList(c)(tup) match {
+        Tuple.treeToList(c)(tup) match {
             case Nil => None
             case x :: q"${y: String}" :: Nil => Some((x, c.parse(y)))
             case _ => TypeError(c)("illegal argument", tup, "pair")

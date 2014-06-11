@@ -9,35 +9,62 @@ package com.github.okomok.lity
 
 object Tuple {
 
-    def apply(xs: Any*): Any = macro Impl.apply
-
-    final class Impl(override val c: Context) extends InContext {
+    def treeFromList(c: Context)(xs: List[c.Tree]): c.Tree = {
         import c.universe._
 
-        def apply(xs: c.Tree*): c.Tree = {
-            q"${Here(c)}.Unparse { ${TupleFromList(c)(xs.toList)} }"
+        if (xs.isEmpty) {
+            q"()"
+        } else {
+            val tn = TermName(s"Tuple${xs.length}")
+            q"scala.$tn(..$xs)"
         }
     }
 
 
-    object raw {
-        def apply(xs: Any*): Any = macro Impl.apply
+    def treeToList(c: Context)(tup: c.Tree): List[c.Tree] = {
+        import c.universe._
 
-        final class Impl(override val c: Context) extends InContext {
-            import c.universe._
-
-            def apply(xs: c.Tree*): c.Tree = TupleFromList(c)(xs.toList)
+        tup match {
+            case q"${x: String}" => _treeToList(c)(c.typecheck(c.parse(x)))
+            case x => _treeToList(c)(x)
         }
+    }
+
+    private def _treeToList(c: Context)(tup: c.Tree): List[c.Tree] = {
+        import c.universe._
+
+        treeDealias(c)(tup) match {
+            case q"()" => Nil
+            case q"${_}(..$xs)" => xs
+            case _ => TypeError(c)("illegal argument", tup, "tuple")
+        }
+    }
+
+
+    def treeDealias(c: Context)(tup: c.Tree): c.Tree = {
+        import c.universe._
+
+        tup match {
+            case q"${_}($x).->[${_}]($y)" => q"($x, $y)"
+            case _ => tup
+        }
+    }
+
+
+    def apply(xs: Any*): Any = macro Impl.apply
+
+    final class Impl(override val c: Context) extends InContext {
+        def apply(xs: c.Tree*): c.Tree = treeFromList(c)(xs.toList)
     }
 
 
     object range {
-        def apply(n: Any, m: Any): Any = macro Impl.apply
+        def apply(n: Int, m: Int): Any = macro Impl.apply
 
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(n: c.Tree, m: c.Tree): c.Tree = TupleFromList(c) {
+            def apply(n: c.Tree, m: c.Tree): c.Tree = treeFromList(c) {
                 List.range(ExtractInt(c)(n), ExtractInt(c)(m)).map { i =>
                     q"$i"
                 }
@@ -66,8 +93,8 @@ object Tuple {
             import c.universe._
 
             def apply(tup1: c.Tree, tup2: c.Tree): c.Tree = {
-                val xs1 = TupleToList(c)(tup1)
-                val xs2 = TupleToList(c)(tup2)
+                val xs1 = treeToList(c)(tup1)
+                val xs2 = treeToList(c)(tup2)
 
                 val b = xs1.corresponds(xs2) { (x1, x2) =>
                     x1.equalsStructure(x2)
@@ -84,9 +111,9 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tup: c.Tree, f: c.Tree): c.Tree = TupleFromList(c) {
-                TupleToList(c)(tup).filter { x =>
-                    AsBoolean(c)(q"${Here(c)}.Apply($f, $x)")
+            def apply(tup: c.Tree, f: c.Tree): c.Tree = treeFromList(c) {
+                treeToList(c)(tup).filter { x =>
+                    AsBoolean(c)(q"${Here(c)}.apply($f, $x)")
                 }
             }
         }
@@ -100,8 +127,8 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree, f: c.Tree): c.Tree = {
-                val y = TupleToList(c)(tup).find { x =>
-                    AsBoolean(c)(q"${Here(c)}.Apply($f, $x)")
+                val y = treeToList(c)(tup).find { x =>
+                    AsBoolean(c)(q"${Here(c)}.apply($f, $x)")
                 }
                 q"$y"
             }
@@ -115,9 +142,9 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tups: c.Tree): c.Tree = TupleFromList(c) {
-                TupleToList(c)(tups).map { tup =>
-                    TupleToList(c)(tup)
+            def apply(tups: c.Tree): c.Tree = treeFromList(c) {
+                treeToList(c)(tups).map { tup =>
+                    treeToList(c)(tup)
                 }.flatten
             }
         }
@@ -131,8 +158,8 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree, z: c.Tree, f: c.Tree): c.Tree = {
-                TupleToList(c)(tup).foldLeft(z) { (z, x) =>
-                    q"${Here(c)}.Apply($f, ($z, $x))"
+                treeToList(c)(tup).foldLeft(z) { (z, x) =>
+                    q"${Here(c)}.apply($f, ($z, $x))"
                 }
             }
         }
@@ -146,8 +173,8 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree, z: c.Tree, f: c.Tree): c.Tree = {
-                TupleToList(c)(tup).foldRight(z) { (x, z) =>
-                    q"${Here(c)}.Apply($f, ($x, $z))"
+                treeToList(c)(tup).foldRight(z) { (x, z) =>
+                    q"${Here(c)}.apply($f, ($x, $z))"
                 }
             }
         }
@@ -162,7 +189,7 @@ object Tuple {
 
             def apply(tup: c.Tree, n: c.Tree): c.Tree = {
                 val i = ExtractInt(c)(n)
-                TupleToList(c)(tup)(i)
+                treeToList(c)(tup)(i)
             }
         }
     }
@@ -175,7 +202,7 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree): c.Tree = {
-                TupleToList(c)(tup).head
+                treeToList(c)(tup).head
             }
         }
     }
@@ -187,8 +214,8 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tup: c.Tree): c.Tree = TupleFromList(c) {
-                TupleToList(c)(tup).tail
+            def apply(tup: c.Tree): c.Tree = treeFromList(c) {
+                treeToList(c)(tup).tail
             }
         }
     }
@@ -201,7 +228,7 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree): c.Tree = {
-                val b = TupleToList(c)(tup).isEmpty
+                val b = treeToList(c)(tup).isEmpty
                 q"$b"
             }
         }
@@ -209,13 +236,13 @@ object Tuple {
 
 
     object length {
-        def apply(tup: Any): Any = macro Impl.apply
+        def apply(tup: Any): Int = macro Impl.apply
 
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
             def apply(tup: c.Tree): c.Tree = {
-                val n = TupleToList(c)(tup).length
+                val n = treeToList(c)(tup).length
                 q"$n"
             }
         }
@@ -228,9 +255,9 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tup: c.Tree, f: c.Tree): c.Tree = TupleFromList(c) {
-                TupleToList(c)(tup).map { x =>
-                    q"${Here(c)}.Apply($f, $x)"
+            def apply(tup: c.Tree, f: c.Tree): c.Tree = treeFromList(c) {
+                treeToList(c)(tup).map { x =>
+                    q"${Here(c)}.apply($f, $x)"
                 }
             }
         }
@@ -238,26 +265,26 @@ object Tuple {
 
 
     object append {
-        def apply(tup1: Any, x: Any): Any = macro Impl.apply
+        def apply(tup: Any, x: Any): Any = macro Impl.apply
 
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tup1: c.Tree, x: c.Tree): c.Tree = TupleFromList(c) {
-                TupleToList(c)(tup1) :+ x
+            def apply(tup: c.Tree, x: c.Tree): c.Tree = treeFromList(c) {
+                treeToList(c)(tup) :+ x
             }
         }
     }
 
 
     object prepend {
-        def apply(tup1: Any, x: Any): Any = macro Impl.apply
+        def apply(tup: Any, x: Any): Any = macro Impl.apply
 
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tup1: c.Tree, x: c.Tree): c.Tree = TupleFromList(c) {
-                x :: TupleToList(c)(tup1)
+            def apply(tup: c.Tree, x: c.Tree): c.Tree = treeFromList(c) {
+                x :: treeToList(c)(tup)
             }
         }
     }
@@ -270,8 +297,8 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree, f: c.Tree): c.Tree = {
-                TupleToList(c)(tup).reduceLeft { (z, x) =>
-                    q"${Here(c)}.Apply($f, ($z, $x))"
+                treeToList(c)(tup).reduceLeft { (z, x) =>
+                    q"${Here(c)}.apply($f, ($z, $x))"
                 }
             }
         }
@@ -285,8 +312,8 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree, f: c.Tree): c.Tree = {
-                TupleToList(c)(tup).reduceRight { (x, z) =>
-                    q"${Here(c)}.Apply($f, ($x, $z))"
+                treeToList(c)(tup).reduceRight { (x, z) =>
+                    q"${Here(c)}.apply($f, ($x, $z))"
                 }
             }
         }
@@ -299,8 +326,8 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tup: c.Tree): c.Tree = TupleFromList(c) {
-                TupleToList(c)(tup).reverse
+            def apply(tup: c.Tree): c.Tree = treeFromList(c) {
+                treeToList(c)(tup).reverse
             }
         }
     }
@@ -313,7 +340,7 @@ object Tuple {
             import c.universe._
 
             def apply(tup: c.Tree): c.Tree = {
-                val xs = TupleToList(c)(tup)
+                val xs = treeToList(c)(tup)
                 q"scala.List(..$xs)"
             }
         }
@@ -326,9 +353,9 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tups: c.Tree): c.Tree = TupleFromList(c) {
-                TupleToList(c)(tups).map { tup =>
-                    TupleToList(c)(tup)
+            def apply(tups: c.Tree): c.Tree = treeFromList(c) {
+                treeToList(c)(tups).map { tup =>
+                    treeToList(c)(tup)
                 }.transpose.map { xs =>
                     q"(..$xs)"
                 }
@@ -343,9 +370,9 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(tup: c.Tree, n: c.Tree, x: c.Tree): c.Tree = TupleFromList(c) {
+            def apply(tup: c.Tree, n: c.Tree, x: c.Tree): c.Tree = treeFromList(c) {
                 val i = ExtractInt(c)(n)
-                TupleToList(c)(tup).updated(i, x)
+                treeToList(c)(tup).updated(i, x)
             }
         }
     }
@@ -357,7 +384,7 @@ object Tuple {
         final class Impl(override val c: Context) extends InContext {
             import c.universe._
 
-            def apply(xs: c.Tree): c.Tree = TupleFromList(c) {
+            def apply(xs: c.Tree): c.Tree = treeFromList(c) {
                 xs match {
                     case q"${y: String}" => y.toList.map { c => q"$c" }
                 }

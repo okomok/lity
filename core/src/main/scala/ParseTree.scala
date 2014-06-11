@@ -14,3 +14,12 @@ private object ParseTree {
         }
     }
 }
+
+
+// Broken for SI-8447
+private object UnparseTree {
+    def apply(c: Context)(x: c.Tree): c.Tree = {
+        import c.universe._
+        q"${showCode(x)}"
+    }
+}

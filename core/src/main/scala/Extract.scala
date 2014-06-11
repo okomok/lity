@@ -11,7 +11,7 @@ private object ExtractPair {
     def apply(c: Context)(x: c.Tree): (c.Tree, c.Tree) = {
         import c.universe._
 
-        TupleToList(c)(x) match {
+        Tuple.treeToList(c)(x) match {
             case v :: w :: Nil => (v, w)
             case _ => TypeError(c)("illegal argument", x, "pair")
         }

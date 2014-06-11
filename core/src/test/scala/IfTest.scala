@@ -21,7 +21,7 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
             final val value = Fun((X1, X2) -> """`if`(X1 == X2, "1", "Hello")""")
         }
 
-        assertEquals(1, Apply(f.value, (1, 1)))
-        assertEquals(Hello, Apply(f.value, (1, 0)))
+        assertEquals(1, apply(f.value, (1, 1)))
+        assertEquals(Hello, apply(f.value, (1, 0)))
     }
 }

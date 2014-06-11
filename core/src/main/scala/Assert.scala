@@ -15,7 +15,7 @@ object Assert {
         import c.universe._
 
         def apply(x: c.Tree): c.Tree = {
-            Undefer(c)(x) match {
+            UndeferTree(c)(x) match {
                 case q"true" => q"()"
                 case y => throw new AssertionError(s"<$x>\n    expected:<true: Boolean(true)> but was:<$y: ${y.tpe.dealias}>")
             }
@@ -30,7 +30,7 @@ object Assert {
             import c.universe._
 
             def apply(x: c.Tree): c.Tree = {
-                Undefer(c)(x) match {
+                UndeferTree(c)(x) match {
                     case q"false" => q"()"
                     case y => throw new AssertionError(s"<$x>\n    expected:<false: Boolean(false)> but was:<$y: ${y.tpe.dealias}>")
                 }
@@ -38,7 +38,7 @@ object Assert {
         }
     }
 
-
+/*
     object equal {
         def apply(x: Any, y: Any): Unit = macro Impl.apply
 
@@ -85,7 +85,7 @@ object Assert {
             }
         }
     }
-
+*/
 
     object errorBy {
         import scala.reflect.macros.TypecheckException

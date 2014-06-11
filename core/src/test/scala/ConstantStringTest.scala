@@ -24,7 +24,7 @@ class ConstantStringTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testLength0() {
-        val y = Apply(Fun(X1 -> ls"Tuple.length(X1)"), (1, 2, 3))
+        val y = apply(Fun(X1 -> ls"Tuple.length(X1)"), (1, 2, 3))
         assertEquals(3, y)
     }
 
