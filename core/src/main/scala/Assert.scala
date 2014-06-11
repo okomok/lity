@@ -9,30 +9,30 @@ package com.github.okomok.lity
 
 object Assert {
 
-    def apply(x: Boolean): Unit = macro Impl.apply
+    def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(val c: Context) {
         import c.universe._
 
         def apply(x: c.Tree): c.Tree = {
-            x match {
+            Undefer(c)(x) match {
                 case q"true" => q"()"
-                case _ => throw new AssertionError(s"expected:<true: Boolean(true)> but was:<$x: ${x.tpe.dealias}>")
+                case y => throw new AssertionError(s"<$x>\n    expected:<true: Boolean(true)> but was:<$y: ${y.tpe.dealias}>")
             }
         }
     }
 
 
     object not {
-        def apply(x: Boolean): Unit = macro Impl.apply
+        def apply(x: Any): Unit = macro Impl.apply
 
         final class Impl(val c: Context) {
             import c.universe._
 
             def apply(x: c.Tree): c.Tree = {
-                x match {
+                Undefer(c)(x) match {
                     case q"false" => q"()"
-                    case _ => throw new AssertionError(s"expected:<false: Boolean(false)> but was:<$x: ${x.tpe.dealias}>")
+                    case y => throw new AssertionError(s"<$x>\n    expected:<false: Boolean(false)> but was:<$y: ${y.tpe.dealias}>")
                 }
             }
         }

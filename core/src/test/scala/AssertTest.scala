@@ -42,8 +42,8 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
             val value2 = "hey"
         }
         Assert { isConstant(V.value) }
-        Assert.errorBy("(?s).*constant.*") {"""
-            Assert.isConstant(V.value2)
+        Assert.errorBy("(?s).*isConstant.*") {"""
+            Assert { defer(isConstant)(V.value2) }
         """}
     }
 
@@ -57,8 +57,8 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
         }
 
         Assert { conforms(typeOf(new Y), typeOf(new X)) }
-        Assert.errorBy("(?s).*conform.*") {"""
-            Assert.conforms(typeOf(new X), typeOf(new Y))
+        Assert.errorBy("(?s).*conforms.*") {"""
+            Assert { defer(conforms)(typeOf(new X), typeOf(new Y)) }
         """}
     }
 
