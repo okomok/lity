@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object echoTree {
+object Echo {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext  {
@@ -21,7 +21,7 @@ object echoTree {
 }
 
 
-object echoTreeRaw {
+object EchoRaw {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext  {

@@ -10,7 +10,7 @@ package com.github.okomok.lity
 import scala.reflect.macros.TypecheckException
 
 
-object expectError {
+object Intercept {
     def apply(r: String)(x: String): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

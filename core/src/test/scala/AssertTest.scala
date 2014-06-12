@@ -16,7 +16,7 @@ import CompileError._
 class AssertTest extends org.scalatest.junit.JUnit3Suite {
 
     def testError() {
-        expectError(NotFound) {"""
+        Intercept(NotFound) {"""
             wow
         """}
     }
@@ -24,14 +24,14 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     def testError2() {
         val hey = "hello" // not constant
 
-        expectError(IllegalArgument) {"""
-            expectError(hey) {"3"}
+        Intercept(IllegalArgument) {"""
+            Intercept(hey) {"3"}
         """}
     }
 
     def testEqual() {
         Assert { Equals(3, 1+2) }
-        expectError(AssertionFailed) {"""
+        Intercept(AssertionFailed) {"""
             Assert { Equals(3, "h") }
         """}
     }
@@ -42,7 +42,7 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
             val value2 = "hey"
         }
         Assert { IsConstant(V.value) }
-        expectError("(?s).*IsConstant.*") {"""
+        Intercept("(?s).*IsConstant.*") {"""
             Assert { Defer(IsConstant)(V.value2) }
         """}
     }
@@ -52,7 +52,7 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
         class Y extends X
 
         Assert { Conforms(classOf[Y], classOf[X]) }
-        expectError("(?s).*Conforms.*") {"""
+        Intercept("(?s).*Conforms.*") {"""
             Assert { Defer(Conforms)(classOf[X], classOf[Y]) }
         """}
     }

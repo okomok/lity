@@ -12,12 +12,12 @@ import com.github.okomok.lity._
 
 trait TimeOfTest {
 /*
-    echoTree {
+    Echo {
         TimeOf("sleep(500)") - TimeOf("sleep(200)")
     }
 
 
-    echoTree {
+    Echo {
         ClassBy(this)
     }
 */
