@@ -14,19 +14,21 @@ import junit.framework.Assert._
 
 class ExampleTest extends org.scalatest.junit.JUnit3Suite {
 
-    final val IsDebug = false
-
-    final val MyClass = If(IsDebug, classOf[Int], classOf[String])
-
-    val t = Type(MyClass)
-    type My = t.apply
-
     Assert {
-        EqualsType(classOf[My], classOf[String])
+        Version >= "2.11.0"
     }
 
     def testExample() {
+        Parse {
+            If(Version < "2.11.1",
+                "oldFoo()",
+                "foo()"
+            )
+        }
     }
+
+    def oldFoo() = ()
+    def foo() = ()
 }
 
 

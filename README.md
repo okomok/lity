@@ -1,6 +1,24 @@
 # lity 0.1.0-SNAPSHOT
 
-Learning macro
+Exploring literal-level metaprogramming
+
+
+```scala
+
+    Assert {
+        Version >= "2.11.0"
+    }
+
+    def testExample() {
+        Parse {
+            If(Version < "2.11.1",
+                "oldFoo()",
+                "foo()"
+            )
+        }
+    }
+
+```
 
 
 ## Links

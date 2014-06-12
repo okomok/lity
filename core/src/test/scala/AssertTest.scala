@@ -43,7 +43,7 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
         }
         Assert { IsConstant(V.value) }
         Intercept("(?s).*IsConstant.*") {"""
-            Assert { Defer(IsConstant)(V.value2) }
+            Assert { "IsConstant(V.value2)" }
         """}
     }
 
@@ -53,7 +53,7 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
 
         Assert { Conforms(classOf[Y], classOf[X]) }
         Intercept("(?s).*Conforms.*") {"""
-            Assert { Defer(Conforms)(classOf[X], classOf[Y]) }
+            Assert { "Conforms(classOf[X], classOf[Y])" }
         """}
     }
 

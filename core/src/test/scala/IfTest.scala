@@ -38,4 +38,13 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
 
         Assert { Equals("h", f.value) }
     }
+
+    def testUnliterable() {
+        object v {
+            final def value = if (true) 1 else 2
+        }
+
+        AssertNot { IsConstant(v.value) }
+    }
+
 }

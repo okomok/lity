@@ -12,7 +12,11 @@ object If {
 
     final class Impl(override val c: Context) extends InContext {
         def apply(b: c.Tree, t: c.Tree, e: c.Tree): c.Tree = {
-            if (AsBoolean(c)(b)) t else e
+            if (AsBoolean(c)(b)) {
+                t // UndeferTree(c)(t)
+            } else {
+                e // UndeferTree(c)(e)
+            }
         }
     }
 }
