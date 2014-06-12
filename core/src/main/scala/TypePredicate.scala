@@ -14,9 +14,9 @@ private object TypePredicate2 {
         val z = x match {
             case Literal(Constant(a: Type)) => y match {
                 case Literal(Constant(b: Type)) => pred(a, b)
-                case _ => TypeError(c)("illegal argument", y, "Type literal")
+                case _ => TypeError(c)("illegal argument", y, "Class literal")
             }
-            case _ => TypeError(c)("illegal argument", x, "Type literal")
+            case _ => TypeError(c)("illegal argument", x, "Class literal")
         }
         q"$z"
     }
