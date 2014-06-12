@@ -11,17 +11,10 @@ object equalsType {
     def apply(x: Class[_], y: Class[_]): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
-        import c.universe._
-
         def apply(x: c.Tree, y: c.Tree): c.Tree = {
-            val z = x match {
-                case Literal(Constant(a: Type)) => y match {
-                    case Literal(Constant(b: Type)) => a =:= b
-                    case _ => TypeError(c)("illegal argument", y, "Type literal")
-                }
-                case _ => TypeError(c)("illegal argument", x, "Type literal")
+            TypePredicate2(c)(x, y) { (a, b) =>
+                a =:= b
             }
-            q"$z"
         }
     }
 }
