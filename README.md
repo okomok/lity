@@ -4,7 +4,6 @@ Exploring literal-level metaprogramming:
 
 
 ```scala
-
     Assert(ScalaVersion >= "2.11.0")
 
     def testExample() {
@@ -15,7 +14,6 @@ Exploring literal-level metaprogramming:
             )
         }
     }
-
 ```
 
 

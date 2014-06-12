@@ -111,7 +111,7 @@ object ScalaVersion {
         val restInt = if (rest.contains("SNAPSHOT")) {
             Int.MinValue
         } else if (rest.contains("RC")) {
-            val rcP = """[^R]+.*RC(\d+).*""".r
+            val rcP = """[^R]*RC(\d+).*""".r
             val rcP(n) = rest
             n.toInt
         } else {
