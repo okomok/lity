@@ -8,6 +8,7 @@ package com.github.okomok.lity
 
 
 // Defers macro-application in macro arguments.
+// https://groups.google.com/d/topic/scala-user/rC2pKStJKq0/discussion
 
 
 class Deferred(x: Any) {

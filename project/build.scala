@@ -12,7 +12,7 @@ object build extends Build {
             ++ Seq("-language", "experimental.macros")
 
         ,libraryDependencies ++= Seq(
-            "org.scalatest" % "scalatest_2.11" % "2.1.5" % "test"
+            "org.scalatest" % "scalatest_2.11" % "2.2.0" % "test"
             , "junit" % "junit" % "4.4" % "test"
         )
 
