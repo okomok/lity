@@ -10,7 +10,7 @@ package com.github.okomok.lity
 private object ParseTree {
     def apply(c: Context)(x: c.Tree): c.Tree = {
         c.parse {
-            ExtractString(c)(x)
+            AsString(c)(x)
         }
     }
 }

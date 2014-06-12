@@ -14,7 +14,7 @@ object sleep {
         import c.universe._
 
         def apply(x: c.Tree): c.Tree = {
-            Thread.sleep(ExtractLong(c)(x))
+            Thread.sleep(AsLong(c)(x))
             q"()"
         }
     }

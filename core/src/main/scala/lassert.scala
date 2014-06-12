@@ -16,7 +16,7 @@ object lassert {
         def apply(x: c.Tree): c.Tree = {
             UndeferTree(c)(x) match {
                 case q"true" => q"()"
-                case y => throw new AssertionError(s"<$x>\n    expected:<true: Boolean(true)> but was:<$y: ${y.tpe.dealias}>")
+                case y => throw new AssertionError(s"<$x>\n    expected:<${ShowExpr(c)(q"true")}> but was:<${ShowExpr(c)(y)}>")
             }
         }
     }
@@ -32,7 +32,7 @@ object lassertNot {
         def apply(x: c.Tree): c.Tree = {
             UndeferTree(c)(x) match {
                 case q"false" => q"()"
-                case y => throw new AssertionError(s"<$x>\n    expected:<false: Boolean(false)> but was:<$y: ${y.tpe.dealias}>")
+                case y => throw new AssertionError(s"<$x>\n    expected:<${ShowExpr(c)(q"false")}> but was:<${ShowExpr(c)(y)}>")
             }
         }
     }

@@ -7,19 +7,20 @@
 package com.github.okomok.lity
 
 
-private object ExtractPair {
-    def apply(c: Context)(x: c.Tree): (c.Tree, c.Tree) = {
+private object AsBoolean {
+    def apply(c: Context)(x: c.Tree): Boolean = {
         import c.universe._
 
-        Tuple.treeToList(c)(x) match {
-            case v :: w :: Nil => (v, w)
-            case _ => TypeError(c)("illegal argument", x, "pair")
+        x match {
+            case q"true" => true
+            case q"false" => false
+            case _ => TypeError(c)("illegal argument", x, "Boolean literal")
         }
     }
 }
 
 
-private object ExtractInt {
+private object AsInt {
     def apply(c: Context)(x: c.Tree): Int = {
         import c.universe._
 
@@ -31,18 +32,18 @@ private object ExtractInt {
 }
 
 
-private object ExtractLong {
+private object AsLong {
     def apply(c: Context)(x: c.Tree): Long = {
         import c.universe._
         x match {
             case q"${y: Long}" => y
-            case t => TypeError(c)("illegal argument", x, "Long literal")
+            case _ => TypeError(c)("illegal argument", x, "Long literal")
         }
     }
 }
 
 
-private object ExtractString {
+private object AsString {
     def apply(c: Context)(x: c.Tree): String = {
         import c.universe._
 

@@ -11,21 +11,18 @@ import com.github.okomok.lity._
 
 import junit.framework.Assert._
 
-class ConstantStringTest extends org.scalatest.junit.JUnit3Suite {
+class LsTest extends org.scalatest.junit.JUnit3Suite {
 
     final val x = "hello"
     final val y = ls"$x world"
+    final val z = s"$x world"
 
     lassert { isConstant(y) }
+    lassertNot { isConstant(z) }
     lassert { lequals("hello world", y) }
 
-    def testTrivial() {
-        assertEquals("hello world", y)
+    def testMe() {
     }
 
-    def testLength0() {
-        val y = apply(Fun(X1 -> ls"Tuple.length(X1)"), (1, 2, 3))
-        assertEquals(3, y)
-    }
 
 }

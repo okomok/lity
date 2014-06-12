@@ -9,7 +9,7 @@ package com.github.okomok.lity
 
 // Fix of SI-8650.
 
-final class StringInterpolatorImpl(override val c: Context) extends InContext {
+final class InterpolatorImpl(override val c: Context) extends InContext {
     import c.universe._
 
     def apply(args: c.Tree*): c.Tree = {

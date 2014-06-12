@@ -10,14 +10,14 @@ package com.github.okomoktest.litytest
 import com.github.okomok.lity._
 
 
-trait BenchmarkTest {
+trait TimeOfTest {
 /*
-    echo {
+    echoTree {
         timeOf("sleep(500)") - timeOf("sleep(200)")
     }
 
 
-    echo {
+    echoTree {
         classBy(this)
     }
 */

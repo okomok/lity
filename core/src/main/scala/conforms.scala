@@ -17,9 +17,9 @@ object conforms {
             val z = x match {
                 case Literal(Constant(a: Type)) => y match {
                     case Literal(Constant(b: Type)) => a <:< b
-                    case y => TypeError(c)("illegal argument", y, "Type literal")
+                    case _ => TypeError(c)("illegal argument", y, "Type literal")
                 }
-                case x => TypeError(c)("illegal argument", x, "Type literal")
+                case _ => TypeError(c)("illegal argument", x, "Type literal")
             }
             q"$z"
         }

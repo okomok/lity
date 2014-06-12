@@ -7,17 +7,18 @@
 package com.github.okomok.lity
 
 
-object expectError {
-    import scala.reflect.macros.TypecheckException
+import scala.reflect.macros.TypecheckException
 
+
+object expectError {
     def apply(r: String)(x: String): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
 
         def apply(r: c.Tree)(x: c.Tree): c.Tree = {
-            val rgx = ExtractString(c)(r)
-            val code = ExtractString(c)(x)
+            val rgx = AsString(c)(r)
+            val code = AsString(c)(x)
 
             try {
                 c.typecheck(c.parse(code))
@@ -29,7 +30,6 @@ object expectError {
                     }
                 }
             }
-
             q"()"
         }
     }

@@ -28,15 +28,7 @@ object build extends Build {
             publish := ()
             , publishLocal := ()
         )
-    ) aggregate(core, macros)
-
-    lazy val macros = Project(
-        "lity-macros"
-        , file("macros")
-        , settings = theSettings ++ Seq(
-            libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
-        )
-    )
+    ) aggregate(core)
 
     lazy val core = Project(
         "lity-core"
@@ -44,5 +36,5 @@ object build extends Build {
         , settings = theSettings ++ Seq(
             libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
         )
-    ) dependsOn(macros)
+    )
 }

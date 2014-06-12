@@ -18,23 +18,24 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
     object Bye
 
     def testTrivial() {
+        object v {
+            final val value = 3
+        }
         object f {
-            final val value = Fun((X1, X2) -> """`if`(X1 == X2, "1", "Hello")""")
+            final val value = `if`(lequals(v.value, 3), "h", "g")
         }
 
-        assertEquals(1, apply(f.value, (1, 1)))
-        assertEquals(Hello, apply(f.value, (1, 0)))
+        lassert { lequals("h", f.value) }
     }
 
-    def testNested() {
+    def testType() {
+        object v {
+            final val value = 3
+        }
         object f {
-            final val value = Fun((X1, X2) -> """
-                `if`(X1 == X2, "1", "`if`(X1 >= X2, \"Bye\", \"Hello\")")
-            """)
+            final val value = `if`(equalsType(classBy(v.value), classOf[Int]), "h", "g")
         }
 
-        assertEquals(1, apply(f.value, (1, 1)))
-        assertEquals(Hello, apply(f.value, (2, 3)))
-        assertEquals(Bye, apply(f.value, (3, 2)))
+        lassert { lequals("h", f.value) }
     }
 }
