@@ -17,9 +17,9 @@ class LsTest extends org.scalatest.junit.JUnit3Suite {
     final val y = ls"$x world"
     final val z = s"$x world"
 
-    lassert { isConstant(y) }
-    lassertNot { isConstant(z) }
-    lassert { lequals("hello world", y) }
+    Assert { IsConstant(y) }
+    AssertNot { IsConstant(z) }
+    Assert { Equals("hello world", y) }
 
     def testMe() {
     }

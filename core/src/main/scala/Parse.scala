@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object parse {
+object Parse {
     def apply(x: String): Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

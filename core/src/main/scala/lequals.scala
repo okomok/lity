@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object lequals {
+object Equals {
     def apply(x: Any, y: Any): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

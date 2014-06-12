@@ -19,20 +19,20 @@ class TypeTest extends org.scalatest.junit.JUnit3Suite {
             final val intType = classOf[Int]
         }
 
-        lassert { equalsType(t.intType, classOf[Int]) }
-        lassertNot { equalsType(classOf[String], classOf[Int]) }
+        Assert { EqualsType(t.intType, classOf[Int]) }
+        AssertNot { EqualsType(classOf[String], classOf[Int]) }
     }
 
     def testEqual() {
-        lassert { equalsType(classBy("g"), classBy("h")) }
-        lassertNot { equalsType(classBy(3), classBy("h")) }
+        Assert { EqualsType(ClassBy("g"), ClassBy("h")) }
+        AssertNot { EqualsType(ClassBy(3), ClassBy("h")) }
     }
 
     def testConfroms() {
         class X
         class Y extends X
-        lassert { conforms(classBy(new Y), classBy(new X)) }
-        lassertNot { conforms(classBy(new X), classBy(new Y)) }
+        Assert { Conforms(ClassBy(new Y), ClassBy(new X)) }
+        AssertNot { Conforms(ClassBy(new X), ClassBy(new Y)) }
     }
 
 }

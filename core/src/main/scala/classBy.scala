@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object classBy {
+object ClassBy {
     def apply(x: Any): Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

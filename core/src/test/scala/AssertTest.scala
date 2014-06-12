@@ -30,9 +30,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEqual() {
-        lassert { lequals(3, 1+2) }
+        Assert { Equals(3, 1+2) }
         expectError(AssertionFailed) {"""
-            lassert { lequals(3, "h") }
+            Assert { Equals(3, "h") }
         """}
     }
 
@@ -41,9 +41,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
             final val value = "hey"
             val value2 = "hey"
         }
-        lassert { isConstant(V.value) }
-        expectError("(?s).*isConstant.*") {"""
-            lassert { defer(isConstant)(V.value2) }
+        Assert { IsConstant(V.value) }
+        expectError("(?s).*IsConstant.*") {"""
+            Assert { Defer(IsConstant)(V.value2) }
         """}
     }
 
@@ -51,9 +51,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
         class X
         class Y extends X
 
-        lassert { conforms(classOf[Y], classOf[X]) }
-        expectError("(?s).*conforms.*") {"""
-            lassert { defer(conforms)(classOf[X], classOf[Y]) }
+        Assert { Conforms(classOf[Y], classOf[X]) }
+        expectError("(?s).*Conforms.*") {"""
+            Assert { Defer(Conforms)(classOf[X], classOf[Y]) }
         """}
     }
 

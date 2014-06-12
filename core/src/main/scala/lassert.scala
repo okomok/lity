@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object lassert {
+object Assert {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(val c: Context) {
@@ -23,7 +23,7 @@ object lassert {
 }
 
 
-object lassertNot {
+object AssertNot {
     def apply(x: Any): Unit = macro Impl.apply
 
     final class Impl(val c: Context) {

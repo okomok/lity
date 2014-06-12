@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object isConstant {
+object IsConstant {
     def apply(x: Any): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

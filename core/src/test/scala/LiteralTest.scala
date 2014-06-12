@@ -18,19 +18,19 @@ class LiteralTest extends org.scalatest.junit.JUnit3Suite {
     final val s2 = s1 + " world"
     final val s3 = s"$s1 world"
 
-    lassert { isConstant(s1) }
-    lassert { isConstant(s2) }
-    lassertNot { isConstant(s3) }
+    Assert { IsConstant(s1) }
+    Assert { IsConstant(s2) }
+    AssertNot { IsConstant(s3) }
 
     final val u = ()
     final val t = classOf[Int]
 
-    lassert { isConstant( () ) }
-    lassertNot { isConstant( u ) }
-    lassertNot { isConstant( Array(1,2,3) ) }
-    lassert { isConstant(t) }
-    lassertNot { isConstant(s"$s1 world") }
-    lassert { isConstant(s1 + " world") }
+    Assert { IsConstant( () ) }
+    AssertNot { IsConstant( u ) }
+    AssertNot { IsConstant( Array(1,2,3) ) }
+    Assert { IsConstant(t) }
+    AssertNot { IsConstant(s"$s1 world") }
+    Assert { IsConstant(s1 + " world") }
 
     def testMe() {
     }

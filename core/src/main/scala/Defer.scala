@@ -21,7 +21,7 @@ object Deferred {
 }
 
 
-object defer {
+object Defer {
     def apply(x: Any): Deferred = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

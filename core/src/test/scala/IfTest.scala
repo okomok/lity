@@ -22,10 +22,10 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
             final val value = 3
         }
         object f {
-            final val value = `if`(lequals(v.value, 3), "h", "g")
+            final val value = If(Equals(v.value, 3), "h", "g")
         }
 
-        lassert { lequals("h", f.value) }
+        Assert { Equals("h", f.value) }
     }
 
     def testType() {
@@ -33,9 +33,9 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
             final val value = 3
         }
         object f {
-            final val value = `if`(equalsType(classBy(v.value), classOf[Int]), "h", "g")
+            final val value = If(EqualsType(ClassBy(v.value), classOf[Int]), "h", "g")
         }
 
-        lassert { lequals("h", f.value) }
+        Assert { Equals("h", f.value) }
     }
 }

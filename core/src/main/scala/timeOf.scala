@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object timeOf {
+object TimeOf {
     def apply(x: String): Long = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

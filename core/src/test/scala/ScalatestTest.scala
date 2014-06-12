@@ -23,7 +23,7 @@ class ScalatestTest extends org.scalatest.junit.JUnit3Suite {
 /*
     def testMe() {
         val a = 3
-        assert(isConstant(a)) // no informative...
+        assert(IsConstant(a)) // no informative...
     }
 
     def testScalatest() {

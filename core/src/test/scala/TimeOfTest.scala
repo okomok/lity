@@ -13,13 +13,13 @@ import com.github.okomok.lity._
 trait TimeOfTest {
 /*
     echoTree {
-        timeOf("sleep(500)") - timeOf("sleep(200)")
+        TimeOf("sleep(500)") - TimeOf("sleep(200)")
     }
 
 
     echoTree {
-        classBy(this)
+        ClassBy(this)
     }
 */
-    //val x = classBy(this)
+    //val x = ClassBy(this)
 }
