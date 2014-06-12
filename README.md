@@ -1,17 +1,15 @@
 # lity 0.1.0-SNAPSHOT
 
-Exploring literal-level metaprogramming
+Exploring literal-level metaprogramming:
 
 
 ```scala
 
-    Assert {
-        Version >= "2.11.0"
-    }
+    Assert(ScalaVersion >= "2.11.0")
 
     def testExample() {
         Parse {
-            If(Version < "2.11.1",
+            If(ScalaVersion < "2.11.1",
                 "oldFoo()",
                 "foo()"
             )

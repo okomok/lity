@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object Version {
+object ScalaVersion {
 
     def apply(): String = macro Impl.apply
 
