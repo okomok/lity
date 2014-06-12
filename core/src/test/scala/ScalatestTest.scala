@@ -18,7 +18,6 @@ class ScalatestTest extends org.scalatest.junit.JUnit3Suite {
     def foo() = false
 
     def testTriv() {
-
     }
 /*
     def testMe() {

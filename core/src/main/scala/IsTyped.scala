@@ -21,7 +21,6 @@ object IsTyped {
                 c.typecheck(ParseTree(c)(x))
                 q"true"
             } catch {
-                // ParseException should be propagated.
                 case _: TypecheckException => q"false"
             }
         }

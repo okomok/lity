@@ -27,8 +27,6 @@ class ExampleTest extends org.scalatest.junit.JUnit3Suite {
 
     def testExample() {
     }
-
-
 }
 
 
