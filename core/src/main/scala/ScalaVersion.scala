@@ -8,7 +8,6 @@ package com.github.okomok.lity
 
 
 object ScalaVersion {
-
     def apply(): Long = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
@@ -23,7 +22,7 @@ object ScalaVersion {
 
 
 object ScalaVersionString {
-    def string(): String = macro Impl.apply
+    def apply(): String = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
         import c.universe._

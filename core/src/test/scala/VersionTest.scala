@@ -36,8 +36,8 @@ class VersionTest extends org.scalatest.junit.JUnit3Suite {
 
     def testCompare() {
 
-        Assert {
-            ScalaVersion() < Version("2.99.0")
+        AssertNot {
+            Version(ScalaVersionString()) < Version("2.11.0")
         }
 
         AssertNot {
@@ -58,6 +58,10 @@ class VersionTest extends org.scalatest.junit.JUnit3Suite {
 
         Assert {
             Version("3.3.1") < Version("3.3.2")
+        }
+
+        Assert {
+            Version("1.4.2-SNAPSHOT") < Version("1.4.2-RC3")
         }
 
         Assert {
