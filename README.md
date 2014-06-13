@@ -4,11 +4,11 @@ Exploring literal-level metaprogramming:
 
 
 ```scala
-    Assert(ScalaVersion >= "2.11.0")
+    Assert(ScalaVersion() >= Version("2.11.0"))
 
     def testExample() {
         Compile {
-            If(ScalaVersion < "2.11.1",
+            If(ScalaVersion() < Version("2.11.1"),
                 "oldFoo()",
                 "foo()"
             )
