@@ -12,12 +12,12 @@ import com.github.okomok.lity._
 
 trait TimeOfTest {
 /*
-    Echo {
+    EchoExpr {
         TimeOf("sleep(500)") - TimeOf("sleep(200)")
     }
 
 
-    Echo {
+    EchoExpr {
         ClassBy(this)
     }
 */

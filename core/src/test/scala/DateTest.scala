@@ -15,7 +15,7 @@ import junit.framework.Assert._
 class DateTest extends org.scalatest.junit.JUnit3Suite {
 
     final val date = Date()
-//    Echo(date)
+//    EchoExpr(date)
 
     def testMe() {
     }

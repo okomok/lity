@@ -7,10 +7,10 @@
 package com.github.okomok.lity
 
 
-import scala.reflect.macros.TypecheckException
+import scala.reflect.macros.{ParseException, TypecheckException}
 
 
-object IsTyped {
+object IsCompilable {
     def apply(x: String): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
@@ -21,6 +21,7 @@ object IsTyped {
                 c.typecheck(ParseTree(c)(x))
                 q"true"
             } catch {
+                case _: ParseException => q"false"
                 case _: TypecheckException => q"false"
             }
         }

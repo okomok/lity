@@ -7,16 +7,16 @@
 package com.github.okomok.lity
 
 
-object Parse {
+object Compile {
     def apply(x: String): Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
-        def apply(x: c.Tree): c.Tree = ParseTree(c)(x)
+        def apply(x: c.Tree): c.Tree = c.typecheck(ParseTree(c)(x))
     }
 }
 
 
-object unparse {
+object Uncompile {
     def apply(x: Any): String = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

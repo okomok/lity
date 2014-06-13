@@ -7,7 +7,7 @@ Exploring literal-level metaprogramming:
     Assert(ScalaVersion >= "2.11.0")
 
     def testExample() {
-        Parse {
+        Compile {
             If(ScalaVersion < "2.11.1",
                 "oldFoo()",
                 "foo()"

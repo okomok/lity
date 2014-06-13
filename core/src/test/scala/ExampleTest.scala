@@ -17,7 +17,7 @@ class ExampleTest extends org.scalatest.junit.JUnit3Suite {
     Assert(ScalaVersion >= "2.11.0")
 
     def testExample() {
-        Parse {
+        Compile {
             If(ScalaVersion < "2.11.1",
                 "oldFoo()",
                 "foo()"

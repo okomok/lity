@@ -14,7 +14,7 @@ package object lity {
 
     type Unspecified = Any
 
-    implicit class Interpolator(val sc: StringContext) extends AnyVal {
-        def ls(args: Any*): String = macro InterpolatorImpl.apply
+    implicit class ConstantStringInterpolator(val sc: StringContext) extends AnyVal {
+        def cs(args: Any*): String = macro ConstantStringInterpolatorImpl.apply
     }
 }
