@@ -22,10 +22,12 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
             final val value = 3
         }
         object f {
-            final val value = If(Equals(v.value, 3), "h", "g")
+            final val value = Constant {
+                if (v.value == 3) "h" else "g"
+            }
         }
 
-        Assert { Equals("h", f.value) }
+        Assert { "h" == f.value }
     }
 
     def testType() {
@@ -33,10 +35,12 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
             final val value = 3
         }
         object f {
-            final val value = If(EqualsType(ClassBy(v.value), classOf[Int]), "h", "g")
+            final val value = Constant {
+                if (ClassBy(v.value) == classOf[Int]) "h" else "g"
+            }
         }
 
-        Assert { Equals("h", f.value) }
+        Assert { "h" == f.value }
     }
 
     def testUnliterable() {

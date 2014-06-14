@@ -30,9 +30,9 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testEqual() {
-        Assert { Equals(3, 1+2) }
+        Assert { 3 == (1+2) }
         Intercept(AssertionFailed) {"""
-            Assert { Equals(3, "h") }
+            Assert { 3 == "h" }
         """}
     }
 

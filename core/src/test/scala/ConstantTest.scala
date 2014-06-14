@@ -42,6 +42,12 @@ class ConstantTest extends org.scalatest.junit.JUnit3Suite {
         }
     }
 
+    Assert {
+        IsConstant {
+            Constant { if (!b) 1 }
+        }
+    }
+
 
     def testMe() {
     }

@@ -17,7 +17,7 @@ class LineTest extends org.scalatest.junit.JUnit3Suite {
     final val line = Line()
 
     Assert {
-        Equals(17, line)
+        17 == line
     }
 
     def testMe() {

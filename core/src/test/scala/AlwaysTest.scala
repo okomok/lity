@@ -17,7 +17,7 @@ class AlwaysTest extends org.scalatest.junit.JUnit3Suite {
     final val y = Always(3)("hello")
 
     Assert {
-        Equals(3, y)
+        3 == y
     }
 
     def testMe() {

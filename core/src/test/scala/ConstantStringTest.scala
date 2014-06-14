@@ -19,7 +19,7 @@ class ConstantStringTest extends org.scalatest.junit.JUnit3Suite {
 
     Assert { IsConstant(y) }
     AssertNot { IsConstant(z) }
-    Assert { Equals("hello world", y) }
+    Assert { "hello world" == y }
 
     def testMe() {
     }

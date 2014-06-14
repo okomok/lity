@@ -17,7 +17,7 @@ class FileTest extends org.scalatest.junit.JUnit3Suite {
     final val file = FileName()
 
     Assert {
-        Equals("FileTest.scala", file)
+        "FileTest.scala" == file
     }
 
     def testMe() {
