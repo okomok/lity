@@ -34,19 +34,19 @@ private object Constantify {
                     q"$y"
                 }
 
-                case q"if($b) $t else $e" => {
+                case q"if ($b) $t else $e" => {
                     if (AsBoolean(c)(_apply(b))) _apply(t) else _apply(e)
                 }
 
                 case q"$l.$m" => {
                     val l_ = _apply(l)
-                    _apply(q"$l_.$m")
+                    builtin(c)(q"$l_.$m")
                 }
 
                 case q"$l.$m(..$rs)" => {
                     val l_ = _apply(l)
                     val rs_ = rs.map { r => _apply(r) }
-                    _apply(q"$l_.$m(..$rs_)")
+                    builtin(c)(q"$l_.$m(..$rs_)")
                 }
 
                 case y => y
