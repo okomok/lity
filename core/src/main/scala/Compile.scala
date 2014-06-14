@@ -16,10 +16,12 @@ object Compile extends Macro {
 }
 
 
-object Uncompile {
+object Uncompile extends Macro {
     def apply(x: Any): String = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
-        def apply(x: c.Tree): c.Tree = UnparseTree(c)(x)
+        def apply(x: c.Tree): c.Tree = EnsuringConstant(c) {
+            UnparseTree(c)(x)
+        }
     }
 }

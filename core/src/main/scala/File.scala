@@ -13,7 +13,7 @@ object FileName extends Macro {
     final class Impl(override val c: Context) extends MacroImpl0 {
         import c.universe._
 
-        override protected def impl(): c.Tree = {
+        override protected def impl(): c.Tree = EnsuringConstant(c) {
             val y = c.macroApplication.pos.source.toString
             q"$y"
         }

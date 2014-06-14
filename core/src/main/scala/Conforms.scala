@@ -11,7 +11,7 @@ object Conforms extends Macro {
     def apply(x: Class[_], y: Class[_]): Boolean = macro Impl.apply
 
     final class Impl(override val c: Context) extends MacroImpl2 {
-        override protected def impl(x: c.Tree, y: c.Tree): c.Tree = {
+        override protected def impl(x: c.Tree, y: c.Tree): c.Tree = EnsuringConstant(c) {
             TypePredicate2(c)(x, y) { (a, b) =>
                 a <:< b
             }

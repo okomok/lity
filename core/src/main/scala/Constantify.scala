@@ -13,11 +13,11 @@ private object Constantify {
 
         def _apply(x: c.Tree): c.Tree = {
             builtin(c)(x) match {
-                case Literal(c.universe.Constant(a: Type)) => {
+                case Literal(Constant(a: Type)) => {
                     Literal(Constant(a.dealias))
                 }
 
-                case y @ Literal(c.universe.Constant(_)) => y
+                case y @ Literal(Constant(_)) => y
 
                 case q"!$b" => {
                     val y = !(AsBoolean(c)(_apply(b)))
@@ -38,23 +38,31 @@ private object Constantify {
                     if (AsBoolean(c)(_apply(b))) _apply(t) else _apply(e)
                 }
 
+                case q"$l.$m" => {
+                    val l_ = _apply(l)
+                    _apply(q"$l_.$m")
+                }
+
+                case q"$l.$m(..$rs)" => {
+                    val l_ = _apply(l)
+                    val rs_ = rs.map { r => _apply(r) }
+                    _apply(q"$l_.$m(..$rs_)")
+                }
+
                 case y => y
             }
         }
 
-        _apply(x) match {
-            case Literal(Constant(_: Unit)) => illegal(c)(x) // Unit is not literal.
-            case y @ Literal(Constant(_)) => y
-            case _ => illegal(c)(x)
+        val y = _apply(x)
+        if (IsConstantTree(c)(y)) {
+            y
+        } else {
+            TypeError(c)("illegal argument", x, "constant-able expression")
         }
     }
 
     // Arithmetic operations etc supported.
     private def builtin(c: Context)(x: c.Tree): c.Tree = {
         c.typecheck(x)
-    }
-
-    private def illegal(c: Context)(x: c.Tree): Nothing = {
-        TypeError(c)("illegal argument", x, "constant-able expression")
     }
 }

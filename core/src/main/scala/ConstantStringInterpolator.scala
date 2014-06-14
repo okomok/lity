@@ -12,7 +12,7 @@ package com.github.okomok.lity
 final class ConstantStringInterpolatorImpl(override val c: Context) extends InContext {
     import c.universe._
 
-    def apply(args: c.Tree*): c.Tree = {
+    def apply(args: c.Tree*): c.Tree = EnsuringConstant(c) {
         val parts = c.prefix.tree match {
             case q"${_}(${_}(..$as))" => toStringList(as)
         }

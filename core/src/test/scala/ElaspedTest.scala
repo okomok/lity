@@ -10,10 +10,10 @@ package com.github.okomoktest.litytest
 import com.github.okomok.lity._
 
 
-trait TimeOfTest {
+trait ElapsedTest {
 /*
     EchoExpr {
-        TimeOf("sleep(500)") - TimeOf("sleep(200)")
+        Elapsed("sleep(500)") - Elapsed("sleep(200)")
     }
 
 

@@ -16,7 +16,7 @@ object IsParsable extends Macro {
     final class Impl(override val c: Context) extends MacroImpl1 {
         import c.universe._
 
-        override protected def impl(x: c.Tree): c.Tree = {
+        override protected def impl(x: c.Tree): c.Tree = EnsuringConstant(c) {
             try {
                 ParseTree(c)(x)
                 q"true"

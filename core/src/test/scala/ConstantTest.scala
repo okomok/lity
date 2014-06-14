@@ -24,6 +24,7 @@ class ConstantTest extends org.scalatest.junit.JUnit3Suite {
         }
     }
 
+
     Assert {
         IsConstant {
             Constant { s == "12" }
@@ -41,6 +42,39 @@ class ConstantTest extends org.scalatest.junit.JUnit3Suite {
             Constant { if (!b) 1 else 2 }
         }
     }
+
+    Assert {
+        IsConstant {
+            i == 12
+        }
+    }
+
+    AssertNot {
+        IsConstant {
+            s == "12"
+        }
+    }
+
+    Assert {
+        IsConstant {
+            true && true
+        }
+    }
+
+    AssertNot {
+        IsConstant {
+            (s == "12") && (s == "12")
+        }
+    }
+
+    Assert {
+        IsConstant {
+            Constant {
+                (s == "12") && (s == "12")
+            }
+        }
+    }
+
 
     def testMe() {
     }

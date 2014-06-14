@@ -13,7 +13,7 @@ object ScalaVersion extends Macro {
     final class Impl(override val c: Context) extends MacroImpl0 {
         import c.universe._
 
-        override protected def impl(): c.Tree = {
+        override protected def impl(): c.Tree = EnsuringConstant(c) {
             val y = Version.encode(util.Properties.versionString)
             q"$y"
         }
@@ -27,7 +27,7 @@ object ScalaVersionString extends Macro {
     final class Impl(override val c: Context) extends MacroImpl0 {
         import c.universe._
 
-        override protected def impl(): c.Tree = {
+        override protected def impl(): c.Tree = EnsuringConstant(c) {
             val y = util.Properties.versionString
             q"$y"
         }

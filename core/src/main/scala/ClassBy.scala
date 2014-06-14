@@ -13,7 +13,7 @@ object ClassBy extends Macro {
     final class Impl(override val c: Context) extends InContext {
         import c.universe._
 
-        def apply(x: c.Tree): c.Tree = {
+        def apply(x: c.Tree): c.Tree = EnsuringConstant(c) {
             q"Predef.classOf[${x.tpe.widen}]"
         }
     }
