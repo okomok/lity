@@ -42,11 +42,11 @@ private object Constantify {
                 case q"if($b) $t else $e" => {
                     if (AsBoolean(c)(_apply(b))) _apply(t) else _apply(e)
                 }
-
+/* Unit is not literal.
                 case q"if($b) $t" => {
                     if (AsBoolean(c)(_apply(b))) _apply(t) else q"()"
                 }
-
+*/
                 case _ => TypeError(c)("illegal argument", x, "constant-able expression")
             }
         }

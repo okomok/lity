@@ -38,16 +38,9 @@ class ConstantTest extends org.scalatest.junit.JUnit3Suite {
 
     Assert {
         IsConstant {
-            Constant { if (b) 1 }
+            Constant { if (!b) 1 else 2 }
         }
     }
-
-    Assert {
-        IsConstant {
-            Constant { if (!b) 1 }
-        }
-    }
-
 
     def testMe() {
     }
