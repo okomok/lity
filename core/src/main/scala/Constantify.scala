@@ -8,11 +8,6 @@ package com.github.okomok.lity
 
 
 private object Constantify {
-    // Arithmetic operations etc supported.
-    def builtin(c: Context)(x: c.Tree): c.Tree = {
-        c.typecheck(x)
-    }
-
     def apply(c: Context)(x: c.Tree): c.Tree = {
         import c.universe._
 
@@ -42,15 +37,24 @@ private object Constantify {
                 case q"if($b) $t else $e" => {
                     if (AsBoolean(c)(_apply(b))) _apply(t) else _apply(e)
                 }
-/* Unit is not literal.
-                case q"if($b) $t" => {
-                    if (AsBoolean(c)(_apply(b))) _apply(t) else q"()"
-                }
-*/
-                case _ => TypeError(c)("illegal argument", x, "constant-able expression")
+
+                case y => y
             }
         }
 
-        _apply(x)
+        _apply(x) match {
+            case Literal(Constant(_: Unit)) => illegal(c)(x) // Unit is not literal.
+            case y @ Literal(Constant(_)) => y
+            case _ => illegal(c)(x)
+        }
+    }
+
+    // Arithmetic operations etc supported.
+    private def builtin(c: Context)(x: c.Tree): c.Tree = {
+        c.typecheck(x)
+    }
+
+    private def illegal(c: Context)(x: c.Tree): Nothing = {
+        TypeError(c)("illegal argument", x, "constant-able expression")
     }
 }
