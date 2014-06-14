@@ -7,6 +7,7 @@
 package com.github.okomok.lity
 
 
+// Will be removed.
 object Equals {
     def apply(x: Any, y: Any): Boolean = macro Impl.apply
 

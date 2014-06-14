@@ -7,13 +7,13 @@
 package com.github.okomok.lity
 
 
-object TimeOf {
+object TimeOf extends Macro {
     def apply(x: String): Long = macro Impl.apply
 
-    final class Impl(override val c: Context) extends InContext {
+    final class Impl(override val c: Context) extends MacroImpl1 {
         import c.universe._
 
-        def apply(x: c.Tree): c.Tree = {
+        override protected def impl(x: c.Tree): c.Tree = {
             val y = ParseTree(c)(x)
             val start = System.currentTimeMillis
             c.typecheck(y)

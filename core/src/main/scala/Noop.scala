@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object Noop {
+object Noop extends Macro {
     def apply(x: Any*): Unit = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {

@@ -7,6 +7,20 @@
 package com.github.okomok.lity
 
 
+object FileName extends Macro {
+    def apply(): String = macro Impl.apply
+
+    final class Impl(override val c: Context) extends MacroImpl0 {
+        import c.universe._
+
+        override protected def impl(): c.Tree = {
+            val y = c.macroApplication.pos.source.toString
+            q"$y"
+        }
+    }
+}
+
+
 /*
 Full-path is a privacy.
 object File {
@@ -22,17 +36,3 @@ object File {
     }
 }
 */
-
-
-object FileName {
-    def apply(): String = macro Impl.apply
-
-    final class Impl(override val c: Context) extends InContext {
-        import c.universe._
-
-        def apply(): c.Tree = {
-            val y = c.macroApplication.pos.source.toString
-            q"$y"
-        }
-    }
-}

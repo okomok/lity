@@ -7,13 +7,13 @@
 package com.github.okomok.lity
 
 
-object Date {
+object Date extends Macro {
     def apply(): String = macro Impl.apply
 
-    final class Impl(override val c: Context) extends InContext {
+    final class Impl(override val c: Context) extends MacroImpl0 {
         import c.universe._
 
-        def apply(): c.Tree = {
+        override protected def impl(): c.Tree = {
             val y = new java.util.Date().toString
             q"$y"
         }

@@ -7,21 +7,23 @@
 package com.github.okomok.lity
 
 
-object Assert {
+object Assert extends Macro {
     def apply(x: Any): Unit = macro Impl.apply
 
-    final class Impl(val c: Context) {
+    final class Impl(override val c: Context) extends MacroImpl1 {
         import c.universe._
-        def apply(x: c.Tree): c.Tree = Assertion(c)(q"true", x)
+
+        override protected def impl(x: c.Tree): c.Tree = Assertion(c)(q"true", x)
     }
 }
 
 
-object AssertNot {
+object AssertNot extends Macro {
     def apply(x: Any): Unit = macro Impl.apply
 
-    final class Impl(val c: Context) {
+    final class Impl(override val c: Context) extends MacroImpl1 {
         import c.universe._
-        def apply(x: c.Tree): c.Tree = Assertion(c)(q"false", x)
+
+        override protected def impl(x: c.Tree): c.Tree = Assertion(c)(q"false", x)
     }
 }

@@ -35,6 +35,7 @@ private object AsInt {
 private object AsLong {
     def apply(c: Context)(x: c.Tree): Long = {
         import c.universe._
+
         x match {
             case q"${y: Long}" => y
             case _ => TypeError(c)("illegal argument", x, "Long literal")

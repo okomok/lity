@@ -7,6 +7,7 @@
 package com.github.okomok.lity
 
 
+// Will be removed.
 object If {
     def apply(b: Boolean, t: Any, e: Any): Any = macro Impl.apply
 

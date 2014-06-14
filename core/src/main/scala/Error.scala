@@ -7,14 +7,14 @@
 package com.github.okomok.lity
 
 
-object Error {
-    def apply(msg: String): Unit = macro Impl.apply
+object Error extends Macro {
+    def apply(x: String): Unit = macro Impl.apply
 
-    final class Impl(override val c: Context) extends InContext {
+    final class Impl(override val c: Context) extends MacroImpl1 {
         import c.universe._
 
-        def apply(msg: c.Tree): c.Tree = {
-            c.error(c.enclosingPosition, AsString(c)(msg))
+        override protected def impl(x: c.Tree): c.Tree = {
+            c.error(c.enclosingPosition, AsString(c)(x))
             q"()"
         }
     }

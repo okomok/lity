@@ -12,7 +12,7 @@ sealed trait Type {
 }
 
 
-object Type {
+object Type extends Macro {
 
     def wrap[x]: wrap[x] = new Type {
         override type apply = x
@@ -28,10 +28,10 @@ object Type {
 
     def apply(x: Class[_]): Type = macro Impl.apply
 
-    final class Impl(override val c: Context) extends InContext {
+    final class Impl(override val c: Context) extends MacroImpl1 {
         import c.universe._
 
-        def apply(x: c.Tree): c.Tree = {
+        override protected def impl(x: c.Tree): c.Tree = {
             x match {
                 case Literal(Constant(a: c.universe.Type)) => q"${Here(c)}.Type.wrap[$a]"
             }

@@ -18,10 +18,11 @@ class ExampleTest extends org.scalatest.junit.JUnit3Suite {
 
     def testExample() {
         Compile {
-            If(ScalaVersion() < Version("2.11.1"),
-                "oldFoo()",
+            if (ScalaVersion() < Version("2.11.1")) {
+                "oldFoo()"
+            } else {
                 "foo()"
-            )
+            }
         }
     }
 

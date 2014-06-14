@@ -10,13 +10,13 @@ package com.github.okomok.lity
 import scala.reflect.macros.TypecheckException
 
 
-object IsTypable {
+object IsTypable extends Macro {
     def apply(x: String): Boolean = macro Impl.apply
 
-    final class Impl(override val c: Context) extends InContext {
+    final class Impl(override val c: Context) extends MacroImpl1 {
         import c.universe._
 
-        def apply(x: c.Tree): c.Tree = {
+        override protected def impl(x: c.Tree): c.Tree = {
             try {
                 c.typecheck(ParseTree(c)(x))
                 q"true"
