@@ -51,4 +51,9 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
         AssertNot { IsConstant(v.value) }
     }
 
+    def testMacroIf() {
+        val x: Hello.type = If(true, Hello, Bye)
+        ()
+    }
+
 }
