@@ -25,7 +25,7 @@ class LiteralTest extends org.scalatest.junit.JUnit3Suite {
     final val u = ()
     final val t = classOf[Int]
 
-    Assert { IsConstant( () ) }
+    AssertNot { IsConstant( () ) }
     AssertNot { IsConstant( u ) }
     AssertNot { IsConstant( Array(1,2,3) ) }
     Assert { IsConstant(t) }
