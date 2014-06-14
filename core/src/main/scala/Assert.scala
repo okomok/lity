@@ -12,21 +12,7 @@ object Assert {
 
     final class Impl(val c: Context) {
         import c.universe._
-
-        def apply(x: c.Tree): c.Tree = {
-            x match {
-                case q"${s: String}" => _apply(s, c.typecheck(c.parse(s)))
-                case q"${_: Boolean}" => _apply(show(x), x)
-                case _ => TypeError(c)("illegal argument", x, "Boolean literal or String literal of expression")
-            }
-        }
-
-        private def _apply(s: String, x: c.Tree): c.Tree = {
-            x match {
-                case q"true" => q"()"
-                case y => throw new AssertionError(s"$s\n    expected:<${ShowExpr(c)(q"true")}> but was:<${ShowExpr(c)(y)}>")
-            }
-        }
+        def apply(x: c.Tree): c.Tree = Assertion(c)(q"true", x)
     }
 }
 
@@ -36,20 +22,6 @@ object AssertNot {
 
     final class Impl(val c: Context) {
         import c.universe._
-
-        def apply(x: c.Tree): c.Tree = {
-            x match {
-                case q"${s: String}" => _apply(s, c.typecheck(c.parse(s)))
-                case q"${_: Boolean}" => _apply(show(x), x)
-                case _ => TypeError(c)("illegal argument", x, "Boolean literal or String literal of expression")
-            }
-        }
-
-        private def _apply(s: String, x: c.Tree): c.Tree = {
-            x match {
-                case q"false" => q"()"
-                case y => throw new AssertionError(s"$s\n    expected:<${ShowExpr(c)(q"false")}> but was:<${ShowExpr(c)(y)}>")
-            }
-        }
+        def apply(x: c.Tree): c.Tree = Assertion(c)(q"false", x)
     }
 }
