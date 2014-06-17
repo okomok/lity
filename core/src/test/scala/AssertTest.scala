@@ -56,7 +56,6 @@ class AssertTest extends org.scalatest.junit.JUnit3Suite {
             Assert { "Conforms(classOf[X], classOf[Y])" }
         """}
     }
-
 }
 
 

@@ -13,25 +13,30 @@ private object Constantify {
 
         def _apply(x: c.Tree): c.Tree = {
             builtin(c)(x) match {
-                case Literal(Constant(a: Type)) => {
-                    Literal(Constant(a.dealias))
+
+                case Literal(Constant(a: Type)) => { // q"${a: Type}" doesn't work.
+                    Literal(Constant(a.dealias)) // dealias for type equality
                 }
 
                 case y @ Literal(Constant(_)) => y
 
+                case y @ q"$l == $r" => {
+                    (_apply(l), _apply(r)) match {
+                        case (Literal(Constant(l_)), Literal(Constant(r_))) => q"${l_ == r_}"
+                        case _ => y
+                    }
+                }
+
+                case y @ q"$l != $r" => {
+                    (_apply(l), _apply(r)) match {
+                        case (Literal(Constant(l_)), Literal(Constant(r_))) => q"${l_ != r_}"
+                        case _ => y
+                    }
+                }
+
                 case q"!$b" => {
-                    val y = !(AsBoolean(c)(_apply(b)))
-                    q"$y"
-                }
-
-                case q"$l == $r" => {
-                    val y = _apply(l).equalsStructure(_apply(r))
-                    q"$y"
-                }
-
-                case q"$l != $r" => {
-                    val y = !(_apply(l).equalsStructure(_apply(r)))
-                    q"$y"
+                    val b_ = AsBoolean(c)(_apply(b))
+                    q"${!b_}"
                 }
 
                 case q"if ($b) $t else $e" => {

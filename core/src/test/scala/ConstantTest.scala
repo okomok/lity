@@ -18,6 +18,12 @@ class ConstantTest extends org.scalatest.junit.JUnit3Suite {
     final val i = 12
     final val s = "12"
 
+    AssertNot {
+        IsConstant {
+            !true
+        }
+    }
+
     Assert {
         IsConstant {
             Constant { i == 2 }
