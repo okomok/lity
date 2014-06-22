@@ -32,9 +32,8 @@ object Type extends Macro {
         import c.universe._
 
         override protected def impl(x: c.Tree): c.Tree = {
-            x match {
-                case Literal(Constant(a: c.universe.Type)) => q"${Here(c)}.Type.wrap[$a]"
-            }
+            val a = AsType(c)(x)
+            q"${Here(c)}.Type.wrap[$a]"
         }
     }
 }

@@ -54,3 +54,15 @@ private object AsString {
         }
     }
 }
+
+
+private object AsType {
+    def apply(c: Context)(x: c.Tree): c.Type = {
+        import c.universe._
+
+        x match {
+            case Literal(Constant(y: Type)) => y // q"${y: Type}" doesn't work.
+            case _ => TypeError(c)("illegal argument", x, "Class literal")
+        }
+    }
+}
