@@ -28,7 +28,7 @@ object Version extends Macro {
         encodeIntList(toIntList(x))
     }
 
-    final val SectMax = 999
+    final val BASE = 1000
 
     def toIntList(x: String): List[Int] = {
         val vP = """\D*(\d+)\.(\d+)\.(\d+)(.*)""".r
@@ -41,17 +41,17 @@ object Version extends Macro {
             val rcP(n) = rest
             1 + n.toInt
         } else { // release version assumed.
-            SectMax
+            BASE-1
         }
 
         List(major.toInt, minor.toInt, patchlevel.toInt, restInt).ensuring { ns =>
-            ns.forall(_ <= SectMax)
+            ns.forall(_ <= BASE-1)
         }
     }
 
     def encodeIntList(ns: List[Int]): Long = {
         ns.reverse.zipWithIndex.map { case (n, i) =>
-            n.toLong * math.pow(SectMax+1, i).toLong
+            n.toLong * math.pow(BASE, i).toLong
         }.reduceLeft(_ + _)
     }
 }
