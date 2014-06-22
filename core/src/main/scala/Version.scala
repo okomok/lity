@@ -45,7 +45,7 @@ object Version extends Macro {
         }
 
         List(major.toInt, minor.toInt, patchlevel.toInt, restInt).ensuring { ns =>
-            ns.forall(_ <= BASE-1)
+            ns.forall(_ < BASE)
         }
     }
 

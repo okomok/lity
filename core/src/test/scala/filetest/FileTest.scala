@@ -20,7 +20,10 @@ class FileTest extends org.scalatest.junit.JUnit3Suite {
         "FileTest.scala" == file
     }
 
+    final val path = File()
+
     def testMe() {
+        assertEquals("filetest" + java.io.File.separator + "FileTest.scala", path)
     }
 
 }
