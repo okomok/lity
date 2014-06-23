@@ -7,14 +7,15 @@
 package com.github.okomok.lity
 
 
-object Abort extends Macro {
-    def apply(x: String): Nothing = macro Impl.apply
+object Warning extends Macro {
+    def apply(x: String): Unit = macro Impl.apply
 
-    final class Impl(override val c: Context) extends MacroImpl1 {
+    final class Impl(override val c: Context) extends MacroImpl1  {
         import c.universe._
 
         override protected def impl(x: c.Tree): c.Tree = {
-            c.abort(NoPosition, AsString(c)(x))
+            c.warning(NoPosition, AsString(c)(x))
+            q"()"
         }
     }
 }

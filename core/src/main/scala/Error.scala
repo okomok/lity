@@ -14,7 +14,7 @@ object Error extends Macro {
         import c.universe._
 
         override protected def impl(x: c.Tree): c.Tree = {
-            c.error(c.enclosingPosition, AsString(c)(x))
+            c.error(NoPosition, AsString(c)(x))
             q"()"
         }
     }

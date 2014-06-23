@@ -10,10 +10,10 @@ package com.github.okomok.lity
 object Echo extends Macro {
     def apply(x: String): Unit = macro Impl.apply
 
-    final class Impl(override val c: Context) extends InContext  {
+    final class Impl(override val c: Context) extends MacroImpl1  {
         import c.universe._
 
-        def apply(x: c.Tree): c.Tree = {
+        override protected def impl(x: c.Tree): c.Tree = {
             c.echo(NoPosition, AsString(c)(x))
             q"()"
         }
