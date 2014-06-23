@@ -11,15 +11,15 @@ package com.github.okomok.lity
 
 
 object Regex extends Macro {
-    def apply(x: String): scala.util.matching.Regex = macro Impl.apply
+    def apply(x: String): String = macro Impl.apply
 
-    final class Impl(override val c: Context) extends MacroImpl1 with ConstantParam1 {
+    final class Impl(override val c: Context) extends MacroImpl1 with ConstantParam1 with ReturnConstant1 {
         import c.universe._
 
         override protected def impl(x: c.Tree): c.Tree = {
             val s = AsString(c)(x)
             s.r
-            q"$s.r"
+            q"$s"
         }
     }
 }

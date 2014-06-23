@@ -21,7 +21,7 @@ class RegexTest extends org.scalatest.junit.JUnit3Suite {
     def testOK() {
         val rx = Regex("h.*o")
         assertTrue {
-            rx.pattern.matcher("hello").matches
+            rx.r.pattern.matcher("hello").matches
         }
     }
 }
