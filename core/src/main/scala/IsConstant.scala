@@ -15,10 +15,10 @@ package com.github.okomok.lity
 object IsConstant {
     def apply(x: Any): Boolean = macro Impl.apply
 
-    final class Impl(override val c: Context) extends InContext {
+    final class Impl(override val c: Context) extends MacroImpl1 with ReturnConstant1{
         import c.universe._
 
-        def apply(x: c.Tree): c.Tree = EnsuringConstant(c) {
+        override protected def impl(x: c.Tree): c.Tree = {
             if (IsConstantTree(c)(x)) {
                 q"true"
             } else {

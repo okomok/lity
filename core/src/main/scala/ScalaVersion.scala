@@ -10,10 +10,10 @@ package com.github.okomok.lity
 object ScalaVersion extends Macro {
     def apply(): Long = macro Impl.apply
 
-    final class Impl(override val c: Context) extends MacroImpl0 {
+    final class Impl(override val c: Context) extends MacroImpl0 with ReturnConstant0 {
         import c.universe._
 
-        override protected def impl(): c.Tree = EnsuringConstant(c) {
+        override protected def impl(): c.Tree = {
             val y = Version.encode(scala.util.Properties.versionString)
             q"$y"
         }
@@ -24,10 +24,10 @@ object ScalaVersion extends Macro {
 object ScalaVersionString extends Macro {
     def apply(): String = macro Impl.apply
 
-    final class Impl(override val c: Context) extends MacroImpl0 {
+    final class Impl(override val c: Context) extends MacroImpl0 with ReturnConstant0 {
         import c.universe._
 
-        override protected def impl(): c.Tree = EnsuringConstant(c) {
+        override protected def impl(): c.Tree = {
             val y = scala.util.Properties.versionString
             q"$y"
         }

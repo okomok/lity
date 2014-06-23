@@ -10,10 +10,10 @@ package com.github.okomok.lity
 object Line extends Macro {
     def apply(): Int = macro Impl.apply
 
-    final class Impl(override val c: Context) extends MacroImpl0 {
+    final class Impl(override val c: Context) extends MacroImpl0 with ReturnConstant0 {
         import c.universe._
 
-        override protected def impl(): c.Tree = EnsuringConstant(c) {
+        override protected def impl(): c.Tree = {
             val y = c.macroApplication.pos.line
             q"$y"
         }

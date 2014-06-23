@@ -9,17 +9,17 @@ package com.github.okomok.lity
 
 trait MacroImpl0 extends InContext {
     protected def impl(): c.Tree
-    final def apply(): c.Tree = impl()
+    def apply(): c.Tree = impl()
 }
 
 
 trait MacroImpl1 extends InContext {
     protected def impl(x: c.Tree): c.Tree
-    final def apply(x: c.Tree): c.Tree = impl(Constantify(c)(x))
+    def apply(x: c.Tree): c.Tree = impl(x)
 }
 
 
 trait MacroImpl2 extends InContext {
     protected def impl(x: c.Tree, y: c.Tree): c.Tree
-    final def apply(x: c.Tree, y: c.Tree): c.Tree = impl(Constantify(c)(x), Constantify(c)(y))
+    def apply(x: c.Tree, y: c.Tree): c.Tree = impl(x, y)
 }
