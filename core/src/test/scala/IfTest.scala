@@ -56,4 +56,11 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
         ()
     }
 
+    // Macro selection available.
+    Assert {
+        IsConstant {
+            If(true, Identity, Identity).apply(1)
+        }
+    }
+
 }
