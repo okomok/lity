@@ -5,7 +5,7 @@ object build extends Build {
     lazy val theSettings = Project.defaultSettings ++ Seq(
         organization := "com.github.okomok"
         , version := "0.1.0-SNAPSHOT"
-        , scalaVersion := "2.11.1"
+        , scalaVersion := "2.11.4"
 
         , scalacOptions ++=
             Seq("-unchecked", "-deprecation", "-feature")

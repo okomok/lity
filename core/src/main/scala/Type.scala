@@ -23,7 +23,7 @@ object Type extends Macro {
     }
 
 
-    def of[x](x: x): wrap[x] = wrap[x]
+    def of[x](x: => x): wrap[x] = wrap[x]
 
 
     def apply(x: Class[_]): Type = macro Impl.apply
