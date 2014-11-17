@@ -12,8 +12,7 @@ sealed trait Type {
 }
 
 
-object Type extends Macro {
-
+object Type {
     def wrap[x]: wrap[x] = new Type {
         override type apply = x
     }
@@ -22,18 +21,6 @@ object Type extends Macro {
         type apply = x
     }
 
-
     def of[x](x: => x): wrap[x] = wrap[x]
-
-
-    def apply(x: Class[_]): Type = macro Impl.apply
-
-    final class Impl(override val c: Context) extends MacroImpl1 with ConstantParam1 {
-        import c.universe._
-
-        override protected def impl(x: c.Tree): c.Tree = {
-            val a = AsType(c)(x)
-            q"${Here(c)}.Type.wrap[$a]"
-        }
-    }
+    def apply[x](x: Class[x]): wrap[x] = wrap[x]
 }
