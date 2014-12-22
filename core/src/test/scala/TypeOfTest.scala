@@ -32,6 +32,11 @@ class TypeOfTest extends org.scalatest.junit.JUnit3Suite {
         implicitly[TypeOf.`3`.apply =:= Int]
         implicitly[TypeOf.`"hello"`.apply =:= String]
     }
+
+    def testWiden() {
+        val x = "hello"
+        implicitly[TypeOf.`x : x.type`.apply =:= String]
+    }
 }
 
 
