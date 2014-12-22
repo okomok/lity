@@ -28,6 +28,10 @@ class TypeOfTest extends org.scalatest.junit.JUnit3Suite {
         implicitly[t.apply =:= Int]
     }
 
+    def testTrivial() {
+        implicitly[TypeOf.`3`.apply =:= Int]
+        implicitly[TypeOf.`"hello"`.apply =:= String]
+    }
 }
 
 
