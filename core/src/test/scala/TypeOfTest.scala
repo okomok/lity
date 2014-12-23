@@ -29,16 +29,16 @@ class TypeOfTest extends org.scalatest.junit.JUnit3Suite {
     }
 
     def testTrivial() {
-        implicitly[TypeOf.`3`.apply =:= Int]
-        implicitly[TypeOf.`"hello"`.apply =:= String]
+        implicitly[Infer.`3`.apply =:= Int]
+        implicitly[Infer.`"hello"`.apply =:= String]
     }
 
     def testWiden() {
         val x = "hello"
-        implicitly[TypeOf.`x : x.type`.apply =:= String]
+        implicitly[Infer.`x : x.type`.apply =:= String]
 
         object y
-        implicitly[TypeOf.`y`.apply =:= y.type]
+        implicitly[Infer.`y`.apply =:= y.type]
     }
 }
 

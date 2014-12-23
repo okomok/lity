@@ -14,7 +14,7 @@ package com.github.okomok.lity
 import scala.language.dynamics
 
 
-object TypeOf extends Macro with Dynamic {
+object Infer extends Macro with Dynamic {
     def selectDynamic(x: String): Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends InContext {
