@@ -17,9 +17,11 @@ class TypeTest extends org.scalatest.junit.JUnit3Suite {
     def testMe() {
         object t {
             final val intType = classOf[Int]
+            final val intType_ = InferClass(3)
         }
 
         Assert { t.intType == classOf[Int] }
+        Assert { t.intType_ == classOf[Int] }
         AssertNot { classOf[String] == classOf[Int] }
     }
 
