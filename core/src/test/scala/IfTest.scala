@@ -36,7 +36,7 @@ class IfTest extends org.scalatest.junit.JUnit3Suite {
         }
         object f {
             final val value = Constant {
-                if (ClassBy(v.value) == classOf[Int]) "h" else "g"
+                if (InferClass(v.value) == classOf[Int]) "h" else "g"
             }
         }
 

@@ -7,7 +7,7 @@
 package com.github.okomok.lity
 
 
-object ClassBy extends Macro {
+object InferClass extends Macro {
     def apply(x: Any): Any = macro Impl.apply
 
     final class Impl(override val c: Context) extends MacroImpl1 with ReturnConstant1 {
